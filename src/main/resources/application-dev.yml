@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+spring:
+  # DATABASE 기본 설정
+  datasource:
+    driver-class-name: ${DATABASE_DEV_MYSQL_CLASSNAME}
+    url: ${DATABASE_DEV_MYSQL_URL}
+    username: ${DATABASE_DEV_MYSQL_USERNAME}
+    password: ${DATABASE_DEV_MYSQL_PASSWORD}

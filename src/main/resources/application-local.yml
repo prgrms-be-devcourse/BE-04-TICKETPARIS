@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  # DATABASE 기본 설정
+  datasource:
+    driver-class-name: ${DATABASE_H2_CLASSNAME}
+    url: ${DATABASE_H2_URL}
+    username: ${DATABASE_H2_USERNAME}
+
+  # H2 콘솔 접속 허용 설정
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

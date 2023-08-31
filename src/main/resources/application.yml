@@ -1,0 +1,14 @@
+spring:
+  # 개발 환경 기본 값 설정
+  profiles:
+    default: local
+
+# MyBatis 설정
+mybatis:
+  # 마이바티스에서 타입 정보를 사용할 때 패키지 이름을 적어줘야하는데, 여기에 명시하면 패키지 이름 생략 가능
+  type-aliases-package: com.programmers.ticketparis.domain
+  # underscore를 camel-case 자동 변환
+  configuration:
+    map-underscore-to-camel-case: true
+  # mapper관련 xml파일이 존재하는 디렉터리의 위치
+  mapper-locations: classpath:mapper/**/*.xml
