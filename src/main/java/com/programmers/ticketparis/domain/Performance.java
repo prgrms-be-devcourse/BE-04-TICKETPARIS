@@ -22,7 +22,9 @@ public class Performance {
     private LocalDateTime updateDateTime;
 
     @Builder
-    private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration, Integer ageRating, Long price, String category, LocalDateTime createdDateTime, LocalDateTime updateDateTime) {
+    private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate,
+                        String duration, Integer ageRating, Long price, String category,
+                        LocalDateTime createdDateTime, LocalDateTime updateDateTime) {
         this.title = title;
         this.posterUrl = posterUrl;
         this.startDate = startDate;
