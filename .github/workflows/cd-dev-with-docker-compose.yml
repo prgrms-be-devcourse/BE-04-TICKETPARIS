@@ -3,8 +3,6 @@ name: cd-dev-with-docker-compose
 on:
   push: # 아래 브랜치에 push되면 작동
     branches: [ "develop" ]
-  pull_request: # 아래 브랜치에 pull request 되면 작동
-    branches: [ "develop" ]
 
 # 작업들
 jobs:
