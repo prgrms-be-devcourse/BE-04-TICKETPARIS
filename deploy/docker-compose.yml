@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  spring:
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:${DOCKER_TAG}
+    container_name: ${DOCKER_TAG}
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILE_ACTIVE=dev
+    env_file:
+      - spring.env
