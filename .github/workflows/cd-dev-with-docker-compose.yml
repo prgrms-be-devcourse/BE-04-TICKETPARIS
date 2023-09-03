@@ -25,14 +25,6 @@ jobs:
         with:
           arguments: build
 
-      # 멀티 플랫폼 이미지를 빌드하기 위하여 사용되는 하이퍼 바이저(에뮬레이터)
-      - name: docker amulator
-        uses: docker/setup-qemu-action@v2
-
-      # 멀티 플랫폼 이미지를 빌드하기 위한 Docker CLI 확장 플러그인
-      - name: docker buildx
-        uses: docker/setup-buildx-action@v2
-
       # 도커에 로그인
       - name: docker hub login
         uses: docker/login-action@v2
@@ -47,7 +39,6 @@ jobs:
           context: . # 경로 지정
           push: true # docker에 push할지 여부
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }} # push할 저장소와 태그
-          platforms: linux/amd64 # CPU 아키텍처
 
       # 공통으로 사용되는 환경변수 파일 만들기
       - name: make common env
