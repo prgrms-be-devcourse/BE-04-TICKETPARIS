@@ -11,6 +11,16 @@ permissions:
 
 # 작업들
 jobs:
+  assign-reviewer:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/hkusu/review-assign-action
+      - name: PR Assignee, Reviewers
+        uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }} # 본인
+          reviewers: Hchanghyeon, kylekim2123, jay-so, charlesuu  # 리뷰어 선택
+
   # 작업 명(본인이 지으면 됨)
   build:
     environment: develop # 환경 develop
