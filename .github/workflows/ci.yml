@@ -21,6 +21,8 @@ jobs:
         with:
           assignees: ${{ github.actor }} # 본인
           reviewers: Hchanghyeon, kylekim2123, jay-so, charlesuu  # 리뷰어 선택
+          ready-comment: '코드 리뷰 요청합니다 🙆 <reviewers>'
+          merged-comment: '성공적으로 Merge 되었습니다. Shout out to <reviewers> :wink:'
 
   # 작업 명(본인이 지으면 됨)
   build:
