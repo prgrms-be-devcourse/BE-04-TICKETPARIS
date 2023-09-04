@@ -17,13 +17,13 @@ public class Performance {
     private String duration;
     private Integer ageRating;
     private Long price;
-    private String category;
+    private Category category;
     private LocalDateTime createdDateTime;
     private LocalDateTime updateDateTime;
 
     @Builder
     private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate,
-                        String duration, Integer ageRating, Long price, String category,
+                        String duration, Integer ageRating, Long price, Category category,
                         LocalDateTime createdDateTime, LocalDateTime updateDateTime) {
         this.title = title;
         this.posterUrl = posterUrl;

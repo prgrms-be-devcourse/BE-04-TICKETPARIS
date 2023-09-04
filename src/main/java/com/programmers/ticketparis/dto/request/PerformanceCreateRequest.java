@@ -1,5 +1,6 @@
 package com.programmers.ticketparis.dto.request;
 
+import com.programmers.ticketparis.domain.Category;
 import com.programmers.ticketparis.domain.Performance;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -62,6 +63,6 @@ public class PerformanceCreateRequest {
                 .duration(duration)
                 .ageRating(ageRating)
                 .price(price)
-                .category(category).build();
+                .category(Category.valueOf(category)).build();
     }
 }

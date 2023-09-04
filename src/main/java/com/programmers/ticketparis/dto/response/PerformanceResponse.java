@@ -50,7 +50,7 @@ public class PerformanceResponse {
                 .duration(performance.getDuration())
                 .ageRating(performance.getAgeRating())
                 .price(performance.getPrice())
-                .category(performance.getCategory())
+                .category(String.valueOf(performance.getCategory()))
                 .createdDateTime(performance.getCreatedDateTime())
                 .updateDateTime(performance.getUpdateDateTime())
                 .build();
