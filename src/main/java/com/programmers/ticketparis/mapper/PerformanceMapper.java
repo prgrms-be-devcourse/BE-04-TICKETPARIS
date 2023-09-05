@@ -1,12 +1,13 @@
 package com.programmers.ticketparis.mapper;
 
-import com.programmers.ticketparis.domain.Performance;
-import com.programmers.ticketparis.dto.request.PerformanceUpdateRequest;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-import java.util.Optional;
+import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
 
 @Mapper
 public interface PerformanceMapper {
