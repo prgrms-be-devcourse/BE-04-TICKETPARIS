@@ -8,4 +8,12 @@
         VALUES (#{startDatetime}, #{sequence}, #{seatsCount}, #{performanceId});
     </insert>
 
+    <select id="findHallSeatsCountByPerformanceId" resultType="Integer">
+        SELECT B.seats_count
+        FROM performance as A
+                 JOIN hall as B
+                      ON A.hall_id = B.hall_id
+        WHERE A.performance_id = #{performanceId};
+    </select>
+
 </mapper>

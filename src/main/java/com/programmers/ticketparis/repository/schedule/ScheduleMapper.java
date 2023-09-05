@@ -8,4 +8,6 @@ import com.programmers.ticketparis.domain.schedule.Schedule;
 public interface ScheduleMapper {
 
     void save(Schedule schedule);
+
+    Integer findHallSeatsCountByPerformanceId(Long performanceId);
 }
