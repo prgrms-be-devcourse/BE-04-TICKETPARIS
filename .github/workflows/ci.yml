@@ -13,7 +13,6 @@ permissions:
 jobs:
   # 작업 명(본인이 지으면 됨)
   build:
-    environment: develop # 환경 develop
     runs-on: ubuntu-latest # 대여해주는 서버
     steps:
       - uses: actions/checkout@v3 # 코드 저장소에 올려둔 코드 CI 서버 내려받은 후 특정 브랜치 전환하는 행위
