@@ -1,6 +1,6 @@
-package com.programmers.ticketparis.common.exception;
+package com.programmers.ticketparis.exception;
 
-import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.programmers.ticketparis.common.dto.ErrorResponse;
+import com.programmers.ticketparis.dto.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

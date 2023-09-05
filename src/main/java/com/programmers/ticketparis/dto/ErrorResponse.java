@@ -1,9 +1,9 @@
-package com.programmers.ticketparis.common.dto;
+package com.programmers.ticketparis.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.programmers.ticketparis.common.exception.ExceptionRule;
+import com.programmers.ticketparis.exception.ExceptionRule;
 
 import lombok.Getter;
 
