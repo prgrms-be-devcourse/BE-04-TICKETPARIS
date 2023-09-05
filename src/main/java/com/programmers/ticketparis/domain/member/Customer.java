@@ -13,40 +13,40 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
 
-	private Long customerId;
+    private Long customerId;
 
-	@NotNull
-	private String username;
+    @NotNull
+    private String username;
 
-	@NotNull
-	private String password;
+    @NotNull
+    private String password;
 
-	@NotNull
-	private String name;
+    @NotNull
+    private String name;
 
-	@NotNull
-	private String email;
+    @NotNull
+    private String email;
 
-	@NotNull
-	private LocalDate birthDate;
+    @NotNull
+    private LocalDate birthDate;
 
-	@NotNull
-	private String phone;
+    @NotNull
+    private String phone;
 
-	@NotNull
-	private String address;
+    @NotNull
+    private String address;
 
-	private LocalDateTime createdDatetime;
-	private LocalDateTime updatedDatetime;
+    private LocalDateTime createdDatetime;
+    private LocalDateTime updatedDatetime;
 
-	@Builder
-	private Customer(String username, String password, String name, String email, LocalDate birthDate, String phone, String address) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.birthDate = birthDate;
-		this.phone = phone;
-		this.address = address;
-	}
+    @Builder
+    private Customer(String username, String password, String name, String email, LocalDate birthDate, String phone, String address) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.address = address;
+    }
 }

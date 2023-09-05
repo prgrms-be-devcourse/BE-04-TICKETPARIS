@@ -22,56 +22,56 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<ErrorResponse> handleNoHandlerFoundException(NoHandlerFoundException e) {
-		log.error("{} : 요청 URL - {}", NOT_FOUND.getMessage(), e.getRequestURL(), e);
-		ErrorResponse response = ErrorResponse.of(NOT_FOUND);
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoHandlerFoundException(NoHandlerFoundException e) {
+        log.error("{} : 요청 URL - {}", NOT_FOUND.getMessage(), e.getRequestURL(), e);
+        ErrorResponse response = ErrorResponse.of(NOT_FOUND);
 
-		return ResponseEntity.status(NOT_FOUND.getStatus()).body(response);
-	}
+        return ResponseEntity.status(NOT_FOUND.getStatus()).body(response);
+    }
 
-	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-		log.error("{} : 지원 메서드 - {}, 실제 요청 메서드 - {}", METHOD_NOT_ALLOWED.getMessage(), e.getSupportedMethods(), e.getMethod(), e);
-		ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        log.error("{} : 지원 메서드 - {}, 실제 요청 메서드 - {}", METHOD_NOT_ALLOWED.getMessage(), e.getSupportedMethods(), e.getMethod(), e);
+        ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 
-		return ResponseEntity.status(METHOD_NOT_ALLOWED.getStatus()).body(response);
-	}
+        return ResponseEntity.status(METHOD_NOT_ALLOWED.getStatus()).body(response);
+    }
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-		List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
 
-		List<String> rejectedValues = allErrors.stream()
-			.map(FieldError.class::cast)
-			.map(error -> {
-				Object rejectedValue = error.getRejectedValue();
-				return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
-			})
-			.toList();
+        List<String> rejectedValues = allErrors.stream()
+            .map(FieldError.class::cast)
+            .map(error -> {
+                Object rejectedValue = error.getRejectedValue();
+                return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
+            })
+            .toList();
 
-		log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
-		ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
+        log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
+        ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
 
-		return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
-	}
+        return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
+    }
 
-	@ExceptionHandler(BusinessException.class)
-	public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-		ExceptionRule rule = e.getRule();
-		List<String> rejectedValues = e.getRejectedValues();
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
+        ExceptionRule rule = e.getRule();
+        List<String> rejectedValues = e.getRejectedValues();
 
-		log.error("{} : 원인 값 - {}", rule.getMessage(), rejectedValues, e);
-		ErrorResponse response = ErrorResponse.of(rule, rejectedValues);
+        log.error("{} : 원인 값 - {}", rule.getMessage(), rejectedValues, e);
+        ErrorResponse response = ErrorResponse.of(rule, rejectedValues);
 
-		return ResponseEntity.status(rule.getStatus()).body(response);
-	}
+        return ResponseEntity.status(rule.getStatus()).body(response);
+    }
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorResponse> handleException(Exception e) {
-		log.error(INTERNAL_SERVER_ERROR.getMessage(), e);
-		ErrorResponse response = ErrorResponse.of(INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        log.error(INTERNAL_SERVER_ERROR.getMessage(), e);
+        ErrorResponse response = ErrorResponse.of(INTERNAL_SERVER_ERROR);
 
-		return ResponseEntity.status(INTERNAL_SERVER_ERROR.getStatus()).body(response);
-	}
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR.getStatus()).body(response);
+    }
 }

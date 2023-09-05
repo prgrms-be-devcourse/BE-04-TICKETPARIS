@@ -12,28 +12,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
 
-	private Long scheduleId;
+    private Long scheduleId;
 
-	@NotNull
-	private LocalDateTime startDatetime;
+    @NotNull
+    private LocalDateTime startDatetime;
 
-	@NotNull
-	private Integer sequence;
+    @NotNull
+    private Integer sequence;
 
-	@NotNull
-	private Integer seatsCount;
+    @NotNull
+    private Integer seatsCount;
 
-	private LocalDateTime createdDatetime;
-	private LocalDateTime updatedDatetime;
+    private LocalDateTime createdDatetime;
+    private LocalDateTime updatedDatetime;
 
-	@NotNull
-	private Long performanceId;
+    @NotNull
+    private Long performanceId;
 
-	@Builder
-	private Schedule(LocalDateTime startDatetime, Integer sequence, Integer seatsCount, Long performanceId) {
-		this.startDatetime = startDatetime;
-		this.sequence = sequence;
-		this.seatsCount = seatsCount;
-		this.performanceId = performanceId;
-	}
+    @Builder
+    private Schedule(LocalDateTime startDatetime, Integer sequence, Integer seatsCount, Long performanceId) {
+        this.startDatetime = startDatetime;
+        this.sequence = sequence;
+        this.seatsCount = seatsCount;
+        this.performanceId = performanceId;
+    }
 }

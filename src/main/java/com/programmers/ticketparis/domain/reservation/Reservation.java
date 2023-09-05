@@ -12,24 +12,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
-	private Long reservationId;
+    private Long reservationId;
 
-	@NotNull
-	private ReservationStatus reservationStatus;
+    @NotNull
+    private ReservationStatus reservationStatus;
 
-	private LocalDateTime createdDatetime;
-	private LocalDateTime updatedDatetime;
+    private LocalDateTime createdDatetime;
+    private LocalDateTime updatedDatetime;
 
-	@NotNull
-	private Long customerId;
+    @NotNull
+    private Long customerId;
 
-	@NotNull
-	private Long scheduleId;
+    @NotNull
+    private Long scheduleId;
 
-	@Builder
-	private Reservation(ReservationStatus reservationStatus, Long customerId, Long scheduleId) {
-		this.reservationStatus = reservationStatus;
-		this.customerId = customerId;
-		this.scheduleId = scheduleId;
-	}
+    @Builder
+    private Reservation(ReservationStatus reservationStatus, Long customerId, Long scheduleId) {
+        this.reservationStatus = reservationStatus;
+        this.customerId = customerId;
+        this.scheduleId = scheduleId;
+    }
 }
