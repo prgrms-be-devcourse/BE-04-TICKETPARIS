@@ -4,7 +4,7 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="performanceId">
         INSERT INTO performance (title, poster_url, start_date, end_date, duration,
-                                 age_rating, price, category)
+                                 age_rating, price, discription, category)
         VALUES (#{title}, #{posterUrl}, #{startDate},
                 #{endDate}, #{duration},
                 #{ageRating}, #{price},
@@ -13,13 +13,13 @@
 
     <update id="update">
         UPDATE performance
-        SET title     = #{updateRequest.title},
+        SET title      = #{updateRequest.title},
             poster_url = #{updateRequest.posterUrl},
             start_date = #{updateRequest.startDate},
             end_date   = #{updateRequest.endDate},
-            duration  = #{updateRequest.duration},
+            duration   = #{updateRequest.duration},
             age_rating = #{updateRequest.ageRating},
-            price     = #{updateRequest.price}
+            price      = #{updateRequest.price}
         WHERE performance_id = #{id}
 
     </update>
