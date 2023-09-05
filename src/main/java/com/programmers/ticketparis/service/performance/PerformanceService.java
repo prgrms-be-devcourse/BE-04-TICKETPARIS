@@ -1,18 +1,20 @@
-package com.programmers.ticketparis.service;
-
-import com.programmers.ticketparis.domain.Performance;
-import com.programmers.ticketparis.dto.request.PerformanceCreateRequest;
-import com.programmers.ticketparis.dto.request.PerformanceUpdateRequest;
-import com.programmers.ticketparis.dto.response.PerformanceResponse;
-import com.programmers.ticketparis.repository.PerformanceRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package com.programmers.ticketparis.service.performance;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
+import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
+import com.programmers.ticketparis.dto.performance.response.PerformanceResponse;
+import com.programmers.ticketparis.repository.performance.PerformanceRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class PerformanceService {
 
     public Optional<PerformanceResponse> findPerformanceById(Long id) {
         Performance performance = performanceRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 공연 정보는 존재하지 않습니다."));
+            .orElseThrow(() -> new NoSuchElementException("해당 공연 정보는 존재하지 않습니다."));
 
         return Optional.ofNullable(PerformanceResponse.fromEntity(performance));
     }
@@ -39,8 +41,8 @@ public class PerformanceService {
     public List<PerformanceResponse> findPerformanceAll() {
         List<Performance> performances = performanceRepository.findAll();
         return performances.stream()
-                .map(PerformanceResponse::fromEntity)
-                .collect(Collectors.toList());
+            .map(PerformanceResponse::fromEntity)
+            .collect(Collectors.toList());
     }
 
     @Transactional
@@ -53,7 +55,7 @@ public class PerformanceService {
         }
         performanceRepository.update(id, updateRequest);
         return findPerformanceById(id)
-                .orElseThrow(() -> new NoSuchElementException("수정할 공연정보를 찾지 못했습니다."));
+            .orElseThrow(() -> new NoSuchElementException("수정할 공연정보를 찾지 못했습니다."));
     }
 
     @Transactional
