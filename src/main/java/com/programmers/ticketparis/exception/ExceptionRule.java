@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.common.exception;
+package com.programmers.ticketparis.exception;
 
 import org.springframework.http.HttpStatus;
 
