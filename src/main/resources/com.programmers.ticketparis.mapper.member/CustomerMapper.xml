@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programmers.ticketparis.mapper.member.CustomerMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into customer (customer_name, price, quantity)
+        values (#{customerName}, #{price}, #{quantity})
+    </insert>
+
+    <select id="findById" resultType="Customer">
+        select id, customer_name, price, quantity
+        from customer
+        where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Customer">
+        select id, customer_name, price, quantity
+        from customer
+        <where>
+            <if test="customerName != null and customerName != ''">
+                and customer_name like concat('%', #{customerName}, '%')
+            </if>
+            <if test="maxPrice != null">
+                and price &lt;= #{maxPrice}
+            </if>
+        </where>
+    </select>
+
+</mapper>
