@@ -203,4 +203,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,gradle,java
