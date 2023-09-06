@@ -8,7 +8,8 @@
         VALUES (#{title}, #{posterUrl}, #{startDate},
                 #{endDate}, #{duration},
                 #{ageRating}, #{price}, #{description},
-                #{category,typeHandler=com.programmers.ticketparis.domain.performance.Category.TypeHandler}, #{sellerId}, #{hallId}) //변경
+                #{category,typeHandler=com.programmers.ticketparis.domain.performance.Category$TypeHandler},
+                #{sellerId}, #{hallId})
     </insert>
 
     <update id="update">
@@ -21,7 +22,7 @@
             age_rating  = #{updateRequest.ageRating},
             price       = #{updateRequest.price},
             description = #{updateRequest.description},
-            category    = #{updateRequest.category,typeHandler=com.programmers.ticketparis.domain.performance.Category.TypeHandler}
+            category    = #{updateRequest.category,typeHandler=com.programmers.ticketparis.domain.performance.Category$TypeHandler}
         WHERE performance_id = #{id}
 
     </update>
