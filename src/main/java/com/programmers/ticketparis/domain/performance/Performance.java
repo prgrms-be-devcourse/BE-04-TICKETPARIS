@@ -1,13 +1,13 @@
 package com.programmers.ticketparis.domain.performance;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,7 +50,7 @@ public class Performance {
 
     @Builder
     private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration, Integer ageRating, Integer price, Category category,
-        String description, Long sellerId, Long hallId) {
+                        String description, Long sellerId, Long hallId) {
         this.title = title;
         this.posterUrl = posterUrl;
         this.startDate = startDate;
