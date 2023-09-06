@@ -23,4 +23,14 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     public Integer findHallSeatsCountByPerformanceId(Long performanceId) {
         return scheduleMapper.findHallSeatsCountByPerformanceId(performanceId);
     }
+
+    @Override
+    public Boolean isExistedScheduleId(Long scheduleId) {
+        return scheduleMapper.isExistedScheduleId(scheduleId);
+    }
+
+    @Override
+    public void deleteById(Long scheduleId) {
+        scheduleMapper.deleteById(scheduleId);
+    }
 }

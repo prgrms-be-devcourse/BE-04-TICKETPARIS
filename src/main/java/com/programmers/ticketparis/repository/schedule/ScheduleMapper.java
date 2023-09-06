@@ -10,4 +10,8 @@ public interface ScheduleMapper {
     void save(Schedule schedule);
 
     Integer findHallSeatsCountByPerformanceId(Long performanceId);
+
+    Boolean isExistedScheduleId(Long scheduleId);
+
+    void deleteById(Long scheduleId);
 }

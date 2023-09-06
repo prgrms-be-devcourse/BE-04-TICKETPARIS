@@ -16,4 +16,14 @@
         WHERE A.performance_id = #{performanceId};
     </select>
 
+    <select id="isExistedScheduleId" resultType="Boolean">
+        SELECT EXISTS(SELECT * FROM schedule WHERE schedule_id = #{scheduleId});
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM schedule
+        WHERE schedule_id = #{scheduleId};
+    </delete>
+
 </mapper>
