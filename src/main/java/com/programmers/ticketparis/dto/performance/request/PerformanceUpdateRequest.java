@@ -1,7 +1,6 @@
 package com.programmers.ticketparis.dto.performance.request;
 
-import java.time.LocalDate;
-
+import com.programmers.ticketparis.domain.performance.Category;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -38,7 +39,7 @@ public class PerformanceUpdateRequest {
     @Min(value = 0, message = "공연 가격은 0 이상 이여야 합니다.")
     private Long price;
 
-    private String category;
+    private Category category;
 
     private String description;
 
@@ -46,8 +47,4 @@ public class PerformanceUpdateRequest {
     private Long sellerId;
 
     private Long hallId;
-
-    public boolean isValidDates() {
-        return !startDate.isAfter(endDate);
-    }
 }

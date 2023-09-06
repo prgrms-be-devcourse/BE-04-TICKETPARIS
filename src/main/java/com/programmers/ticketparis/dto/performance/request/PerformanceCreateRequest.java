@@ -40,7 +40,7 @@ public class PerformanceCreateRequest {
     @Min(value = 0, message = "공연 가격은 0이상 이어야 합니다.")
     private Integer price;
 
-    private Category category;
+    private String category;
 
     private String description;
 
@@ -49,15 +49,7 @@ public class PerformanceCreateRequest {
 
     private Long hallId;
 
-    public boolean isValidDates() {
-        return !startDate.isAfter(endDate);
-    }
-
     public Performance toEntity() {
-
-        if (!isValidDates()) {
-            throw new IllegalArgumentException("공연 시작 날짜는 공연 종료 날짜 이후가 될 수 없습니다.");
-        }
 
         return Performance.builder()
                 .title(title)
@@ -67,7 +59,7 @@ public class PerformanceCreateRequest {
                 .duration(duration)
                 .ageRating(ageRating)
                 .price(price)
-                .category(category)
+                .category(Category.fromString(category))
                 .description(description)
                 .sellerId(sellerId)
                 .hallId(hallId)
