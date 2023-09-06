@@ -1,11 +1,10 @@
 package com.programmers.ticketparis.repository;
 
-import org.springframework.stereotype.Repository;
-
 import com.programmers.ticketparis.domain.reservation.Reservation;
+import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import com.programmers.ticketparis.mapper.ReservationMapper;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,8 +18,8 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public void cancel(Long reservationId, Reservation reservation) {
-        reservationMapper.cancel(reservationId, reservation);
+    public void cancel(Long reservationId, ReservationStatus reservationStatus) {
+        reservationMapper.cancel(reservationId, reservationStatus);
     }
 
     @Override

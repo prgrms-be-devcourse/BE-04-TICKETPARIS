@@ -1,18 +1,16 @@
 package com.programmers.ticketparis.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.programmers.ticketparis.domain.reservation.Reservation;
-import com.programmers.ticketparis.dto.reservation.ReservationCancelRequest;
+import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.ReservationException;
 import com.programmers.ticketparis.repository.ReservationRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +25,10 @@ public class ReservationService {
     }
 
     @Transactional
-    public void cancel(Long reservationId, ReservationCancelRequest reservationCancelRequest) {
+    public void cancel(Long reservationId) {
         existById(reservationId);
 
-        Reservation reservation = reservationCancelRequest.toEntity();
-        reservationRepository.cancel(reservationId, reservation);
+        reservationRepository.cancel(reservationId, ReservationStatus.CANCELED);
     }
 
     private void existById(Long reservationId) {

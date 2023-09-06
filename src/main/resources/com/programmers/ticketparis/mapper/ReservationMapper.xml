@@ -10,7 +10,7 @@
 
     <update id="cancel">
         update reservation
-        set status=#{reservation.reservationStatus}
+        set status=#{reservationStatus}
         where reservation_id = #{reservationId}
     </update>
 
