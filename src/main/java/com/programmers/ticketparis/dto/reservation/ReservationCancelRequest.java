@@ -2,18 +2,15 @@ package com.programmers.ticketparis.dto.reservation;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class ReservationCancelRequest {
 
     @NotNull(message = "고객 ID는 빈 값일 수 없습니다.")
@@ -32,9 +29,9 @@ public class ReservationCancelRequest {
 
     public Reservation toEntity() {
         return Reservation.builder()
-            .reservationStatus(ReservationStatus.CANCELED)
-            .customerId(customerId)
-            .scheduleId(scheduleId)
-            .build();
+                .reservationStatus(ReservationStatus.CANCELED)
+                .customerId(customerId)
+                .scheduleId(scheduleId)
+                .build();
     }
 }
