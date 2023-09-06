@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 
 import static com.programmers.ticketparis.domain.performance.Category.MUSICAL;
+import static com.programmers.ticketparis.domain.performance.Category.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -60,7 +61,7 @@ public class PerformanceTest {
         //then
         assertThrows(IllegalArgumentException.class,
                 () -> {
-                    Category category = Category.valueOf(invalidCategoryString);
+                    Category category = valueOf(invalidCategoryString);
                     Performance testPerformance = Performance.builder()
                             .title("테스트 공연 타이틀")
                             .posterUrl("https://picsum.photos/id/237/200/300\n")
@@ -69,7 +70,7 @@ public class PerformanceTest {
                             .duration("2시간")
                             .ageRating(18)
                             .price(15000)
-                            .category(category)
+                            .category(Category.valueOf(invalidCategoryString))
                             .description("테스트 공연의 상세 설명입니다.")
                             .sellerId(1L)
                             .hallId(2L).build();
