@@ -1,6 +1,5 @@
 package com.programmers.ticketparis.repository.member;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -16,21 +15,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MyBatisCustomerRepository implements CustomerRepository {
 
-	private final CustomerMapper customerMapper;
+    private final CustomerMapper customerMapper;
 
-	@Override
-	public Customer save(Customer customer) {
-		customerMapper.save(customer);
-		return customer;
-	}
+    @Override
+    public void createAccount(Customer customer) {
+        customerMapper.createAccount(customer);
+    }
 
-	@Override
-	public Optional<Customer> findById(Long id) {
-		return customerMapper.findById(id);
-	}
+    @Override
+    public Optional<Customer> findById(Long id) {
+        return customerMapper.findById(id);
+    }
 
-	@Override
-	public List<Customer> findAll() {
-		return customerMapper.findAll();
-	}
+    @Override
+    public boolean existById(Long customerId) {
+        return customerMapper.existById(customerId);
+    }
+
 }
