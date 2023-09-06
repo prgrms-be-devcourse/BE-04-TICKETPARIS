@@ -24,7 +24,8 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleResponse createSchedule(Long performanceId, ScheduleCreateRequest request) {
-        // 이 부분에 performanceId에 해당하는 공연 데이터가 없는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
+        // performanceId에 해당하는 공연 데이터가 없는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
+        // startDatetime이 공연의 시작, 종료날짜 범위를 벗어나는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
 
         Integer seatsCount = scheduleRepository.findHallSeatsCountByPerformanceId(performanceId);
         Schedule schedule = request.toEntity(seatsCount, performanceId);

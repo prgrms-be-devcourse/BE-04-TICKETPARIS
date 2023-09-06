@@ -2,10 +2,12 @@ package com.programmers.ticketparis.exception;
 
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -52,6 +54,22 @@ public class GlobalExceptionHandler {
 
         log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
         ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
+
+        return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error(BAD_REQUEST.getMessage(), e);
+
+        Throwable rootCause = e.getRootCause();
+        ErrorResponse response = ErrorResponse.of(BAD_REQUEST);
+
+        // LocalDatetime.parse()가 불가능한 형식으로 datetime 값을 입력받는 경우
+        if (rootCause instanceof DateTimeParseException dateTimeParseException) {
+            List<String> rejectedValues = List.of(dateTimeParseException.getParsedString());
+            response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
+        }
 
         return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
     }

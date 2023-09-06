@@ -15,6 +15,7 @@ import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
 import com.programmers.ticketparis.service.schedule.ScheduleService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -26,7 +27,7 @@ public class ScheduleController {
 
     @PostMapping("/schedules")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<ScheduleResponse> createSchedule(@PathVariable Long performanceId, @RequestBody ScheduleCreateRequest request, HttpServletRequest httpServletRequest) {
+    public ApiResponse<ScheduleResponse> createSchedule(@PathVariable Long performanceId, @Valid @RequestBody ScheduleCreateRequest request, HttpServletRequest httpServletRequest) {
         ScheduleResponse response = scheduleService.createSchedule(performanceId, request);
         String requestURI = httpServletRequest.getRequestURI();
 
