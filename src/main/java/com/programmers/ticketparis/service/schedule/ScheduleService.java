@@ -1,11 +1,16 @@
 package com.programmers.ticketparis.service.schedule;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
+import com.programmers.ticketparis.exception.ScheduleException;
 import com.programmers.ticketparis.repository.schedule.ScheduleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,5 +29,20 @@ public class ScheduleService {
         Long savedScheduleId = scheduleRepository.save(schedule);
 
         return ScheduleResponse.from(savedScheduleId);
+    }
+
+    @Transactional
+    public void deleteScheduleById(Long performanceId, Long scheduleId) {
+        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
+
+        if (isNotDeleted(deletedCounts)) {
+            List<String> rejectedValues = List.of(String.valueOf(performanceId), String.valueOf(scheduleId));
+
+            throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
+        }
+    }
+
+    private Boolean isNotDeleted(Integer deletedCounts) {
+        return deletedCounts == 0;
     }
 }

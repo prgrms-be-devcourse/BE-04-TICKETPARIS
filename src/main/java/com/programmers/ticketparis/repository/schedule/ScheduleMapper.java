@@ -11,7 +11,5 @@ public interface ScheduleMapper {
 
     Integer findHallSeatsCountByPerformanceId(Long performanceId);
 
-    Boolean isExistedScheduleId(Long scheduleId);
-
-    void deleteById(Long scheduleId);
+    Integer deleteById(Long performanceId, Long scheduleId);
 }

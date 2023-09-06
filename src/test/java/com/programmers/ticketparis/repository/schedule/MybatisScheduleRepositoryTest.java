@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +21,9 @@ class MybatisScheduleRepositoryTest {
     private ScheduleRepository scheduleRepository;
 
     @Test
-    @DisplayName("스케줄 데이터를 DB에 삽입 한 후 ID를 반환한다.")
+    @DisplayName("스케줄 데이터를 정상적으로 DB에 삽입 후 스케줄 ID를 반환한다.")
     @Transactional
-    void test_scheduleId_when_save_schedule() {
+    void test_save_schedule_success() {
         //given
         Schedule schedule = Schedule.builder()
             .startDatetime(LocalDateTime.of(2023, 9, 11, 19, 30))
@@ -43,7 +42,7 @@ class MybatisScheduleRepositoryTest {
     @ParameterizedTest
     @DisplayName("공연 ID를 이용해, 공연이 진행되는 공연장의 좌석 수를 조회한다.")
     @CsvSource(value = {"1,598", "2,598", "3,200", "5,559"})
-    void test_hall_seatsCount_from_performanceId(Long performanceId, Integer expectedSeatsCount) {
+    void test_find_hall_seatsCount(Long performanceId, Integer expectedSeatsCount) {
         //when
         Integer actualSeatsCount = scheduleRepository.findHallSeatsCountByPerformanceId(performanceId);
 
@@ -51,27 +50,30 @@ class MybatisScheduleRepositoryTest {
         assertThat(actualSeatsCount).isEqualTo(expectedSeatsCount);
     }
 
-    @ParameterizedTest
-    @DisplayName("특정 스케줄 ID에 해당하는 스케줄이 존재하는지 아닌지 판별한다.")
-    @CsvSource(value = {"1,true", "2,true", "0,false", "99999999,false"})
-    void test_existed_scheduleId(Long scheduleId, Boolean expectedStatus) {
+    @Test
+    @DisplayName("존재하는 공연 ID와 스케줄 ID에 해당하는 스케줄을 삭제한다.")
+    @Transactional
+    void test_delete_schedule_success() {
+        //given
+        Long performanceId = 1L;
+        Long scheduleId = 1L;
+
         //when
-        Boolean actualStatus = scheduleRepository.isExistedScheduleId(scheduleId);
+        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
 
         //then
-        assertThat(actualStatus).isEqualTo(expectedStatus);
+        assertThat(deletedCounts).isOne();
     }
 
     @ParameterizedTest
-    @DisplayName("특정 스케줄 ID에 해당하는 스케줄을 삭제한다.")
-    @ValueSource(longs = {1, 2, 3, 4, 5})
+    @DisplayName("존재하지 않는 공연 ID와 스케줄 ID에 대해서는 스케줄을 삭제하지 못한다.")
+    @CsvSource(value = {"0,1", "1,0", "9999999,9999999", "-1,2", "2,-1"})
     @Transactional
-    void test_schedule_existed_or_not_after_delete_schedule(Long scheduleId) {
+    void test_delete_schedule_fail(Long performanceId, Long scheduleId) {
         //when
-        scheduleRepository.deleteById(scheduleId);
+        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
 
         //then
-        Boolean status = scheduleRepository.isExistedScheduleId(scheduleId);
-        assertThat(status).isFalse();
+        assertThat(deletedCounts).isZero();
     }
 }
