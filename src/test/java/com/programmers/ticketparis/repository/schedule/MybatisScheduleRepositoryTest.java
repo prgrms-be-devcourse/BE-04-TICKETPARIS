@@ -25,18 +25,21 @@ class MybatisScheduleRepositoryTest {
     @Transactional
     void test_save_schedule_success() {
         //given
-        Schedule schedule = Schedule.builder()
+        Long performanceId = 1L;
+
+        Schedule expectedSchedule = Schedule.builder()
             .startDatetime(LocalDateTime.of(2023, 9, 11, 19, 30))
             .sequence(1)
             .seatsCount(598)
-            .performanceId(1L)
+            .performanceId(performanceId)
             .build();
 
         //when
-        Long scheduleId = scheduleRepository.save(schedule);
+        Long scheduleId = scheduleRepository.save(expectedSchedule);
 
         //then
-        assertThat(scheduleId).isEqualTo(schedule.getScheduleId());
+        Schedule actualSchedule = scheduleRepository.findById(performanceId, scheduleId).get();
+        assertThat(actualSchedule.getScheduleId()).isEqualTo(expectedSchedule.getScheduleId());
     }
 
     @ParameterizedTest

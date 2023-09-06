@@ -1,5 +1,7 @@
 package com.programmers.ticketparis.repository.schedule;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import com.programmers.ticketparis.domain.schedule.Schedule;
@@ -22,6 +24,11 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     @Override
     public Integer findHallSeatsCountByPerformanceId(Long performanceId) {
         return scheduleMapper.findHallSeatsCountByPerformanceId(performanceId);
+    }
+
+    @Override
+    public Optional<Schedule> findById(Long performanceId, Long scheduleId) {
+        return scheduleMapper.findById(performanceId, scheduleId);
     }
 
     @Override

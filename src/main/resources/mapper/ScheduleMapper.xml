@@ -16,6 +16,13 @@
         WHERE A.performance_id = #{performanceId};
     </select>
 
+    <select id="findById" resultType="Schedule">
+        SELECT *
+        FROM schedule
+        WHERE performance_id = #{performanceId}
+          AND schedule_id = #{scheduleId};
+    </select>
+
     <delete id="deleteById">
         DELETE
         FROM schedule
