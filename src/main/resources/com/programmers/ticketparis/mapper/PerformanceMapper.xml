@@ -4,22 +4,24 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="performanceId">
         INSERT INTO performance (title, poster_url, start_date, end_date, duration,
-                                 age_rating, price, discription, category)
+                                 age_rating, price, description, category, seller_id, hall_id)
         VALUES (#{title}, #{posterUrl}, #{startDate},
                 #{endDate}, #{duration},
-                #{ageRating}, #{price},
-                #{category})
+                #{ageRating}, #{price}, #{description},
+                #{category,typeHandler=com.programmers.ticketparis.domain.performance.Category.TypeHandler}, #{sellerId}, #{hallId}) //변경
     </insert>
 
     <update id="update">
         UPDATE performance
-        SET title      = #{updateRequest.title},
-            poster_url = #{updateRequest.posterUrl},
-            start_date = #{updateRequest.startDate},
-            end_date   = #{updateRequest.endDate},
-            duration   = #{updateRequest.duration},
-            age_rating = #{updateRequest.ageRating},
-            price      = #{updateRequest.price}
+        SET title       = #{updateRequest.title},
+            poster_url  = #{updateRequest.posterUrl},
+            start_date  = #{updateRequest.startDate},
+            end_date    = #{updateRequest.endDate},
+            duration    = #{updateRequest.duration},
+            age_rating  = #{updateRequest.ageRating},
+            price       = #{updateRequest.price},
+            description = #{updateRequest.description},
+            category    = #{updateRequest.category,typeHandler=com.programmers.ticketparis.domain.performance.Category.TypeHandler}
         WHERE performance_id = #{id}
 
     </update>
