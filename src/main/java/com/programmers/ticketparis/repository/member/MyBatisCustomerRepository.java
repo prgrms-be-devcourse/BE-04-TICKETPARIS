@@ -19,7 +19,9 @@ public class MyBatisCustomerRepository implements CustomerRepository {
 
     @Override
     public void createAccount(Customer customer) {
+        log.info("레포지토리 도착");
         customerMapper.createAccount(customer);
+        log.info("레포지토리 통과");
     }
 
     @Override
