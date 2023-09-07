@@ -8,7 +8,7 @@
         VALUES (#{title}, #{posterUrl}, #{startDate},
                 #{endDate}, #{duration},
                 #{ageRating}, #{price}, #{description},
-                #{category,typeHandler=com.programmers.ticketparis.domain.performance.Category$TypeHandler},
+                #{category},
                 #{sellerId}, #{hallId})
     </insert>
 
@@ -22,22 +22,25 @@
             age_rating  = #{updateRequest.ageRating},
             price       = #{updateRequest.price},
             description = #{updateRequest.description},
-            category    = #{updateRequest.category,typeHandler=com.programmers.ticketparis.domain.performance.Category$TypeHandler}
+            category    = #{updateRequest.category}
         WHERE performance_id = #{id}
 
     </update>
 
-    <select id="findById" resultType="Performance">
+    <select id="findById" resultMap="resultPerformance">
         SELECT *
         FROM performance
         WHERE performance_id = #{id}
     </select>
 
-
-    <select id="findAll" resultType="Performance">
+    <select id="findAll" resultMap="resultPerformance">
         SELECT *
         FROM performance
     </select>
+
+    <resultMap id="resultPerformance" type="Performance">
+        <result column="category" property="category"/>
+    </resultMap>
 
     <delete id="deleteById">
         DELETE

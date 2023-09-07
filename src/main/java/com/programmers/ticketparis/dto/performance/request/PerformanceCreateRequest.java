@@ -40,7 +40,7 @@ public class PerformanceCreateRequest {
     @Min(value = 0, message = "공연 가격은 0이상 이어야 합니다.")
     private Integer price;
 
-    private String category;
+    private Category category;
 
     private String description;
 
@@ -59,7 +59,7 @@ public class PerformanceCreateRequest {
                 .duration(duration)
                 .ageRating(ageRating)
                 .price(price)
-                .category(Category.fromString(category))
+                .category(category)
                 .description(description)
                 .sellerId(sellerId)
                 .hallId(hallId)

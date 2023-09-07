@@ -1,13 +1,11 @@
 package com.programmers.ticketparis.domain.performance;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.type.MappedTypes;
 
-@Getter
 @RequiredArgsConstructor
-public enum Category implements CategoryEnum {
+public enum Category {
     MUSICAL("뮤지컬"),
     CONCERT("콘서트"),
     PLAY("연극"),
@@ -17,7 +15,7 @@ public enum Category implements CategoryEnum {
 
     private final String name;
 
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static Category fromString(String name) {
         for (Category value : Category.values()) {
             if (value.getName().equalsIgnoreCase(name)) {
@@ -27,10 +25,8 @@ public enum Category implements CategoryEnum {
         throw new IllegalArgumentException(name + "는 허용된 카테고리가 아닙니다.");
     }
 
-    @MappedTypes(Category.class)
-    public static class TypeHandler extends CategoryEnumTypeHander<Category> {
-        public TypeHandler() {
-            super(Category.class);
-        }
+    @JsonValue
+    public String getName() {
+        return name;
     }
 }

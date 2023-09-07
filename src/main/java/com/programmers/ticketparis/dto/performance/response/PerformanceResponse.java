@@ -1,5 +1,6 @@
 package com.programmers.ticketparis.dto.performance.response;
 
+import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.domain.performance.Performance;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class PerformanceResponse {
     private String duration;
     private Integer ageRating;
     private Integer price;
-    private String category;
+    private Category category;
     private String description;
     private LocalDateTime createdDateTime;
     private LocalDateTime updatedDateTime;
@@ -28,7 +29,7 @@ public class PerformanceResponse {
 
     @Builder
     public PerformanceResponse(Long performanceId, String title, String posterUrl, LocalDate startDate,
-                               LocalDate endDate, String duration, Integer ageRating, Integer price, String category, String description,
+                               LocalDate endDate, String duration, Integer ageRating, Integer price, Category category, String description,
                                LocalDateTime createdDateTime, LocalDateTime updateDateTime, Long sellerId, Long hallId) {
         this.performanceId = performanceId;
         this.title = title;
@@ -56,7 +57,7 @@ public class PerformanceResponse {
                 .duration(performance.getDuration())
                 .ageRating(performance.getAgeRating())
                 .price(performance.getPrice())
-                .category(performance.getCategory().getName())
+                .category(performance.getCategory())
                 .description(performance.getDescription())
                 .createdDateTime(performance.getCreatedDatetime())
                 .updateDateTime(performance.getUpdatedDatetime())
