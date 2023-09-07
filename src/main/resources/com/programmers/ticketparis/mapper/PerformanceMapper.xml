@@ -27,20 +27,16 @@
 
     </update>
 
-    <select id="findById" resultMap="resultPerformance">
+    <select id="findById" resultType="Performance">
         SELECT *
         FROM performance
         WHERE performance_id = #{id}
     </select>
 
-    <select id="findAll" resultMap="resultPerformance">
+    <select id="findAll" resultType="Performance">
         SELECT *
         FROM performance
     </select>
-
-    <resultMap id="resultPerformance" type="Performance">
-        <result column="category" property="category"/>
-    </resultMap>
 
     <delete id="deleteById">
         DELETE
