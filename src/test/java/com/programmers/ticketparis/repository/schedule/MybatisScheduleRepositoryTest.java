@@ -3,6 +3,7 @@ package com.programmers.ticketparis.repository.schedule;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,44 @@ class MybatisScheduleRepositoryTest {
 
         //then
         assertThat(actualSeatsCount).isEqualTo(expectedSeatsCount);
+    }
+
+    // todo: scheduleRepository.findById() 와 scheduleRepository.existsById() 에 대한 테스트 작성
+    @Test
+    @DisplayName("존재하는 공연 ID와 스케줄 ID에 해당하는 스케줄을 조회한다.")
+    void test_find_schedule_success() {
+        //given
+        Long performanceId = 1L;
+        Long scheduleId = 1L;
+
+        //when
+        Schedule schedule = scheduleRepository.findById(performanceId, scheduleId).get();
+
+        //then
+        assertThat(schedule.getPerformanceId()).isEqualTo(performanceId);
+        assertThat(schedule.getScheduleId()).isEqualTo(scheduleId);
+    }
+
+    @ParameterizedTest
+    @DisplayName("존재하지 않는 공연 ID와 스케줄 ID에 대해서는 스케줄을 조회하지 못한다.")
+    @CsvSource(value = {"0,1", "1,0", "9999999,9999999", "-1,2", "2,-1"})
+    void test_find_schedule_fail(Long performanceId, Long scheduleId) {
+        //when
+        Optional<Schedule> schedule = scheduleRepository.findById(performanceId, scheduleId);
+
+        //then
+        assertThat(schedule).isEmpty();
+    }
+
+    @ParameterizedTest
+    @DisplayName("공연 ID와 스케줄 ID에 해당하는 스케줄의 존재 여부를 판별한다.")
+    @CsvSource(value = {"1,1,true", "0,1,false", "1,0,false", "9999999,9999999,false"})
+    void test_exists_schedule(Long performanceId, Long scheduleId, Boolean expectedStatus) {
+        //when
+        Boolean actualStatus = scheduleRepository.existsById(performanceId, scheduleId);
+
+        //then
+        assertThat(actualStatus).isEqualTo(expectedStatus);
     }
 
     @Test
