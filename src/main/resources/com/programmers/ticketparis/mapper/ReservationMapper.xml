@@ -3,27 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.programmers.ticketparis.mapper.ReservationMapper">
-    <insert id="create" useGeneratedKeys="true" keyProperty="reservationId">
+    <insert id="save" useGeneratedKeys="true" keyProperty="reservationId">
         insert into reservation (status, customer_id, schedule_id)
         values (#{reservationStatus}, #{customerId}, #{scheduleId})
     </insert>
 
-    <update id="cancel">
+    <update id="updateById">
         update reservation
         set status=#{reservationStatus}
         where reservation_id = #{reservationId}
     </update>
 
-    <select id="existById" resultType="boolean">
+    <select id="existsById" resultType="boolean">
         select exists(select 1 from reservation where reservation_id = #{reservationId})
     </select>
 
     <select id="findById" resultMap="resultReservation">
-        select * from reservation where reservation_id = #{reservationId};
+        select reservation_id, status, created_datetime, updated_datetime from reservation where reservation_id =
+        #{reservationId};
     </select>
 
     <select id="findAll" resultMap="resultReservation">
-        select * from reservation;
+        select reservation_id, status, created_datetime, updated_datetime from reservation;
     </select>
 
     <resultMap id="resultReservation" type="Reservation">

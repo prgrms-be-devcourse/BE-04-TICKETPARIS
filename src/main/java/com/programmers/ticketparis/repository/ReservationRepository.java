@@ -10,11 +10,11 @@ public interface ReservationRepository {
 
     void save(Reservation reservation);
 
-    void update(Long reservationId, ReservationStatus reservationStatus);
+    void updateById(Long reservationId, ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 
     List<Reservation> findAll();
 
-    boolean existById(Long reservationId);
+    boolean existsById(Long reservationId);
 }

@@ -13,12 +13,12 @@ public interface ReservationMapper {
 
     void save(Reservation reservation);
 
-    void update(@Param("reservationId") Long reservationId,
-                @Param("reservationStatus") ReservationStatus reservationStatus);
+    void updateById(@Param("reservationId") Long reservationId,
+                    @Param("reservationStatus") ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 
     List<Reservation> findAll();
 
-    boolean existById(Long reservationId);
+    boolean existsById(Long reservationId);
 }

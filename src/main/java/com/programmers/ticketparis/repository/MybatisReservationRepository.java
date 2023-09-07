@@ -21,8 +21,8 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public void update(Long reservationId, ReservationStatus reservationStatus) {
-        reservationMapper.update(reservationId, reservationStatus);
+    public void updateById(Long reservationId, ReservationStatus reservationStatus) {
+        reservationMapper.updateById(reservationId, reservationStatus);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public boolean existById(Long reservationId) {
-        return reservationMapper.existById(reservationId);
+    public boolean existsById(Long reservationId) {
+        return reservationMapper.existsById(reservationId);
     }
 }

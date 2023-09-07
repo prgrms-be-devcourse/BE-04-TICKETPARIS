@@ -27,9 +27,9 @@ public class ReservationService {
     }
 
     @Transactional
-    public void cancelReservation(Long reservationId) {
+    public void cancelReservationById(Long reservationId) {
         existsReservationById(reservationId);
-        reservationRepository.update(reservationId, ReservationStatus.CANCELED);
+        reservationRepository.updateById(reservationId, ReservationStatus.CANCELED);
     }
 
     public ReservationResponse findReservationById(Long reservationId) {
@@ -46,7 +46,7 @@ public class ReservationService {
     }
 
     private void existsReservationById(Long reservationId) {
-        if (!reservationRepository.existById(reservationId)) {
+        if (!reservationRepository.existsById(reservationId)) {
             throw new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId)));
         }
     }

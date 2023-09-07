@@ -26,8 +26,8 @@ public class ReservationController {
     }
 
     @PatchMapping("/{reservationId}")
-    public void cancelReservation(@PathVariable("reservationId") Long reservationId) {
-        reservationService.cancelReservation(reservationId);
+    public void cancelReservationById(@PathVariable("reservationId") Long reservationId) {
+        reservationService.cancelReservationById(reservationId);
     }
 
     @GetMapping("/{reservationId}")
