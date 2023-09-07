@@ -12,5 +12,7 @@ public interface ScheduleRepository {
 
     Optional<Schedule> findById(Long performanceId, Long scheduleId);
 
+    Boolean existsById(Long performanceId, Long scheduleId);
+
     Integer deleteById(Long performanceId, Long scheduleId);
 }

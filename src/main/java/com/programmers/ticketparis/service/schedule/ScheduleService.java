@@ -36,16 +36,13 @@ public class ScheduleService {
 
     @Transactional
     public void deleteScheduleById(Long performanceId, Long scheduleId) {
-        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
-
-        if (isNotDeleted(deletedCounts)) {
-            List<String> rejectedValues = List.of(String.valueOf(performanceId), String.valueOf(scheduleId));
-
-            throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
+        if (scheduleRepository.existsById(performanceId, scheduleId)) {
+            scheduleRepository.deleteById(performanceId, scheduleId);
+            return;
         }
-    }
 
-    private Boolean isNotDeleted(Integer deletedCounts) {
-        return deletedCounts == 0;
+        List<String> rejectedValues = List.of(String.valueOf(performanceId), String.valueOf(scheduleId));
+
+        throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
     }
 }

@@ -23,6 +23,13 @@
           AND schedule_id = #{scheduleId};
     </select>
 
+    <select id="existsById" resultType="Boolean">
+        SELECT EXISTS(SELECT schedule_id
+                      FROM schedule
+                      WHERE performance_id = #{performanceId}
+                        AND schedule_id = #{scheduleId});
+    </select>
+
     <delete id="deleteById">
         DELETE
         FROM schedule

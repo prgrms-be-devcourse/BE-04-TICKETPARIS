@@ -1,5 +1,6 @@
 package com.programmers.ticketparis.service.schedule;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,7 @@ class ScheduleServiceTest {
     void test_delete_schedule_throw_exception(Long performanceId, Long scheduleId) {
         //when, then
         assertThatThrownBy(() -> scheduleService.deleteScheduleById(performanceId, scheduleId))
-            .isInstanceOf(ScheduleException.class);
+            .isInstanceOf(ScheduleException.class)
+            .hasMessage(SCHEDULE_NOT_FOUND.getMessage());
     }
 }

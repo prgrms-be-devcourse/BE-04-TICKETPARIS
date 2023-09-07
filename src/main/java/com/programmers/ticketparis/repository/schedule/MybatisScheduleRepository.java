@@ -32,6 +32,11 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     }
 
     @Override
+    public Boolean existsById(Long performanceId, Long scheduleId) {
+        return scheduleMapper.existsById(performanceId, scheduleId);
+    }
+
+    @Override
     public Integer deleteById(Long performanceId, Long scheduleId) {
         return scheduleMapper.deleteById(performanceId, scheduleId);
     }
