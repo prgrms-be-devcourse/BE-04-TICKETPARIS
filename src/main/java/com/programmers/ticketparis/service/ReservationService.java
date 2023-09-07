@@ -36,13 +36,24 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId))));
 
-        return ReservationResponse.of(reservation);
+        return ReservationResponse.builder()
+                .reservationId(reservation.getReservationId())
+                .reservationStatus(reservation.getReservationStatus())
+                .createdDatetime(reservation.getCreatedDatetime())
+                .updatedDatetime(reservation.getUpdatedDatetime())
+                .build();
     }
 
     public List<ReservationResponse> findAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
 
-        return reservations.stream().map(ReservationResponse::of).toList();
+        return reservations.stream().map(reservation -> ReservationResponse.builder()
+                .reservationId(reservation.getReservationId())
+                .reservationStatus(reservation.getReservationStatus())
+                .createdDatetime(reservation.getCreatedDatetime())
+                .updatedDatetime(reservation.getUpdatedDatetime())
+                .build()
+        ).toList();
     }
 
     private void existsReservationById(Long reservationId) {
