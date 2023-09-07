@@ -16,13 +16,13 @@ public class MybatisReservationRepository implements ReservationRepository {
     private final ReservationMapper reservationMapper;
 
     @Override
-    public void create(Reservation reservation) {
-        reservationMapper.create(reservation);
+    public void save(Reservation reservation) {
+        reservationMapper.save(reservation);
     }
 
     @Override
-    public void cancel(Long reservationId, ReservationStatus reservationStatus) {
-        reservationMapper.cancel(reservationId, reservationStatus);
+    public void update(Long reservationId, ReservationStatus reservationStatus) {
+        reservationMapper.update(reservationId, reservationStatus);
     }
 
     @Override

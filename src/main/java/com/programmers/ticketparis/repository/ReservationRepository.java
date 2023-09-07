@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface ReservationRepository {
 
-    void create(Reservation reservation);
+    void save(Reservation reservation);
 
-    void cancel(Long reservationId, ReservationStatus reservationStatus);
+    void update(Long reservationId, ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 

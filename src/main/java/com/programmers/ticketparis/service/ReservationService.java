@@ -21,16 +21,15 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     @Transactional
-    public void create(ReservationCreateRequest reservationCreateRequest) {
+    public void createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
-        reservationRepository.create(reservation);
+        reservationRepository.save(reservation);
     }
 
     @Transactional
-    public void cancel(Long reservationId) {
-        existById(reservationId);
-
-        reservationRepository.cancel(reservationId, ReservationStatus.CANCELED);
+    public void cancelReservation(Long reservationId) {
+        existsReservationById(reservationId);
+        reservationRepository.update(reservationId, ReservationStatus.CANCELED);
     }
 
     public ReservationResponse findReservationById(Long reservationId) {
@@ -46,7 +45,7 @@ public class ReservationService {
         return reservations.stream().map(ReservationResponse::of).toList();
     }
 
-    private void existReservationById(Long reservationId) {
+    private void existsReservationById(Long reservationId) {
         if (!reservationRepository.existById(reservationId)) {
             throw new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId)));
         }

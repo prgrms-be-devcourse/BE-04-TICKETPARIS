@@ -21,12 +21,29 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
-        reservationService.create(reservationCreateRequest);
+    public void createReservation(@Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
+        reservationService.createReservation(reservationCreateRequest);
     }
 
     @PatchMapping("/{reservationId}")
-    public void cancel(@PathVariable("reservationId") Long reservationId) {
-        reservationService.cancel(reservationId);
+    public void cancelReservation(@PathVariable("reservationId") Long reservationId) {
+        reservationService.cancelReservation(reservationId);
+    }
+
+    @GetMapping("/{reservationId}")
+    public ApiResponse<ReservationResponse> findReservationById(@PathVariable("reservationId") Long reservationId,
+                                                                HttpServletRequest httpServletRequest) {
+        return ApiResponse.<ReservationResponse>builder()
+                .path(httpServletRequest.getRequestURI())
+                .data(reservationService.findReservationById(reservationId))
+                .build();
+    }
+
+    @GetMapping
+    public ApiResponse<List<ReservationResponse>> findAllReservations(HttpServletRequest httpServletRequest) {
+        return ApiResponse.<List<ReservationResponse>>builder()
+                .path(httpServletRequest.getRequestURI())
+                .data(reservationService.findAllReservations())
+                .build();
     }
 }

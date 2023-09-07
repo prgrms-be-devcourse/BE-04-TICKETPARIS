@@ -11,9 +11,10 @@ import java.util.Optional;
 @Mapper
 public interface ReservationMapper {
 
-    void create(Reservation reservation);
+    void save(Reservation reservation);
 
-    void cancel(@Param("reservationId") Long reservationId, @Param("reservationStatus") ReservationStatus reservationStatus);
+    void update(@Param("reservationId") Long reservationId,
+                @Param("reservationStatus") ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 
