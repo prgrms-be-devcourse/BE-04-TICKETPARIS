@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.programmers.ticketparis.domain.member.Customer;
-import com.programmers.ticketparis.mapper.member.CustomerMapper;
+import com.programmers.ticketparis.exception.CustomerException;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -21,26 +21,22 @@ class MyBatisCustomerRepositoryTest {
     @Autowired
     private MyBatisCustomerRepository myBatisCustomerRepository;
 
-    @Autowired
-    private CustomerMapper customerMapper;
-
     @Test
     @DisplayName("구매자 계정을 생성하여 DB에 저장할 수 있다")
-    void createAccount() {
+    void createAccountTest() {
         //given
         Customer customer = Customer.builder()
-            .username("이현호")
-            .address("성신여대")
-            .name("이현호")
-            .email("charlessu")
-            .phone("010-1111-2222")
+            .username("dkssudtlsr")
+            .password("dkssudgktlsr1")
+            .name("이현현")
+            .email("charlesu@naver.com")
             .birthDate(LocalDate.parse("1997-03-27"))
-            .password("하위")
+            .phone("010-1111-2222")
+            .address("성신여대")
             .build();
 
         //when
-        customerMapper.createAccount(customer);
-
+        myBatisCustomerRepository.createAccount(customer);
         Customer actualCustomer = myBatisCustomerRepository.findById(3L).orElseThrow(NoSuchElementException::new);
 
         //then
@@ -54,10 +50,32 @@ class MyBatisCustomerRepositoryTest {
     }
 
     @Test
+    @DisplayName("이미 가입된 username, email로 계정을 생성할 수 없다")
+    void canNotCreateAccountWithDuplicateValueInUniqueColumn() {
+        //given
+        Customer customer = Customer.builder()
+            .username("dksadftlsr")
+            .password("dkssudfd")
+            .name("이현현")
+            .email("abcsu@naver.com")
+            .birthDate(LocalDate.parse("1997-03-27"))
+            .phone("010-1111-2222")
+            .address("성신여대")
+            .build();
+
+        myBatisCustomerRepository.createAccount(customer);
+
+        //when, then
+        assertThatThrownBy(() -> myBatisCustomerRepository.createAccount(customer))
+            .isInstanceOf(CustomerException.class)
+            .hasMessageContaining("이미 가입된 username 또는 email로 요청");
+    }
+
+    @Test
     @DisplayName("DB에서 구매자 id로 조회할 수 있다")
-    void findById() {
+    void findByIdTest() {
         //when
-        Customer actualCustomer = customerMapper.findById(1L).orElseThrow(NoSuchElementException::new);
+        Customer actualCustomer = myBatisCustomerRepository.findById(1L).orElseThrow(NoSuchElementException::new);
 
         //then
         assertThat(actualCustomer.getUsername()).isEqualTo("testCustomer1");

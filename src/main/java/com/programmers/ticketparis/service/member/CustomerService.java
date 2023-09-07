@@ -29,13 +29,12 @@ public class CustomerService {
     }
 
     public CustomerResponse findById(Long customerId) {
-        existById(customerId);
-
         return customerRepository.findById(customerId)
             .map(CustomerResponse::new)
             .orElseThrow(() -> new CustomerException(ExceptionRule.NOT_EXIST_CUSTOMER, List.of(String.valueOf(customerId))));
     }
 
+    //todo: 추후 update, delete 메서드 구현되면 해당 메서드 활용
     private void existById(Long customerId) {
         if (!customerRepository.existById(customerId)) {
             throw new CustomerException(ExceptionRule.NOT_EXIST_CUSTOMER, List.of(String.valueOf(customerId)));
