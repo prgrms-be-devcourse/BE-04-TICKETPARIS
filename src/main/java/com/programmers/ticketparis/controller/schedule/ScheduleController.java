@@ -27,7 +27,11 @@ public class ScheduleController {
 
     @PostMapping("/schedules")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<ScheduleResponse> createSchedule(@PathVariable Long performanceId, @Valid @RequestBody ScheduleCreateRequest request, HttpServletRequest httpServletRequest) {
+    public ApiResponse<ScheduleResponse> createSchedule(
+        @PathVariable Long performanceId,
+        @Valid @RequestBody ScheduleCreateRequest request,
+        HttpServletRequest httpServletRequest
+    ) {
         ScheduleResponse response = scheduleService.createSchedule(performanceId, request);
         String requestURI = httpServletRequest.getRequestURI();
 

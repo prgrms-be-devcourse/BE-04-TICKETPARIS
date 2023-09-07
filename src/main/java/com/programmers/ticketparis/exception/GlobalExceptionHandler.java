@@ -33,8 +33,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.error("{} : 지원 메서드 - {}, 실제 요청 메서드 - {}", METHOD_NOT_ALLOWED.getMessage(), e.getSupportedMethods(), e.getMethod(), e);
+    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
+        HttpRequestMethodNotSupportedException e) {
+        log.error(
+            "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
+            METHOD_NOT_ALLOWED.getMessage(),
+            e.getSupportedMethods(),
+            e.getMethod(),
+            e
+        );
         ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 
         return ResponseEntity.status(METHOD_NOT_ALLOWED.getStatus()).body(response);

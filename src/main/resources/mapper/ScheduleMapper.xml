@@ -9,15 +9,15 @@
     </insert>
 
     <select id="findHallSeatsCountByPerformanceId" resultType="Integer">
-        SELECT B.seats_count
-        FROM performance as A
-                 JOIN hall as B
-                      ON A.hall_id = B.hall_id
-        WHERE A.performance_id = #{performanceId};
+        SELECT h.seats_count
+        FROM performance as p
+                 JOIN hall as h
+                      ON p.hall_id = h.hall_id
+        WHERE p.performance_id = #{performanceId};
     </select>
 
     <select id="findById" resultType="Schedule">
-        SELECT *
+        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
         FROM schedule
         WHERE performance_id = #{performanceId}
           AND schedule_id = #{scheduleId};
