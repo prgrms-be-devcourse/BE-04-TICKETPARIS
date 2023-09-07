@@ -69,11 +69,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.error(BAD_REQUEST.getMessage(), e);
 
-        Throwable rootCause = e.getRootCause();
+        Throwable cause = e.getCause().getCause();
         ErrorResponse response = ErrorResponse.of(BAD_REQUEST);
 
         // LocalDatetime.parse()가 불가능한 형식으로 datetime 값을 입력받는 경우
-        if (rootCause instanceof DateTimeParseException dateTimeParseException) {
+        if (Objects.nonNull(cause) && cause instanceof DateTimeParseException dateTimeParseException) {
             List<String> rejectedValues = List.of(dateTimeParseException.getParsedString());
             response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
         }
