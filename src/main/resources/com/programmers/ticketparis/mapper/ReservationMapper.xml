@@ -17,4 +17,16 @@
     <select id="existById" resultType="boolean">
         select exists(select 1 from reservation where reservation_id = #{reservationId})
     </select>
+
+    <select id="findById" resultMap="resultReservation">
+        select * from reservation where reservation_id = #{reservationId};
+    </select>
+
+    <select id="findAll" resultMap="resultReservation">
+        select * from reservation;
+    </select>
+
+    <resultMap id="resultReservation" type="Reservation">
+        <result column="status" property="reservationStatus"/>
+    </resultMap>
 </mapper>
