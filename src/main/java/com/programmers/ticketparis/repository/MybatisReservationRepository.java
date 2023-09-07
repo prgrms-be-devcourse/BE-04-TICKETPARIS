@@ -36,7 +36,7 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public boolean existsById(Long reservationId) {
+    public Boolean existsById(Long reservationId) {
         return reservationMapper.existsById(reservationId);
     }
 
