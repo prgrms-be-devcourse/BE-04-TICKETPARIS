@@ -29,7 +29,6 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
-        log.info("컨트롤러 도착");
         customerService.createAccount(customerCreateRequest);
     }
 

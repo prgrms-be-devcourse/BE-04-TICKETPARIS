@@ -24,14 +24,13 @@ public class CustomerService {
 
     @Transactional
     public void createAccount(CustomerCreateRequest customerCreateRequest) {
-        log.info("서비스 도착");
         Customer customer = customerCreateRequest.toEntity();
         customerRepository.createAccount(customer);
-        log.info("서비스 통과");
     }
 
     public CustomerResponse findById(Long customerId) {
         existById(customerId);
+
         return customerRepository.findById(customerId)
             .map(CustomerResponse::new)
             .orElseThrow(() -> new CustomerException(ExceptionRule.NOT_EXIST_CUSTOMER, List.of(String.valueOf(customerId))));
