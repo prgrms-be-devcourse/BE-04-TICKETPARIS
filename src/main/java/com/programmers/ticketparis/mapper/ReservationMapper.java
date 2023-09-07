@@ -5,12 +5,19 @@ import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Optional;
+
 @Mapper
 public interface ReservationMapper {
 
     void create(Reservation reservation);
 
     void cancel(@Param("reservationId") Long reservationId, @Param("reservationStatus") ReservationStatus reservationStatus);
+
+    Optional<Reservation> findById(Long reservationId);
+
+    List<Reservation> findAll();
 
     boolean existById(Long reservationId);
 }
