@@ -30,4 +30,8 @@
     <resultMap id="resultReservation" type="Reservation">
         <result column="status" property="reservationStatus"/>
     </resultMap>
+
+    <delete id="deleteAll">
+        delete from reservation;
+    </delete>
 </mapper>
