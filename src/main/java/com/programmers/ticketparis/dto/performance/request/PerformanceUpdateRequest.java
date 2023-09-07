@@ -37,7 +37,7 @@ public class PerformanceUpdateRequest {
     private Integer ageRating;
 
     @Min(value = 0, message = "공연 가격은 0 이상 이여야 합니다.")
-    private Long price;
+    private Integer price;
 
     private Category category;
 
