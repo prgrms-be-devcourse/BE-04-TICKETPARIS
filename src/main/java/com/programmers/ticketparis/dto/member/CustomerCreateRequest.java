@@ -29,7 +29,7 @@ public class CustomerCreateRequest {
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,255}\\.[a-zA-Z]{2,}$", message = "이메일은 320자 이하로 입력해주세요.(공백 미포함)")
     private String email;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "핸드폰 번호 형식(000-0000-0000)에 맞추어 입력해주세요.")
