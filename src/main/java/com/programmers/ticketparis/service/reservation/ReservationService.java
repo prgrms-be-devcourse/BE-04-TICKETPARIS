@@ -43,6 +43,12 @@ public class ReservationService {
                 List.of(String.valueOf(reservationId))));
     }
 
+    private Reservation getReservationById(Long reservationId) {
+        return reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new ReservationException(ExceptionRule.RESERVATION_NOT_EXIST,
+                List.of(String.valueOf(reservationId))));
+    }
+
     public List<ReservationResponse> findAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
 

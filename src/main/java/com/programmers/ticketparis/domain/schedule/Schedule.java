@@ -1,6 +1,10 @@
 package com.programmers.ticketparis.domain.schedule;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.programmers.ticketparis.exception.ExceptionRule;
+import com.programmers.ticketparis.exception.ScheduleException;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
