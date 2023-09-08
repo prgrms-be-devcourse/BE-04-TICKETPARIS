@@ -34,10 +34,6 @@ public class PerformanceService {
         if (updateRequest.getStartDate().isAfter(updateRequest.getEndDate())) {
             throw new IllegalArgumentException("공연 시작 날짜는 공연 종료 날짜 이후가 될 수 없습니다.");
         }
-        if (!performanceRepository.findById(id).isPresent()) {
-            throw new NoSuchElementException("수정하려는 공연을 찾지 못했습니다.");
-        }
-
         performanceRepository.update(id, updateRequest);
         return findPerformanceById(id)
                 .orElseThrow(() -> new NoSuchElementException("수정할 공연 정보를 찾지 못했습니다."));
