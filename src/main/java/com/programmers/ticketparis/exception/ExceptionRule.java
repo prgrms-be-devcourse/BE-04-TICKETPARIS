@@ -13,6 +13,8 @@ public enum ExceptionRule {
     RESERVATION_STATUS_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, "올바르지 않은 예매 상태"),
 
     SCHEDULE_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 스케줄을 찾을 수 없음"),
+    SCHEDULE_NO_SEATS(HttpStatus.INTERNAL_SERVER_ERROR, "해당하는 스케줄의 남은 좌석 수가 없음"),
+    SCHEDULE_FULL_SEATS(HttpStatus.INTERNAL_SERVER_ERROR, "해당하는 스케줄의 남은 좌석 수는 전체 좌석 수보다 많을 수 없음"),
 
     NOT_EXIST_RESERVATION(HttpStatus.NOT_FOUND, "요청한 예매 ID가 존재하지 않음"),
     NOT_EXIST_RESERVATION_STATUS(HttpStatus.NOT_FOUND, "존재하지 않는 예약 상태"),

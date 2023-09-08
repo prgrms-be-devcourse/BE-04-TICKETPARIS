@@ -40,4 +40,10 @@
         WHERE schedule_id = #{scheduleId};
     </delete>
 
+    <update id="updateSeatsCountById">
+        UPDATE schedule
+        SET seats_count = #{seatsCount}
+        WHERE schedule_id = #{scheduleId}
+    </update>
+
 </mapper>

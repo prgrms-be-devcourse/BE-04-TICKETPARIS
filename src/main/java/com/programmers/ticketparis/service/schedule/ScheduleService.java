@@ -35,6 +35,11 @@ public class ScheduleService {
         return ScheduleResponse.from(savedScheduleId);
     }
 
+    public Schedule findByScheduleId(Long scheduleId) {
+        return scheduleRepository.findByScheduleId(scheduleId)
+            .orElseThrow(() -> new ScheduleException(SCHEDULE_NOT_EXIST, List.of(String.valueOf(scheduleId))));
+    }
+
     @Transactional
     public void deleteScheduleById(Long scheduleId) {
         if (!scheduleRepository.existsById(scheduleId)) {
@@ -43,5 +48,10 @@ public class ScheduleService {
         }
 
         scheduleRepository.deleteById(scheduleId);
+    }
+
+    @Transactional
+    public void updateSeatsCountById(Long scheduleId, Integer seatsCount) {
+        scheduleRepository.updateSeatsCountById(scheduleId, seatsCount);
     }
 }

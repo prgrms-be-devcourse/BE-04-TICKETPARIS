@@ -40,4 +40,9 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     public Integer deleteById(Long scheduleId) {
         return scheduleMapper.deleteById(scheduleId);
     }
+
+    @Override
+    public void updateSeatsCountById(Long scheduleId, Integer seatsCount) {
+        scheduleMapper.updateSeatsCountById(scheduleId, seatsCount);
+    }
 }
