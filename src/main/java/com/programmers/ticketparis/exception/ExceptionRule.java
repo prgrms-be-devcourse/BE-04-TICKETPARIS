@@ -9,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ExceptionRule {
 
-    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "공연 ID와 스케줄 ID에 해당하는 스케줄이 존재하지 않아 삭제 불가"),
+    RESERVATION_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 예매를 찾을 수 없음"),
+    RESERVATION_STATUS_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, "올바르지 않은 예매 상태"),
+
+    SCHEDULE_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 스케줄을 찾을 수 없음"),
 
     NOT_EXIST_RESERVATION(HttpStatus.NOT_FOUND, "요청한 예매 ID가 존재하지 않음"),
     NOT_EXIST_RESERVATION_STATUS(HttpStatus.NOT_FOUND, "존재하지 않는 예약 상태"),

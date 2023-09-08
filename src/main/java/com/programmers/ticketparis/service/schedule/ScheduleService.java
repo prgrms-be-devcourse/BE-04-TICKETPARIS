@@ -39,7 +39,7 @@ public class ScheduleService {
     public void deleteScheduleById(Long scheduleId) {
         if (!scheduleRepository.existsById(scheduleId)) {
             List<String> rejectedValues = List.of(String.valueOf(scheduleId));
-            throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
+            throw new ScheduleException(SCHEDULE_NOT_EXIST, rejectedValues);
         }
 
         scheduleRepository.deleteById(scheduleId);

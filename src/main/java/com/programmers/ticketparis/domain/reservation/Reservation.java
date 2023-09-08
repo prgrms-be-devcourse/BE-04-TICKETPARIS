@@ -41,7 +41,7 @@ public class Reservation {
 
     private void validateReservationStatus(ReservationStatus reservationStatus) {
         if (reservationStatus != ReservationStatus.COMPLETED) {
-            throw new ReservationException(NOT_EXIST_RESERVATION_STATUS, List.of(reservationStatus.toString()));
+            throw new ReservationException(RESERVATION_STATUS_INVALID, List.of(reservationStatus.toString()));
         }
     }
 }

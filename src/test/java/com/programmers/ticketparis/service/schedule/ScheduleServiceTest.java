@@ -26,6 +26,6 @@ class ScheduleServiceTest {
         //when, then
         assertThatThrownBy(() -> scheduleService.deleteScheduleById(scheduleId))
             .isInstanceOf(ScheduleException.class)
-            .hasMessage(SCHEDULE_NOT_FOUND.getMessage());
+            .hasMessage(SCHEDULE_NOT_EXIST.getMessage());
     }
 }
