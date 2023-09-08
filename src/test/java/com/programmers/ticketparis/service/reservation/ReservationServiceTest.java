@@ -3,7 +3,7 @@ package com.programmers.ticketparis.service.reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.ReservationResponse;
-import com.programmers.ticketparis.repository.ReservationRepository;
+import com.programmers.ticketparis.repository.reservation.ReservationRepository;
 import com.programmers.ticketparis.service.ReservationService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

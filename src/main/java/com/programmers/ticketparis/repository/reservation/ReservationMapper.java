@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.mapper;
+package com.programmers.ticketparis.repository.reservation;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;

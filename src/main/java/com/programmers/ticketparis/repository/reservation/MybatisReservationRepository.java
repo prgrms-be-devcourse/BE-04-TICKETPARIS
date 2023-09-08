@@ -1,8 +1,7 @@
-package com.programmers.ticketparis.repository;
+package com.programmers.ticketparis.repository.reservation;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import com.programmers.ticketparis.mapper.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

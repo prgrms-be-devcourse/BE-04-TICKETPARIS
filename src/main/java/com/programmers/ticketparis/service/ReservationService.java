@@ -6,7 +6,7 @@ import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.ReservationResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.ReservationException;
-import com.programmers.ticketparis.repository.ReservationRepository;
+import com.programmers.ticketparis.repository.reservation.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
