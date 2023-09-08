@@ -12,39 +12,36 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CustomerResponse {
-    private Long customerId;
+	private Long customerId;
 
-    private String username;
+	private String username;
 
-    private String password;
+	private String name;
+    
+	private String email;
 
-    private String name;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate birthDate;
 
-    private String email;
+	private String phone;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+	private String address;
 
-    private String phone;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+	private LocalDateTime createdDatetime;
 
-    private String address;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+	private LocalDateTime updatedDatetime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createdDatetime;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime updatedDatetime;
-
-    public CustomerResponse(Customer customer) {
-        this.customerId = customer.getCustomerId();
-        this.username = customer.getUsername();
-        this.password = customer.getPassword();
-        this.name = customer.getName();
-        this.email = customer.getEmail();
-        this.birthDate = customer.getBirthDate();
-        this.phone = customer.getPhone();
-        this.address = customer.getAddress();
-        this.createdDatetime = customer.getCreatedDatetime();
-        this.updatedDatetime = customer.getUpdatedDatetime();
-    }
+	public CustomerResponse(Customer customer) {
+		this.customerId = customer.getCustomerId();
+		this.username = customer.getUsername();
+		this.name = customer.getName();
+		this.email = customer.getEmail();
+		this.birthDate = customer.getBirthDate();
+		this.phone = customer.getPhone();
+		this.address = customer.getAddress();
+		this.createdDatetime = customer.getCreatedDatetime();
+		this.updatedDatetime = customer.getUpdatedDatetime();
+	}
 }

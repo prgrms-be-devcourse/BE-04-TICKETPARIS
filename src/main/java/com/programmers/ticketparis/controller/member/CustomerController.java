@@ -35,6 +35,6 @@ public class CustomerController {
 	@GetMapping("/{customerId}")
 	public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
 		HttpServletRequest httpServletRequest) {
-		return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findById(customerId));
+		return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findCustomerById(customerId));
 	}
 }

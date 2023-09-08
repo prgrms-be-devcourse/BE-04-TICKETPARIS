@@ -5,10 +5,10 @@ import java.util.Optional;
 import com.programmers.ticketparis.domain.member.Customer;
 
 public interface CustomerRepository {
-    void createAccount(Customer item);
+	void createAccount(Customer item);
 
-    Optional<Customer> findById(Long id);
+	Optional<Customer> findById(Long id);
 
-    boolean existById(Long customerId);
+	boolean existById(Long customerId);
 
 }

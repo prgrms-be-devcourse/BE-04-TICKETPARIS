@@ -9,7 +9,7 @@
     </insert>
 
     <select id="findById" resultType="Customer">
-        select *
+        select customer_id, username, name, email, birth_date, phone, address
         from customer
         where customer_id = #{customerId}
     </select>
