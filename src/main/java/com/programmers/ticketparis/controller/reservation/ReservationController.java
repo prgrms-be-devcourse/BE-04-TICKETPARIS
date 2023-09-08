@@ -33,17 +33,11 @@ public class ReservationController {
     @GetMapping("/{reservationId}")
     public ApiResponse<ReservationResponse> findReservationById(@PathVariable("reservationId") Long reservationId,
                                                                 HttpServletRequest httpServletRequest) {
-        return ApiResponse.<ReservationResponse>builder()
-                .path(httpServletRequest.getRequestURI())
-                .data(reservationService.findReservationById(reservationId))
-                .build();
+        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationService.findReservationById(reservationId));
     }
 
     @GetMapping
     public ApiResponse<List<ReservationResponse>> findAllReservations(HttpServletRequest httpServletRequest) {
-        return ApiResponse.<List<ReservationResponse>>builder()
-                .path(httpServletRequest.getRequestURI())
-                .data(reservationService.findAllReservations())
-                .build();
+        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationService.findAllReservations());
     }
 }
