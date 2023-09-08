@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programmers.ticketparis.repository.schedule.ScheduleMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="scheduleId">
+        INSERT INTO schedule (start_datetime, sequence, seats_count, performance_id)
+        VALUES (#{startDatetime}, #{sequence}, #{seatsCount}, #{performanceId});
+    </insert>
+
+    <select id="findHallSeatsCountByPerformanceId" resultType="Integer">
+        SELECT h.seats_count
+        FROM performance as p
+                 JOIN hall as h
+                      ON p.hall_id = h.hall_id
+        WHERE p.performance_id = #{performanceId};
+    </select>
+
+    <select id="findById" resultType="Schedule">
+        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
+        FROM schedule
+        WHERE performance_id = #{performanceId}
+          AND schedule_id = #{scheduleId};
+    </select>
+
+    <select id="existsById" resultType="Boolean">
+        SELECT EXISTS(SELECT schedule_id
+                      FROM schedule
+                      WHERE performance_id = #{performanceId}
+                        AND schedule_id = #{scheduleId});
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM schedule
+        WHERE performance_id = #{performanceId}
+          AND schedule_id = #{scheduleId};
+    </delete>
+
+</mapper>

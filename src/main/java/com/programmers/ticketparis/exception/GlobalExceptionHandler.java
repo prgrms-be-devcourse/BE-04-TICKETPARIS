@@ -2,10 +2,12 @@ package com.programmers.ticketparis.exception;
 
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -31,8 +33,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.error("{} : 지원 메서드 - {}, 실제 요청 메서드 - {}", METHOD_NOT_ALLOWED.getMessage(), e.getSupportedMethods(), e.getMethod(), e);
+    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
+        HttpRequestMethodNotSupportedException e) {
+        log.error(
+            "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
+            METHOD_NOT_ALLOWED.getMessage(),
+            e.getSupportedMethods(),
+            e.getMethod(),
+            e
+        );
         ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 
         return ResponseEntity.status(METHOD_NOT_ALLOWED.getStatus()).body(response);
@@ -52,6 +61,22 @@ public class GlobalExceptionHandler {
 
         log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
         ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
+
+        return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error(BAD_REQUEST.getMessage(), e);
+
+        Throwable cause = e.getCause().getCause();
+        ErrorResponse response = ErrorResponse.of(BAD_REQUEST);
+
+        // LocalDatetime.parse()가 불가능한 형식으로 datetime 값을 입력받는 경우
+        if (Objects.nonNull(cause) && cause instanceof DateTimeParseException dateTimeParseException) {
+            List<String> rejectedValues = List.of(dateTimeParseException.getParsedString());
+            response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
+        }
 
         return ResponseEntity.status(BAD_REQUEST.getStatus()).body(response);
     }
