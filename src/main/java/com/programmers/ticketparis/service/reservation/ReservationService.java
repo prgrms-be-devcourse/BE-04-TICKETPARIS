@@ -1,5 +1,7 @@
 package com.programmers.ticketparis.service.reservation;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.ReservationException;
 import com.programmers.ticketparis.repository.reservation.ReservationRepository;
+import com.programmers.ticketparis.service.schedule.ScheduleService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final ScheduleService scheduleService;
 
     @Transactional
     public Long createReservation(ReservationCreateRequest reservationCreateRequest) {
@@ -45,7 +49,7 @@ public class ReservationService {
 
     private Reservation getReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new ReservationException(ExceptionRule.RESERVATION_NOT_EXIST,
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST,
                 List.of(String.valueOf(reservationId))));
     }
 

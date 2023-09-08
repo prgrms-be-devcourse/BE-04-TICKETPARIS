@@ -11,7 +11,7 @@ public interface ScheduleRepository {
     Integer findHallSeatsCountByPerformanceId(Long performanceId);
 
     Optional<Schedule> findById(Long scheduleId);
-
+    
     Boolean existsById(Long scheduleId);
 
     Integer deleteById(Long scheduleId);

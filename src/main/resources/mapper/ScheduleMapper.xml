@@ -22,6 +22,12 @@
         WHERE schedule_id = #{scheduleId};
     </select>
 
+    <select id="findByScheduleId" resultType="Schedule">
+        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
+        FROM schedule
+        WHERE schedule_id = #{scheduleId};
+    </select>
+
     <select id="existsByPerformanceIdAndScheduleId" resultType="Boolean">
         SELECT EXISTS(SELECT schedule_id
                       FROM schedule
