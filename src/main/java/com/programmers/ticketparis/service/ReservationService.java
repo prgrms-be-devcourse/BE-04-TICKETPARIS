@@ -30,7 +30,7 @@ public class ReservationService {
 
     @Transactional
     public void cancelReservationById(Long reservationId) {
-        existsReservationById(reservationId);
+        validateReservationExists(reservationId);
         reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
     }
 
@@ -59,7 +59,7 @@ public class ReservationService {
         ).toList();
     }
 
-    private void existsReservationById(Long reservationId) {
+    private void validateReservationExists(Long reservationId) {
         if (!reservationRepository.existsById(reservationId)) {
             throw new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId)));
         }
