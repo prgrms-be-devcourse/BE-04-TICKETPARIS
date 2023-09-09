@@ -1,10 +1,9 @@
 package com.programmers.ticketparis.service.reservation;
 
-import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
-import com.programmers.ticketparis.dto.reservation.ReservationResponse;
-import com.programmers.ticketparis.repository.reservation.ReservationRepository;
-import com.programmers.ticketparis.service.ReservationService;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
@@ -15,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
+import com.programmers.ticketparis.repository.reservation.ReservationRepository;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,14 +36,14 @@ public class ReservationServiceTest {
     void setUp() {
         reservationRepository.deleteAll();
         reservationCreateRequest1 = ReservationCreateRequest.builder()
-                .customerId(1L)
-                .scheduleId(1L)
-                .build();
+            .customerId(1L)
+            .scheduleId(1L)
+            .build();
 
         reservationCreateRequest2 = ReservationCreateRequest.builder()
-                .customerId(2L)
-                .scheduleId(2L)
-                .build();
+            .customerId(2L)
+            .scheduleId(2L)
+            .build();
     }
 
     @Transactional
@@ -71,14 +71,16 @@ public class ReservationServiceTest {
         reservationService.cancelReservationById(savedReservationResponse.getReservationId());
 
         // then
-        ReservationStatus actualReservationStatus = reservationService.findAllReservations().get(0).getReservationStatus();
+        ReservationStatus actualReservationStatus = reservationService.findAllReservations()
+            .get(0)
+            .getReservationStatus();
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
 
     private static Stream<Arguments> createReservationRequest() {
         return Stream.of(
-                Arguments.of(reservationCreateRequest1),
-                Arguments.of(reservationCreateRequest2)
+            Arguments.of(reservationCreateRequest1),
+            Arguments.of(reservationCreateRequest2)
         );
     }
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.dto.ApiResponse;
-import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
-import com.programmers.ticketparis.dto.reservation.ReservationResponse;
-import com.programmers.ticketparis.service.ReservationService;
+import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
+import com.programmers.ticketparis.service.reservation.ReservationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

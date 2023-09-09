@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.dto.reservation;
+package com.programmers.ticketparis.dto.reservation.request;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;

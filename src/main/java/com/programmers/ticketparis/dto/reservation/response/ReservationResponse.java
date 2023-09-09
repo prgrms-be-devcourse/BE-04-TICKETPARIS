@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.dto.reservation;
+package com.programmers.ticketparis.dto.reservation.response;
 
 import java.time.LocalDateTime;
 

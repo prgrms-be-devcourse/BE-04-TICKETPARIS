@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.service;
+package com.programmers.ticketparis.service.reservation;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
-import com.programmers.ticketparis.dto.reservation.ReservationResponse;
+import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.ReservationException;
 import com.programmers.ticketparis.repository.reservation.ReservationRepository;
