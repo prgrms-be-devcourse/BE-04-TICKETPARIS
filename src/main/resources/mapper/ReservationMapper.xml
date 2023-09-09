@@ -8,7 +8,7 @@
         values (#{reservationStatus}, #{customerId}, #{scheduleId})
     </insert>
 
-    <update id="updateById">
+    <update id="updateReservationStatusById">
         update reservation
         set status=#{reservationStatus}
         where reservation_id = #{reservationId}

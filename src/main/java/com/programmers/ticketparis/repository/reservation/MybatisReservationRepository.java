@@ -1,12 +1,14 @@
 package com.programmers.ticketparis.repository.reservation;
 
-import com.programmers.ticketparis.domain.reservation.Reservation;
-import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
+import com.programmers.ticketparis.domain.reservation.Reservation;
+import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,8 +22,8 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public void updateById(Long reservationId, ReservationStatus reservationStatus) {
-        reservationMapper.updateById(reservationId, reservationStatus);
+    public void updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus) {
+        reservationMapper.updateReservationStatusById(reservationId, reservationStatus);
     }
 
     @Override

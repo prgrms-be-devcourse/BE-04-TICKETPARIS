@@ -1,7 +1,9 @@
 package com.programmers.ticketparis.repository.reservation;
 
-import com.programmers.ticketparis.domain.reservation.Reservation;
-import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
@@ -12,9 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.programmers.ticketparis.domain.reservation.Reservation;
+import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -30,16 +31,16 @@ class MybatisReservationRepositoryTest {
     void setUp() {
         reservationRepository.deleteAll();
         reservation1 = Reservation.builder()
-                .reservationStatus(ReservationStatus.COMPLETED)
-                .customerId(1L)
-                .scheduleId(1L)
-                .build();
+            .reservationStatus(ReservationStatus.COMPLETED)
+            .customerId(1L)
+            .scheduleId(1L)
+            .build();
 
         reservation2 = Reservation.builder()
-                .reservationStatus(ReservationStatus.COMPLETED)
-                .customerId(2L)
-                .scheduleId(2L)
-                .build();
+            .reservationStatus(ReservationStatus.COMPLETED)
+            .customerId(2L)
+            .scheduleId(2L)
+            .build();
     }
 
     @Transactional
@@ -64,7 +65,8 @@ class MybatisReservationRepositoryTest {
 
         // when
         Reservation savedReservation = reservationRepository.findAll().get(0);
-        reservationRepository.updateById(savedReservation.getReservationId(), ReservationStatus.CANCELED);
+        reservationRepository.updateReservationStatusById(savedReservation.getReservationId(),
+            ReservationStatus.CANCELED);
 
         // then
         ReservationStatus actualReservationStatus = reservationRepository.findAll().get(0).getReservationStatus();
@@ -73,8 +75,8 @@ class MybatisReservationRepositoryTest {
 
     private static Stream<Arguments> createReservation() {
         return Stream.of(
-                Arguments.of(reservation1),
-                Arguments.of(reservation2)
+            Arguments.of(reservation1),
+            Arguments.of(reservation2)
         );
     }
 

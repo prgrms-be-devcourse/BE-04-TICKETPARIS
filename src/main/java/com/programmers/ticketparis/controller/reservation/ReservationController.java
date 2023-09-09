@@ -1,16 +1,25 @@
 package com.programmers.ticketparis.controller.reservation;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.reservation.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.ReservationResponse;
 import com.programmers.ticketparis.service.ReservationService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -26,14 +35,15 @@ public class ReservationController {
     }
 
     @PatchMapping("/{reservationId}")
-    public void cancelReservationById(@PathVariable("reservationId") Long reservationId) {
+    public void cancelReservationById(@PathVariable Long reservationId) {
         reservationService.cancelReservationById(reservationId);
     }
 
     @GetMapping("/{reservationId}")
-    public ApiResponse<ReservationResponse> findReservationById(@PathVariable("reservationId") Long reservationId,
-                                                                HttpServletRequest httpServletRequest) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationService.findReservationById(reservationId));
+    public ApiResponse<ReservationResponse> findReservationById(@PathVariable Long reservationId,
+        HttpServletRequest httpServletRequest) {
+        return ApiResponse.of(httpServletRequest.getRequestURI(),
+            reservationService.findReservationById(reservationId));
     }
 
     @GetMapping
