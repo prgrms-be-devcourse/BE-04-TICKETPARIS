@@ -1,12 +1,13 @@
 package com.programmers.ticketparis.dto.reservation;
 
+import java.time.LocalDateTime;
+
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,7 +19,8 @@ public class ReservationResponse {
     private LocalDateTime updatedDatetime;
 
     @Builder
-    public ReservationResponse(Long reservationId, ReservationStatus reservationStatus, LocalDateTime createdDatetime, LocalDateTime updatedDatetime) {
+    public ReservationResponse(Long reservationId, ReservationStatus reservationStatus, LocalDateTime createdDatetime,
+        LocalDateTime updatedDatetime) {
         this.reservationId = reservationId;
         this.reservationStatus = reservationStatus;
         this.createdDatetime = createdDatetime;

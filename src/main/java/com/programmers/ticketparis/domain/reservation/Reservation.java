@@ -1,16 +1,17 @@
 package com.programmers.ticketparis.domain.reservation;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.programmers.ticketparis.exception.ReservationException;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static com.programmers.ticketparis.exception.ExceptionRule.NOT_EXIST_RESERVATION_STATUS;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
