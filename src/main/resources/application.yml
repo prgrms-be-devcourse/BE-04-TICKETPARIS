@@ -21,4 +21,3 @@ mybatis:
     map-underscore-to-camel-case: true
   # mapper관련 xml파일이 존재하는 디렉터리의 위치
   mapper-locations: classpath:mapper/**/*.xml
-  type-handlers-package: com.programmers.ticketparis.domain
