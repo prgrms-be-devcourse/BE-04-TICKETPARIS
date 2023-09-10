@@ -23,15 +23,17 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     @Transactional
-    public void createReservation(ReservationCreateRequest reservationCreateRequest) {
+    public Long createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
-        reservationRepository.save(reservation);
+
+        return reservationRepository.save(reservation);
     }
 
     @Transactional
-    public void cancelReservationById(Long reservationId) {
+    public Long cancelReservationById(Long reservationId) {
         validateReservationExists(reservationId);
-        reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
+
+        return reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
     }
 
     public ReservationResponse findReservationById(Long reservationId) {

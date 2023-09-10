@@ -30,13 +30,21 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createReservation(@Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
-        reservationService.createReservation(reservationCreateRequest);
+    public ApiResponse<Long> createReservation(
+        @Valid @RequestBody ReservationCreateRequest reservationCreateRequest,
+        HttpServletRequest httpServletRequest
+    ) {
+        Long reservationId = reservationService.createReservation(reservationCreateRequest);
+
+        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationId);
     }
 
     @PatchMapping("/{reservationId}")
-    public void cancelReservationById(@PathVariable Long reservationId) {
-        reservationService.cancelReservationById(reservationId);
+    public ApiResponse<Long> cancelReservationById(@PathVariable Long reservationId,
+        HttpServletRequest httpServletRequest) {
+        Long canceledReservationId = reservationService.cancelReservationById(reservationId);
+
+        return ApiResponse.of(httpServletRequest.getRequestURI(), canceledReservationId);
     }
 
     @GetMapping("/{reservationId}")

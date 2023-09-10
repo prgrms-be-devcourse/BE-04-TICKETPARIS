@@ -51,10 +51,11 @@ public class ReservationServiceTest {
     @DisplayName("고객은 공연을 예매할 수 있다.")
     void createReservation_Save_Sucess(ReservationCreateRequest reservationCreateRequest) {
         // given & when
-        reservationService.createReservation(reservationCreateRequest);
+        Long reservationId = reservationService.createReservation(reservationCreateRequest);
 
         // then
-        assertThat(reservationService.findAllReservations()).hasSize(1);
+        ReservationResponse reservationResponse = reservationService.findReservationById(reservationId);
+        assertThat(reservationResponse).isNotNull();
     }
 
     @Transactional
@@ -63,16 +64,15 @@ public class ReservationServiceTest {
     @DisplayName("고객은 예매한 공연을 취소할 수 있다.")
     void cancleReservation_Update_Success(ReservationCreateRequest reservationCreateRequest) {
         // given
-        reservationService.createReservation(reservationCreateRequest);
+        Long reservationId = reservationService.createReservation(reservationCreateRequest);
 
         // when
-        ReservationResponse savedReservationResponse = reservationService.findAllReservations().get(0);
-        reservationService.cancelReservationById(savedReservationResponse.getReservationId());
+        reservationService.cancelReservationById(reservationId);
 
         // then
-        ReservationStatus actualReservationStatus = reservationService.findAllReservations()
-            .get(0)
+        ReservationStatus actualReservationStatus = reservationService.findReservationById(reservationId)
             .getReservationStatus();
+        
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
 

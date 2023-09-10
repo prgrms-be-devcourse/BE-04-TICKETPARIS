@@ -2,6 +2,7 @@ package com.programmers.ticketparis.repository.reservation;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+import com.programmers.ticketparis.exception.ExceptionRule;
+import com.programmers.ticketparis.exception.ReservationException;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -48,10 +51,14 @@ class MybatisReservationRepositoryTest {
     @DisplayName("고객은 공연을 예매할 수 있다.")
     void createReservation_Save_Sucess(Reservation reservation) {
         // given & when
-        reservationRepository.save(reservation);
+        Long reservationId = reservationRepository.save(reservation);
 
         // then
-        assertThat(reservationRepository.findAll()).hasSize(1);
+        Reservation actualReservation = reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(
+                String.valueOf(reservationId))));
+
+        assertThat(actualReservation).isNotNull();
     }
 
     @Transactional
@@ -60,15 +67,17 @@ class MybatisReservationRepositoryTest {
     @DisplayName("고객은 예매한 공연을 취소할 수 있다.")
     void cancleReservation_Update_Success(Reservation reservation) {
         // given
-        reservationRepository.save(reservation);
+        Long reservationId = reservationRepository.save(reservation);
 
         // when
-        Reservation savedReservation = reservationRepository.findAll().get(0);
-        reservationRepository.updateReservationStatusById(savedReservation.getReservationId(),
-            ReservationStatus.CANCELED);
+        reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
 
         // then
-        ReservationStatus actualReservationStatus = reservationRepository.findAll().get(0).getReservationStatus();
+        ReservationStatus actualReservationStatus = reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(
+                String.valueOf(reservationId))))
+            .getReservationStatus();
+        
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
 

@@ -8,9 +8,9 @@ import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
 public interface ReservationRepository {
 
-    void save(Reservation reservation);
+    Long save(Reservation reservation);
 
-    void updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
+    Long updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 
