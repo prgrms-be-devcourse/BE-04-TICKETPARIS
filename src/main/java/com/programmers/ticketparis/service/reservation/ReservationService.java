@@ -44,8 +44,7 @@ public class ReservationService {
     public ReservationResponse findReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId)
             .map(ReservationResponse::from)
-            .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION,
-                List.of(String.valueOf(reservationId))));
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId));
     }
 
     public List<ReservationResponse> findAllReservations() {
@@ -57,7 +56,7 @@ public class ReservationService {
 
     private void validateReservationExists(Long reservationId) {
         if (!reservationRepository.existsById(reservationId)) {
-            throw new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId)));
+            throw new ReservationException(RESERVATION_NOT_EXIST, reservationId);
         }
     }
 }
