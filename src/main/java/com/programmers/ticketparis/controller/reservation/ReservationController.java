@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.service.reservation.ReservationService;
@@ -30,34 +29,29 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createReservation(
+    public Long createReservation(
         @Valid @RequestBody ReservationCreateRequest reservationCreateRequest,
         HttpServletRequest httpServletRequest
     ) {
-        Long reservationId = reservationService.createReservation(reservationCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationId);
+        return reservationService.createReservation(reservationCreateRequest);
     }
 
     @PatchMapping("/{reservationId}")
-    public ApiResponse<Long> cancelReservationById(@PathVariable Long reservationId,
+    public Long cancelReservationById(@PathVariable Long reservationId,
         HttpServletRequest httpServletRequest) {
-        Long canceledReservationId = reservationService.cancelReservationById(reservationId);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), canceledReservationId);
+        return reservationService.cancelReservationById(reservationId);
     }
 
     @GetMapping("/{reservationId}")
-    public ApiResponse<ReservationResponse> findReservationById(
+    public ReservationResponse findReservationById(
         @PathVariable Long reservationId,
         HttpServletRequest httpServletRequest
     ) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(),
-            reservationService.findReservationById(reservationId));
+        return reservationService.findReservationById(reservationId);
     }
 
     @GetMapping
-    public ApiResponse<List<ReservationResponse>> findAllReservations(HttpServletRequest httpServletRequest) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationService.findAllReservations());
+    public List<ReservationResponse> findAllReservations(HttpServletRequest httpServletRequest) {
+        return reservationService.findAllReservations();
     }
 }
