@@ -48,8 +48,10 @@ public class ReservationController {
     }
 
     @GetMapping("/{reservationId}")
-    public ApiResponse<ReservationResponse> findReservationById(@PathVariable Long reservationId,
-        HttpServletRequest httpServletRequest) {
+    public ApiResponse<ReservationResponse> findReservationById(
+        @PathVariable Long reservationId,
+        HttpServletRequest httpServletRequest
+    ) {
         return ApiResponse.of(httpServletRequest.getRequestURI(),
             reservationService.findReservationById(reservationId));
     }

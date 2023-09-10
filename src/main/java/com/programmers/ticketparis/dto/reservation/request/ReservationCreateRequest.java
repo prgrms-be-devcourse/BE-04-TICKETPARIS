@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReservationCreateRequest {
 
-    @NotNull(message = "고객 ID는 빈 값일 수 없습니다.")
-    @Positive(message = "고객 ID는 1이상의 양수 값 이어야합니다.")
+    @NotNull(message = "고객 ID는 빈 값일 수 없음")
+    @Positive(message = "고객 ID는 1이상의 양수 값이어야 함")
     private Long customerId;
 
-    @NotNull(message = "스케줄 ID는 빈 값일 수 없습니다.")
-    @Positive(message = "스케줄 ID는 1이상의 양수 값 이어야합니다.")
+    @NotNull(message = "스케줄 ID는 빈 값일 수 없음")
+    @Positive(message = "스케줄 ID는 1이상의 양수 값이어야 함")
     private Long scheduleId;
 
     @Builder
