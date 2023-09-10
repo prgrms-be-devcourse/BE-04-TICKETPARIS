@@ -3,6 +3,7 @@ package com.programmers.ticketparis.exception;
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -23,37 +24,49 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ErrorData handleNoHandlerFoundException(NoHandlerFoundException e) {
-        log.error("{} : 요청 URL - {}", NOT_FOUND.getMessage(), e.getRequestURL(), e);
+        log.error("[ERROR] {} => 요청 URL : {}", NOT_FOUND.getMessage(), e.getRequestURL(), e);
 
-        return makeErrorData(NOT_FOUND);
+        return ErrorData.builder()
+            .exceptionRule(NOT_FOUND)
+            .build();
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ErrorData handleHttpRequestMethodNotSupportedException(
         HttpRequestMethodNotSupportedException e) {
         log.error(
-            "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
+            "[ERROR] {} => 지원 메서드 : {} | 요청 메서드 : {}",
             METHOD_NOT_ALLOWED.getMessage(),
             e.getSupportedMethods(),
             e.getMethod(),
             e
         );
 
-        return makeErrorData(METHOD_NOT_ALLOWED);
+        return ErrorData.builder()
+            .exceptionRule(METHOD_NOT_ALLOWED)
+            .build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorData handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        Object[] rejectedValues = e.getBindingResult()
+        List<FieldError> errors = e.getBindingResult()
             .getAllErrors()
             .stream()
             .map(FieldError.class::cast)
+            .toList();
+
+        log.error("[ERROR] {}", BAD_REQUEST.getMessage(), e);
+        errors.forEach(
+            error -> log.error("{} => {} : {}", error.getDefaultMessage(), error.getField(), error.getRejectedValue()));
+
+        Object[] rejectedValues = errors.stream()
             .map(FieldError::getRejectedValue)
             .toArray();
 
-        log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
-
-        return makeErrorData(BAD_REQUEST, rejectedValues);
+        return ErrorData.builder()
+            .exceptionRule(BAD_REQUEST)
+            .rejectedValues(rejectedValues)
+            .build();
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -62,15 +75,20 @@ public class GlobalExceptionHandler {
 
         // LocalDatetime.parse()가 불가능한 형식으로 datetime 값을 입력받는 경우
         if (Objects.nonNull(cause) && cause instanceof DateTimeParseException dateTimeParseException) {
-            String rejectedValue = dateTimeParseException.getParsedString();
-            log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValue, e);
+            String parsedString = dateTimeParseException.getParsedString();
+            log.error("[ERROR] {} => 원인 값 : {}", BAD_REQUEST.getMessage(), parsedString, e);
 
-            return makeErrorData(BAD_REQUEST, rejectedValue);
+            return ErrorData.builder()
+                .exceptionRule(BAD_REQUEST)
+                .rejectedValues(new Object[] {parsedString})
+                .build();
         }
 
-        log.error(BAD_REQUEST.getMessage(), e);
+        log.error("[ERROR] {}", BAD_REQUEST.getMessage(), e);
 
-        return makeErrorData(BAD_REQUEST);
+        return ErrorData.builder()
+            .exceptionRule(BAD_REQUEST)
+            .build();
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -78,28 +96,20 @@ public class GlobalExceptionHandler {
         ExceptionRule exceptionRule = e.getExceptionRule();
         Object[] rejectedValues = e.getRejectedValues();
 
-        log.error("{} : 원인 값 - {}", exceptionRule.getMessage(), rejectedValues, e);
+        log.error("[ERROR] {} => 원인 값 : {}", exceptionRule.getMessage(), rejectedValues, e);
 
-        return makeErrorData(exceptionRule, rejectedValues);
+        return ErrorData.builder()
+            .exceptionRule(exceptionRule)
+            .rejectedValues(rejectedValues)
+            .build();
     }
 
     @ExceptionHandler(Exception.class)
     public ErrorData handleException(Exception e) {
-        log.error(INTERNAL_SERVER_ERROR.getMessage(), e);
+        log.error("[ERROR] {}", INTERNAL_SERVER_ERROR.getMessage(), e);
 
-        return makeErrorData(INTERNAL_SERVER_ERROR);
-    }
-
-    private ErrorData makeErrorData(ExceptionRule exceptionRule) {
         return ErrorData.builder()
-            .exceptionRule(exceptionRule)
-            .build();
-    }
-
-    private ErrorData makeErrorData(ExceptionRule exceptionRule, Object... rejectedValues) {
-        return ErrorData.builder()
-            .exceptionRule(exceptionRule)
-            .rejectedValues(rejectedValues)
+            .exceptionRule(INTERNAL_SERVER_ERROR)
             .build();
     }
 }
