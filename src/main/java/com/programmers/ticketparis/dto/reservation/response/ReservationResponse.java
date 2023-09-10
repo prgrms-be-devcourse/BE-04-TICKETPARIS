@@ -2,6 +2,7 @@ package com.programmers.ticketparis.dto.reservation.response;
 
 import java.time.LocalDateTime;
 
+import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
 import lombok.AccessLevel;
@@ -17,13 +18,20 @@ public class ReservationResponse {
     private ReservationStatus reservationStatus;
     private LocalDateTime createdDatetime;
     private LocalDateTime updatedDatetime;
+    private Long customerId;
+    private Long scheduleId;
 
     @Builder
-    public ReservationResponse(Long reservationId, ReservationStatus reservationStatus, LocalDateTime createdDatetime,
-        LocalDateTime updatedDatetime) {
-        this.reservationId = reservationId;
-        this.reservationStatus = reservationStatus;
-        this.createdDatetime = createdDatetime;
-        this.updatedDatetime = updatedDatetime;
+    private ReservationResponse(Reservation reservation) {
+        this.reservationId = reservation.getReservationId();
+        this.reservationStatus = reservation.getReservationStatus();
+        this.createdDatetime = reservation.getCreatedDatetime();
+        this.updatedDatetime = reservation.getUpdatedDatetime();
+        this.customerId = reservation.getCustomerId();
+        this.scheduleId = reservation.getScheduleId();
+    }
+
+    public static ReservationResponse from(Reservation reservation) {
+        return new ReservationResponse(reservation);
     }
 }

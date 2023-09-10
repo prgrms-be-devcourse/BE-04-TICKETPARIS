@@ -37,28 +37,16 @@ public class ReservationService {
     }
 
     public ReservationResponse findReservationById(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
+        return reservationRepository.findById(reservationId)
+            .map(ReservationResponse::from)
             .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION,
                 List.of(String.valueOf(reservationId))));
-
-        return ReservationResponse.builder()
-            .reservationId(reservation.getReservationId())
-            .reservationStatus(reservation.getReservationStatus())
-            .createdDatetime(reservation.getCreatedDatetime())
-            .updatedDatetime(reservation.getUpdatedDatetime())
-            .build();
     }
 
     public List<ReservationResponse> findAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
 
-        return reservations.stream().map(reservation -> ReservationResponse.builder()
-            .reservationId(reservation.getReservationId())
-            .reservationStatus(reservation.getReservationStatus())
-            .createdDatetime(reservation.getCreatedDatetime())
-            .updatedDatetime(reservation.getUpdatedDatetime())
-            .build()
-        ).toList();
+        return reservations.stream().map(ReservationResponse::from).toList();
     }
 
     private void validateReservationExists(Long reservationId) {
