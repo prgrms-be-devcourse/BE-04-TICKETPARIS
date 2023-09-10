@@ -3,12 +3,10 @@ package com.programmers.ticketparis.exception;
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,15 +44,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorData handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
-
-        List<String> rejectedValues = allErrors.stream()
+        Object[] rejectedValues = e.getBindingResult()
+            .getAllErrors()
+            .stream()
             .map(FieldError.class::cast)
-            .map(error -> {
-                Object rejectedValue = error.getRejectedValue();
-                return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
-            })
-            .toList();
+            .map(FieldError::getRejectedValue)
+            .toArray();
 
         log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
 
@@ -67,10 +62,10 @@ public class GlobalExceptionHandler {
 
         // LocalDatetime.parse()가 불가능한 형식으로 datetime 값을 입력받는 경우
         if (Objects.nonNull(cause) && cause instanceof DateTimeParseException dateTimeParseException) {
-            List<String> rejectedValues = List.of(dateTimeParseException.getParsedString());
-            log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
+            String rejectedValue = dateTimeParseException.getParsedString();
+            log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValue, e);
 
-            return makeErrorData(BAD_REQUEST, rejectedValues);
+            return makeErrorData(BAD_REQUEST, rejectedValue);
         }
 
         log.error(BAD_REQUEST.getMessage(), e);
@@ -80,8 +75,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ErrorData handleBusinessException(BusinessException e) {
-        ExceptionRule exceptionRule = e.getRule();
-        List<String> rejectedValues = e.getRejectedValues();
+        ExceptionRule exceptionRule = e.getExceptionRule();
+        Object[] rejectedValues = e.getRejectedValues();
 
         log.error("{} : 원인 값 - {}", exceptionRule.getMessage(), rejectedValues, e);
 
@@ -101,7 +96,7 @@ public class GlobalExceptionHandler {
             .build();
     }
 
-    private ErrorData makeErrorData(ExceptionRule exceptionRule, List<String> rejectedValues) {
+    private ErrorData makeErrorData(ExceptionRule exceptionRule, Object... rejectedValues) {
         return ErrorData.builder()
             .exceptionRule(exceptionRule)
             .rejectedValues(rejectedValues)

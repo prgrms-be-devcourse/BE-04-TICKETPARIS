@@ -1,7 +1,5 @@
 package com.programmers.ticketparis.dto;
 
-import java.util.List;
-
 import com.programmers.ticketparis.exception.ExceptionRule;
 
 import lombok.Builder;
@@ -11,10 +9,10 @@ import lombok.Getter;
 public class ErrorData {
 
     private ExceptionRule exceptionRule;
-    private List<String> rejectedValues;
+    private Object[] rejectedValues;
 
     @Builder
-    private ErrorData(ExceptionRule exceptionRule, List<String> rejectedValues) {
+    private ErrorData(ExceptionRule exceptionRule, Object[] rejectedValues) {
         this.exceptionRule = exceptionRule;
         this.rejectedValues = rejectedValues;
     }
