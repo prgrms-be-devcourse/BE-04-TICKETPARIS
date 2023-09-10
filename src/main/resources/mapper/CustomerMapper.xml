@@ -9,7 +9,7 @@
     </insert>
 
     <select id="findById" resultType="Customer">
-        select customer_id, username, name, email, birth_date, phone, address
+        select customer_id, username, name, email, birth_date, phone, address, created_datetime, updated_datetime
         from customer
         where customer_id = #{customerId}
     </select>
