@@ -17,6 +17,4 @@ public interface ReservationRepository {
     List<Reservation> findAll();
 
     Boolean existsById(Long reservationId);
-
-    void deleteAll();
 }

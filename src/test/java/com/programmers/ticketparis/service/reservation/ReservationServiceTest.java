@@ -34,7 +34,6 @@ public class ReservationServiceTest {
 
     @BeforeAll
     void setUp() {
-        reservationRepository.deleteAll();
         reservationCreateRequest1 = ReservationCreateRequest.builder()
             .customerId(1L)
             .scheduleId(1L)

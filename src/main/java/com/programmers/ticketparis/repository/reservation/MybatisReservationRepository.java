@@ -40,9 +40,4 @@ public class MybatisReservationRepository implements ReservationRepository {
     public Boolean existsById(Long reservationId) {
         return reservationMapper.existsById(reservationId);
     }
-
-    @Override
-    public void deleteAll() {
-        reservationMapper.deleteAll();
-    }
 }

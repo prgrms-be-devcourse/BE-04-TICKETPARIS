@@ -29,7 +29,6 @@ class MybatisReservationRepositoryTest {
 
     @BeforeAll
     void setUp() {
-        reservationRepository.deleteAll();
         reservation1 = Reservation.builder()
             .reservationStatus(ReservationStatus.COMPLETED)
             .customerId(1L)
