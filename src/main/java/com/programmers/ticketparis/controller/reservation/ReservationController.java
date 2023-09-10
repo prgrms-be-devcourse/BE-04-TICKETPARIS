@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.service.reservation.ReservationService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -29,29 +29,23 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createReservation(
-        @Valid @RequestBody ReservationCreateRequest reservationCreateRequest,
-        HttpServletRequest httpServletRequest
-    ) {
+    public ReservationIdResponse createReservation(
+        @Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
         return reservationService.createReservation(reservationCreateRequest);
     }
 
     @PatchMapping("/{reservationId}")
-    public Long cancelReservationById(@PathVariable Long reservationId,
-        HttpServletRequest httpServletRequest) {
+    public ReservationIdResponse cancelReservationById(@PathVariable Long reservationId) {
         return reservationService.cancelReservationById(reservationId);
     }
 
     @GetMapping("/{reservationId}")
-    public ReservationResponse findReservationById(
-        @PathVariable Long reservationId,
-        HttpServletRequest httpServletRequest
-    ) {
+    public ReservationResponse findReservationById(@PathVariable Long reservationId) {
         return reservationService.findReservationById(reservationId);
     }
 
     @GetMapping
-    public List<ReservationResponse> findAllReservations(HttpServletRequest httpServletRequest) {
+    public List<ReservationResponse> findAllReservations() {
         return reservationService.findAllReservations();
     }
 }
