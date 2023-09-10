@@ -33,16 +33,15 @@ public class Reservation {
 
     @Builder
     private Reservation(ReservationStatus reservationStatus, Long customerId, Long scheduleId) {
-        this.reservationStatus = checkReservationStatus(reservationStatus);
+        validateReservationStatus(reservationStatus);
+        this.reservationStatus = reservationStatus;
         this.customerId = customerId;
         this.scheduleId = scheduleId;
     }
 
-    private ReservationStatus checkReservationStatus(ReservationStatus reservationStatus) {
+    private void validateReservationStatus(ReservationStatus reservationStatus) {
         if (reservationStatus != ReservationStatus.COMPLETED) {
             throw new ReservationException(NOT_EXIST_RESERVATION_STATUS, List.of(reservationStatus.toString()));
         }
-
-        return reservationStatus;
     }
 }
