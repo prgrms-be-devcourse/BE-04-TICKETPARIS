@@ -50,14 +50,14 @@ public class ReservationServiceTest {
     @ParameterizedTest
     @MethodSource("createReservationRequest")
     @DisplayName("고객은 공연을 예매할 수 있다.")
-    void createReservation_Save_Sucess(ReservationCreateRequest reservationCreateRequest) {
+    void createReservation_Save_Success(ReservationCreateRequest reservationCreateRequest) {
         // given & when
         ReservationIdResponse reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
 
         // then
         ReservationResponse reservationResponse = reservationService.findReservationById(
             reservationIdResponse.getReservationId());
-        
+
         assertThat(reservationResponse).isNotNull();
     }
 
@@ -65,7 +65,7 @@ public class ReservationServiceTest {
     @ParameterizedTest
     @MethodSource("createReservationRequest")
     @DisplayName("고객은 예매한 공연을 취소할 수 있다.")
-    void cancleReservation_Update_Success(ReservationCreateRequest reservationCreateRequest) {
+    void cancelReservation_Update_Success(ReservationCreateRequest reservationCreateRequest) {
         // given
         ReservationIdResponse reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
 
