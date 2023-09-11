@@ -27,13 +27,18 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
-        customerService.createAccount(customerCreateRequest);
+    public ApiResponse<Long> createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest,
+        HttpServletRequest httpServletRequest
+    ) {
+        Long customerId = customerService.createAccount(customerCreateRequest);
+
+        return ApiResponse.of(httpServletRequest.getRequestURI(), customerId);
     }
 
     @GetMapping("/{customerId}")
     public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
-        HttpServletRequest httpServletRequest) {
+        HttpServletRequest httpServletRequest
+    ) {
         return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findCustomerById(customerId));
     }
 }

@@ -6,10 +6,11 @@ import com.programmers.ticketparis.domain.member.Customer;
 
 public interface CustomerRepository {
 
-    void createAccount(Customer item);
+    Long save(Customer item);
 
     Optional<Customer> findById(Long id);
 
     Boolean existsById(Long customerId);
 
+    Boolean existsByUsernameOrEmail(String username, String email);
 }
