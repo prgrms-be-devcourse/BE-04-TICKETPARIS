@@ -36,7 +36,7 @@ class MyBatisCustomerRepositoryTest {
             .build();
 
         //when
-        myBatisCustomerRepository.createAccount(customer);
+        myBatisCustomerRepository.save(customer);
         Customer actualCustomer = myBatisCustomerRepository.findById(3L).orElseThrow(NoSuchElementException::new);
 
         //then
@@ -63,10 +63,10 @@ class MyBatisCustomerRepositoryTest {
             .address("성신여대")
             .build();
 
-        myBatisCustomerRepository.createAccount(customer);
+        myBatisCustomerRepository.save(customer);
 
         //when, then
-        assertThatThrownBy(() -> myBatisCustomerRepository.createAccount(customer))
+        assertThatThrownBy(() -> myBatisCustomerRepository.save(customer))
             .isInstanceOf(CustomerException.class)
             .hasMessage("이미 가입된 username 또는 email로 요청");
     }

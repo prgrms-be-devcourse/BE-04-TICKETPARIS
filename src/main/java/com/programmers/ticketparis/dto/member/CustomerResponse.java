@@ -34,7 +34,7 @@ public class CustomerResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updatedDatetime;
 
-    public CustomerResponse(Customer customer) {
+    private CustomerResponse(Customer customer) {
         this.customerId = customer.getCustomerId();
         this.username = customer.getUsername();
         this.name = customer.getName();
@@ -44,5 +44,9 @@ public class CustomerResponse {
         this.address = customer.getAddress();
         this.createdDatetime = customer.getCreatedDatetime();
         this.updatedDatetime = customer.getUpdatedDatetime();
+    }
+
+    public static CustomerResponse from(Customer customer) {
+        return new CustomerResponse(customer);
     }
 }
