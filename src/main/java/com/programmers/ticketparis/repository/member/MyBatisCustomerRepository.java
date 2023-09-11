@@ -12,9 +12,7 @@ import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.mapper.member.CustomerMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MyBatisCustomerRepository implements CustomerRepository {
@@ -40,8 +38,8 @@ public class MyBatisCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public boolean existById(Long customerId) {
-        return customerMapper.existById(customerId);
+    public Boolean existsById(Long customerId) {
+        return customerMapper.existsById(customerId);
     }
 
 }

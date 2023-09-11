@@ -10,6 +10,6 @@ public interface CustomerRepository {
 
     Optional<Customer> findById(Long id);
 
-    boolean existById(Long customerId);
+    Boolean existsById(Long customerId);
 
 }

@@ -17,12 +17,10 @@ import com.programmers.ticketparis.service.member.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
-@Slf4j
 public class CustomerController {
 
     private final CustomerService customerService;

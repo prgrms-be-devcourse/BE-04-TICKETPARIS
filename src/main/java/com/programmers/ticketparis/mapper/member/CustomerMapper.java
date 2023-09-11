@@ -13,5 +13,5 @@ public interface CustomerMapper {
 
     Optional<Customer> findById(Long id);
 
-    boolean existById(Long customerId);
+    Boolean existsById(Long customerId);
 }

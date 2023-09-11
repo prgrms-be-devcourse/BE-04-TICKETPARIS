@@ -14,7 +14,7 @@
         where customer_id = #{customerId}
     </select>
 
-    <select id="existById" resultType="boolean">
+    <select id="existsById" resultType="Boolean">
         select exists(select 1 from customer where customer_id = #{customerId})
     </select>
 
