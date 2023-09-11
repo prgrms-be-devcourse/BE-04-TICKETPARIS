@@ -147,40 +147,22 @@ INSERT INTO schedule (start_datetime, sequence, seats_count, performance_id)
 VALUES ('2023-08-24 19:30:00', 1, 557, 6); -- 강예서, 유스퀘어, 8
 
 
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 1);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 2);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 2);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 3);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 4);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 5);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 6);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 7);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 1, 8);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 1);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 2);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 2);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 3);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 4);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 5);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 6);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 7);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 1, 8);
 
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 1);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 1);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 2);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 2);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 3);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 3);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 3);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 7);
-INSERT INTO reservation (status, customer_id, schedule_id)
-VALUES ('COMPLETED', 2, 8);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 1);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 1);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 2);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 2);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 3);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 3);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 3);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 7);
+INSERT INTO reservation (status, customer_id, schedule_id) VALUES ('COMPLETED', 2, 8);
