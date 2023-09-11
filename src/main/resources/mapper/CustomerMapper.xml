@@ -3,19 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.programmers.ticketparis.mapper.member.CustomerMapper">
 
-    <insert id="createAccount" useGeneratedKeys="true" keyProperty="customerId">
-        insert into customer (username, password, name, email, birth_date, phone, address)
-        values (#{username}, #{password}, #{name}, #{email}, #{birthDate}, #{phone}, #{address})
+    <insert id="save" useGeneratedKeys="true" keyProperty="customerId">
+        INSERT INTO customer (username, password, name, email, birth_date, phone, address)
+        VALUES (#{username}, #{password}, #{name}, #{email}, #{birthDate}, #{phone}, #{address})
     </insert>
 
     <select id="findById" resultType="Customer">
-        select customer_id, username, name, email, birth_date, phone, address, created_datetime, updated_datetime
-        from customer
-        where customer_id = #{customerId}
+        SELECT customer_id, username, name, email, birth_date, phone, address, created_datetime, updated_datetime
+        FROM customer
+        WHERE customer_id = #{customerId}
     </select>
 
     <select id="existsById" resultType="Boolean">
-        select exists(select 1 from customer where customer_id = #{customerId})
+        SELECT EXISTS(select 1 from customer where customer_id = #{customerId})
+    </select>
+
+    <select id="existsByUsernameOrEmail" resultType="Boolean">
+        SELECT EXISTS(select 1 from customer where username = #{username} OR email = #{email})
     </select>
 
 </mapper>
