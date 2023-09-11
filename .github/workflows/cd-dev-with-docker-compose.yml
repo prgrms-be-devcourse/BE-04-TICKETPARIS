@@ -56,6 +56,9 @@ jobs:
           echo 'DATABASE_DEV_MYSQL_PASSWORD=${{ secrets.DATABASE_DEV_MYSQL_PASSWORD }}' >> spring.env
           echo 'DATABASE_DEV_MYSQL_URL=${{ secrets.DATABASE_DEV_MYSQL_URL }}' >> spring.env
           echo 'DATABASE_DEV_MYSQL_USERNAME=${{ secrets.DATABASE_DEV_MYSQL_USERNAME }}' >> spring.env
+          echo 'REDIS_HOST=${{ secrets.REDIS_HOST }}' >> spring.env
+          echo 'REDIS_PORT=${{ secrets.REDIS_PORT }}' >> spring.env
+          echo 'REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}' >> spring.env
 
       # docker-compose 파일과 env파일 EC2 서버로 전달하기
       - name: send file to EC2
