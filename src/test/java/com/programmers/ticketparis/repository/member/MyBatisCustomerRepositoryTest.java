@@ -9,10 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.member.Customer;
-import com.programmers.ticketparis.exception.CustomerException;
 
 @SpringBootTest
 class MyBatisCustomerRepositoryTest {
@@ -67,8 +67,7 @@ class MyBatisCustomerRepositoryTest {
 
         //when, then
         assertThatThrownBy(() -> myBatisCustomerRepository.save(customer))
-            .isInstanceOf(CustomerException.class)
-            .hasMessage("이미 가입된 username 또는 email로 요청");
+            .isInstanceOf(DuplicateKeyException.class);
     }
 
     @Test
