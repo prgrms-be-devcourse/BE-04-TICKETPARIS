@@ -1,39 +1,22 @@
 package com.programmers.ticketparis.repository.performance;
 
+import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
+public interface PerformanceRepository {
 
-import com.programmers.ticketparis.domain.performance.Performance;
-import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
-import com.programmers.ticketparis.mapper.PerformanceMapper;
+    void save(Performance performance);
 
-import lombok.RequiredArgsConstructor;
+    void update(Long performanceId, PerformanceUpdateRequest updateRequest);
 
-@Repository
-@RequiredArgsConstructor
-public class PerformanceRepository {
+    Optional<Performance> findById(Long performanceId);
 
-    private final PerformanceMapper performanceMapper;
+    List<Performance> findAll();
 
-    public void save(Performance performance) {
-        performanceMapper.save(performance);
-    }
+    void deleteById(Long performanceId);
 
-    public void update(Long performanceId, PerformanceUpdateRequest updateRequest) {
-        performanceMapper.update(performanceId, updateRequest);
-    }
-
-    public Optional<Performance> findById(Long id) {
-        return performanceMapper.findById(id);
-    }
-
-    public List<Performance> findAll() {
-        return performanceMapper.findAll();
-    }
-
-    public void deleteById(Long id) {
-        performanceMapper.deleteById(id);
-    }
+    Boolean existsById(Long performanceId);
 }
