@@ -40,7 +40,8 @@ public class Customer {
     private LocalDateTime updatedDatetime;
 
     @Builder
-    private Customer(String username, String password, String name, String email, LocalDate birthDate, String phone, String address) {
+    private Customer(String username, String password, String name, String email, LocalDate birthDate, String phone,
+        String address) {
         this.username = username;
         this.password = password;
         this.name = name;

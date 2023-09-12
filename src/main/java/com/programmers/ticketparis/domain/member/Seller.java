@@ -39,7 +39,8 @@ public class Seller {
     private LocalDateTime updatedDatetime;
 
     @Builder
-    private Seller(String username, String password, String name, String registrationNumber, String storeName, String email, String phone) {
+    private Seller(String username, String password, String name, String registrationNumber, String storeName,
+        String email, String phone) {
         this.username = username;
         this.password = password;
         this.name = name;
