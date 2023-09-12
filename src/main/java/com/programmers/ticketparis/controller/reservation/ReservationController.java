@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
@@ -45,7 +47,17 @@ public class ReservationController {
     }
 
     @GetMapping
-    public List<ReservationResponse> findAllReservations() {
-        return reservationService.findAllReservations();
+    public List<ReservationResponse> findReservationsByPage(
+        @RequestParam Integer pageNum,
+        @RequestParam Integer size
+    ) {
+        Pageable pageable = Pageable.builder()
+            .pageNum(pageNum)
+            .size(size)
+            .build();
+        
+        List<ReservationResponse> reservationResponses = reservationService.findReservationsByPage(pageable);
+
+        return reservationResponses;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
@@ -32,8 +33,8 @@ public class MybatisReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> findAll() {
-        return reservationMapper.findAll();
+    public List<Reservation> findReservationsByPage(Pageable pageable) {
+        return reservationMapper.findReservationsByPage(pageable);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.programmers.ticketparis.repository.reservation;
 import java.util.List;
 import java.util.Optional;
 
+import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
@@ -14,7 +15,7 @@ public interface ReservationRepository {
 
     Optional<Reservation> findById(Long reservationId);
 
-    List<Reservation> findAll();
+    List<Reservation> findReservationsByPage(Pageable pageable);
 
     Boolean existsById(Long reservationId);
 }

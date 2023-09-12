@@ -22,9 +22,10 @@
         WHERE reservation_id = #{reservationId};
     </select>
 
-    <select id="findAll" resultMap="resultReservation">
+    <select id="findReservationsByPage" resultMap="resultReservation">
         SELECT reservation_id, status, created_datetime, updated_datetime, customer_id, schedule_id
-        FROM reservation;
+        FROM reservation
+        LIMIT #{skipData}, #{size};
     </select>
 
     <resultMap id="resultReservation" type="Reservation">
