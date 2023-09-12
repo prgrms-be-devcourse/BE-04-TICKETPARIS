@@ -15,6 +15,7 @@ public enum ExceptionRule {
     NOT_EXIST_RESERVATION_STATUS(HttpStatus.NOT_FOUND, "존재하지 않는 예약 상태"),
 
     NOT_EXIST_CUSTOMER(HttpStatus.NOT_FOUND, "요청한 회원(구매자) ID가 존재하지 않음"),
+    CUSTOMER_ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email로 요청"),
 
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "사용자 입력 유효성 검사 실패"),
     NOT_FOUND(HttpStatus.NOT_FOUND, "요청한 URL에 해당하는 리소스를 찾을 수 없음"),

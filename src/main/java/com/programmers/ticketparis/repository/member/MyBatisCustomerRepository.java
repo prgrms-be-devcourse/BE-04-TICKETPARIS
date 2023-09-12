@@ -1,10 +1,14 @@
 package com.programmers.ticketparis.repository.member;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import com.programmers.ticketparis.domain.member.Customer;
+import com.programmers.ticketparis.exception.CustomerException;
+import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.mapper.member.CustomerMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +23,15 @@ public class MyBatisCustomerRepository implements CustomerRepository {
 
     @Override
     public void createAccount(Customer customer) {
-        log.info("레포지토리 도착");
-        customerMapper.createAccount(customer);
-        log.info("레포지토리 통과");
+        try {
+            customerMapper.createAccount(customer);
+        } catch (DuplicateKeyException e) {
+            if (e.getMessage().contains("USERNAME NULLS FIRST")) {
+                throw new CustomerException(ExceptionRule.CUSTOMER_ALREADY_REGISTERED, List.of(customer.getUsername()));
+            } else {
+                throw new CustomerException(ExceptionRule.CUSTOMER_ALREADY_REGISTERED, List.of(customer.getEmail()));
+            }
+        }
     }
 
     @Override
