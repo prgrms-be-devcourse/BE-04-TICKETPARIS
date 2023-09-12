@@ -72,8 +72,7 @@ class MybatisReservationRepositoryTest {
 
         // then
         ReservationStatus actualReservationStatus = reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId))
-            .getReservationStatus();
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId)).getReservationStatus();
 
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
