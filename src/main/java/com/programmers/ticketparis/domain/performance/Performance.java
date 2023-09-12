@@ -49,7 +49,8 @@ public class Performance {
     private Long hallId;
 
     @Builder
-    private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration, Integer ageRating, Integer price, Category category,
+    private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration,
+        Integer ageRating, Integer price, Category category,
         String description, Long sellerId, Long hallId) {
         this.title = title;
         this.posterUrl = posterUrl;

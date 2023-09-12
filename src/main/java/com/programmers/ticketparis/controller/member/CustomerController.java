@@ -24,17 +24,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class CustomerController {
-	private final CustomerService customerService;
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public void createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
-		customerService.createAccount(customerCreateRequest);
-	}
+    private final CustomerService customerService;
 
-	@GetMapping("/{customerId}")
-	public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
-		HttpServletRequest httpServletRequest) {
-		return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findCustomerById(customerId));
-	}
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
+        customerService.createAccount(customerCreateRequest);
+    }
+
+    @GetMapping("/{customerId}")
+    public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
+        HttpServletRequest httpServletRequest) {
+        return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findCustomerById(customerId));
+    }
 }

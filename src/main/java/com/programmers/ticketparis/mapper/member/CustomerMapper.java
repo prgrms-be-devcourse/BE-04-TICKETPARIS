@@ -8,6 +8,7 @@ import com.programmers.ticketparis.domain.member.Customer;
 
 @Mapper
 public interface CustomerMapper {
+
     void createAccount(Customer item);
 
     Optional<Customer> findById(Long id);
