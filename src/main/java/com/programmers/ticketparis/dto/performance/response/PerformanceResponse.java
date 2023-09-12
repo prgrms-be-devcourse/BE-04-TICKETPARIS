@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class PerformanceResponse {
+
     private Long performanceId;
     private String title;
     private String posterUrl;

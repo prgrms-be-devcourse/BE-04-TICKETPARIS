@@ -25,7 +25,6 @@ public enum Category {
     private final String name;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-
     public static Category fromString(String name) {
         Category category = stringToEnum.get(name);
         if (category == null) {
