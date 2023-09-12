@@ -84,5 +84,4 @@ class MyBatisCustomerRepositoryTest {
         assertThat(actualCustomer.getPhone()).isEqualTo("010-1234-5678");
         assertThat(actualCustomer.getBirthDate()).isEqualTo("1990-01-01");
     }
-
 }
