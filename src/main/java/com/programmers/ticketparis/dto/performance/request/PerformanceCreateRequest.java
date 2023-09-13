@@ -52,6 +52,7 @@ public class PerformanceCreateRequest {
     private Long hallId;
 
     public Performance toEntity() {
+
         return Performance.builder()
                 .title(title)
                 .posterUrl(posterUrl)

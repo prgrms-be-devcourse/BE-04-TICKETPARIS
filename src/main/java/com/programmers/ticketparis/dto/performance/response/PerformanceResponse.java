@@ -49,6 +49,7 @@ public class PerformanceResponse {
     }
 
     public static PerformanceResponse fromEntity(Performance performance) {
+
         return PerformanceResponse.builder()
                 .performanceId(performance.getPerformanceId())
                 .title(performance.getTitle())
