@@ -19,16 +19,19 @@ public class CategoryEnumTypeHandler implements TypeHandler<Category> {
 
     @Override
     public Category getResult(ResultSet rs, String columnName) throws SQLException {
+
         return Category.fromString(rs.getString(columnName));
     }
 
     @Override
     public Category getResult(ResultSet rs, int columnIndex) throws SQLException {
+
         return Category.fromString(rs.getString(columnIndex));
     }
 
     @Override
     public Category getResult(CallableStatement cs, int columnIndex) throws SQLException {
+
         return Category.fromString(cs.getString(columnIndex));
     }
 }
