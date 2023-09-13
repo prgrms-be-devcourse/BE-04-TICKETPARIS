@@ -22,7 +22,10 @@ public class ScheduleCreateRequest {
     @Positive(message = "회차는 자연수만 가능")
     private Integer sequence;
 
-    public Schedule toEntity(Integer seatsCount, Long performanceId) {
+    @Positive(message = "공연 ID는 자연수만 가능")
+    private Long performanceId;
+
+    public Schedule toEntity(Integer seatsCount) {
         return Schedule.builder()
             .startDatetime(startDatetime)
             .sequence(sequence)

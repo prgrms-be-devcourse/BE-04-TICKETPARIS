@@ -20,27 +20,25 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/performances/{performanceId}")
+@RequestMapping("/api/schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @PostMapping("/schedules")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<ScheduleResponse> createSchedule(
-        @PathVariable Long performanceId,
-        @Valid @RequestBody ScheduleCreateRequest request,
+        @Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest,
         HttpServletRequest httpServletRequest
     ) {
-        ScheduleResponse response = scheduleService.createSchedule(performanceId, request);
-        String requestURI = httpServletRequest.getRequestURI();
+        ScheduleResponse scheduleResponse = scheduleService.createSchedule(scheduleCreateRequest);
 
-        return ApiResponse.of(requestURI, response);
+        return ApiResponse.of(httpServletRequest.getRequestURI(), scheduleResponse);
     }
 
-    @DeleteMapping("/schedules/{scheduleId}")
+    @DeleteMapping("/{scheduleId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteScheduleById(@PathVariable Long performanceId, @PathVariable Long scheduleId) {
-        scheduleService.deleteScheduleById(performanceId, scheduleId);
+    public void deleteScheduleById(@PathVariable Long scheduleId) {
+        scheduleService.deleteScheduleById(scheduleId);
     }
 }
