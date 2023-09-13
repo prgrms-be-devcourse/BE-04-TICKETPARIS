@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.programmers.ticketparis.domain.performance.Performance;
 import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
+import com.programmers.ticketparis.dto.performance.response.PerformanceIdResponse;
 import com.programmers.ticketparis.dto.performance.response.PerformanceResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.PerformanceException;
@@ -23,17 +24,20 @@ public class PerformanceService {
     private final PerformanceRepository performanceRepository;
 
     @Transactional
-    public void createPerformance(PerformanceCreateRequest createRequest) {
+    public PerformanceIdResponse createPerformance(PerformanceCreateRequest createRequest) {
         Performance performance = createRequest.toEntity();
-        performanceRepository.save(performance);
+        Long performanceId = performanceRepository.save(performance);
+
+        return PerformanceIdResponse.from(performanceId);
     }
 
     @Transactional
-    public PerformanceResponse updatePerformance(Long performanceId, PerformanceUpdateRequest updateRequest) {
+    public PerformanceIdResponse updatePerformance(Long performanceId,
+        PerformanceUpdateRequest performanceUpdateRequest) {
         validatePerformanceExists(performanceId);
-        performanceRepository.update(performanceId, updateRequest);
+        performanceRepository.update(performanceId, performanceUpdateRequest);
 
-        return findPerformanceById(performanceId);
+        return PerformanceIdResponse.from(performanceId);
     }
 
     public PerformanceResponse findPerformanceById(Long performanceId) {
@@ -45,7 +49,7 @@ public class PerformanceService {
                     List.of(String.valueOf(performanceId))));
     }
 
-    public List<PerformanceResponse> findPerformanceAll() {
+    public List<PerformanceResponse> findAllPerformances() {
 
         return performanceRepository.findAll().stream()
             .map(performance -> PerformanceResponse.fromEntity(performance))
