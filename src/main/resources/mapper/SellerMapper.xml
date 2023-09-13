@@ -18,8 +18,8 @@
         SELECT EXISTS(select 1 from seller where seller_id = #{sellerId})
     </select>
 
-    <select id="existsByUsernameOrEmail" resultType="Boolean">
-        SELECT EXISTS(select 1 from seller where username = #{username} OR email = #{email})
+    <select id="existsByUniqueFields" resultType="Boolean">
+        SELECT EXISTS(select 1 from seller where username = #{username} OR email = #{email} OR registration_number = #{registrationNumber})
     </select>
 
 </mapper>

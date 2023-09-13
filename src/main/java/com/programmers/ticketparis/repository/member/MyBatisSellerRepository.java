@@ -31,7 +31,7 @@ public class MyBatisSellerRepository implements SellerRepository {
     }
 
     @Override
-    public Boolean existsByUsernameOrEmail(String username, String email) {
-        return sellerMapper.existsByUsernameOrEmail(username, email);
+    public Boolean existsByUniqueFields(String username, String email, String registrationNumber) {
+        return sellerMapper.existsByUniqueFields(username, email, registrationNumber);
     }
 }

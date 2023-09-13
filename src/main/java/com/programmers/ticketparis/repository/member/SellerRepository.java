@@ -12,5 +12,5 @@ public interface SellerRepository {
 
     Boolean existsById(Long sellerId);
 
-    Boolean existsByUsernameOrEmail(String username, String email);
+    Boolean existsByUniqueFields(String username, String email, String registrationNumber);
 }
