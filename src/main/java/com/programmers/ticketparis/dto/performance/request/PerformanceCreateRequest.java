@@ -4,6 +4,7 @@ import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.domain.performance.Performance;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class PerformanceCreateRequest {
 
     @NotBlank(message = "공연의 제목은 필수입니다.")
