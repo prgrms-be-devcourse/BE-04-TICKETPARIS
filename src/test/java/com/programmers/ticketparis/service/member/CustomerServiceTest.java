@@ -21,6 +21,6 @@ class CustomerServiceTest {
         //when, then
         assertThatThrownBy(() -> customerService.findCustomerById(100L))
             .isInstanceOf(CustomerException.class)
-            .hasMessage("요청한 회원(구매자) ID가 존재하지 않음");
+            .hasMessage("요청한 구매자 ID가 존재하지 않음");
     }
 }
