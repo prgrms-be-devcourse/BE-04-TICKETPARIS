@@ -1,18 +1,19 @@
 package com.programmers.ticketparis.mapper;
 
-import com.programmers.ticketparis.domain.performance.Performance;
-import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
 
 @Mapper
 public interface PerformanceMapper {
 
-    void save(Performance performance);
+    Long save(Performance performance);
 
-    void update(Long performanceId, PerformanceUpdateRequest updateRequest);
+    Long update(Long performanceId, PerformanceUpdateRequest updateRequest);
 
     Optional<Performance> findById(Long performanceId);
 
