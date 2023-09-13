@@ -30,10 +30,10 @@ public class Customer {
     private String email;
 
     @NotNull
-    private LocalDate birthDate;
-
-    @NotNull
     private String phone;
+    
+    @NotNull
+    private LocalDate birthDate;
 
     @NotNull
     private String address;

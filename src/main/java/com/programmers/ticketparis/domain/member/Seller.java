@@ -24,16 +24,16 @@ public class Seller {
     private String name;
 
     @NotNull
-    private String registrationNumber;
-
-    @NotNull
-    private String storeName;
-
-    @NotNull
     private String email;
 
     @NotNull
     private String phone;
+
+    @NotNull
+    private String registrationNumber;
+
+    @NotNull
+    private String storeName;
 
     private LocalDateTime createdDatetime;
     private LocalDateTime updatedDatetime;
