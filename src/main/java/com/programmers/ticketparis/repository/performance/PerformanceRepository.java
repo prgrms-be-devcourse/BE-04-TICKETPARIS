@@ -1,16 +1,16 @@
 package com.programmers.ticketparis.repository.performance;
 
-import com.programmers.ticketparis.domain.performance.Performance;
-import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
-
 import java.util.List;
 import java.util.Optional;
 
+import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
+
 public interface PerformanceRepository {
 
-    void save(Performance performance);
+    Long save(Performance performance);
 
-    void update(Long performanceId, PerformanceUpdateRequest updateRequest);
+    Long update(Long performanceId, PerformanceUpdateRequest updateRequest);
 
     Optional<Performance> findById(Long performanceId);
 
