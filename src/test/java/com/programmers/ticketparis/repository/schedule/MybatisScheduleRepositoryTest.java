@@ -26,20 +26,18 @@ class MybatisScheduleRepositoryTest {
     @Transactional
     void test_save_schedule_success() {
         //given
-        Long performanceId = 1L;
-
         Schedule expectedSchedule = Schedule.builder()
             .startDatetime(LocalDateTime.of(2023, 9, 11, 19, 30))
             .sequence(1)
             .seatsCount(598)
-            .performanceId(performanceId)
+            .performanceId(1L)
             .build();
 
         //when
         Long scheduleId = scheduleRepository.save(expectedSchedule);
 
         //then
-        Schedule actualSchedule = scheduleRepository.findById(performanceId, scheduleId).get();
+        Schedule actualSchedule = scheduleRepository.findById(scheduleId).get();
         assertThat(actualSchedule.getScheduleId()).isEqualTo(expectedSchedule.getScheduleId());
     }
 
@@ -56,64 +54,61 @@ class MybatisScheduleRepositoryTest {
 
     // todo: scheduleRepository.findById() 와 scheduleRepository.existsById() 에 대한 테스트 작성
     @Test
-    @DisplayName("존재하는 공연 ID와 스케줄 ID에 해당하는 스케줄을 조회한다.")
+    @DisplayName("스케줄 ID에 해당하는 스케줄을 조회한다.")
     void test_find_schedule_success() {
         //given
-        Long performanceId = 1L;
         Long scheduleId = 1L;
 
         //when
-        Schedule schedule = scheduleRepository.findById(performanceId, scheduleId).get();
+        Schedule schedule = scheduleRepository.findById(scheduleId).get();
 
         //then
-        assertThat(schedule.getPerformanceId()).isEqualTo(performanceId);
         assertThat(schedule.getScheduleId()).isEqualTo(scheduleId);
     }
 
     @ParameterizedTest
-    @DisplayName("존재하지 않는 공연 ID와 스케줄 ID에 대해서는 스케줄을 조회하지 못한다.")
-    @CsvSource(value = {"0,1", "1,0", "9999999,9999999", "-1,2", "2,-1"})
-    void test_find_schedule_fail(Long performanceId, Long scheduleId) {
+    @DisplayName("존재하지 않는 스케줄 ID에 대해서는 스케줄을 조회하지 못한다.")
+    @CsvSource(value = {"0", "9999999", "-100", "-1"})
+    void test_find_schedule_fail(Long scheduleId) {
         //when
-        Optional<Schedule> schedule = scheduleRepository.findById(performanceId, scheduleId);
+        Optional<Schedule> schedule = scheduleRepository.findById(scheduleId);
 
         //then
         assertThat(schedule).isEmpty();
     }
 
     @ParameterizedTest
-    @DisplayName("공연 ID와 스케줄 ID에 해당하는 스케줄의 존재 여부를 판별한다.")
-    @CsvSource(value = {"1,1,true", "0,1,false", "1,0,false", "9999999,9999999,false"})
-    void test_exists_schedule(Long performanceId, Long scheduleId, Boolean expectedStatus) {
+    @DisplayName("스케줄 ID에 해당하는 스케줄의 존재 여부를 판별한다.")
+    @CsvSource(value = {"1,true", "0,false", "9999999,false"})
+    void test_exists_schedule(Long scheduleId, Boolean expectedStatus) {
         //when
-        Boolean actualStatus = scheduleRepository.existsById(performanceId, scheduleId);
+        Boolean actualStatus = scheduleRepository.existsById(scheduleId);
 
         //then
         assertThat(actualStatus).isEqualTo(expectedStatus);
     }
 
     @Test
-    @DisplayName("존재하는 공연 ID와 스케줄 ID에 해당하는 스케줄을 삭제한다.")
+    @DisplayName("스케줄 ID에 해당하는 스케줄을 삭제한다.")
     @Transactional
     void test_delete_schedule_success() {
         //given
-        Long performanceId = 1L;
         Long scheduleId = 1L;
 
         //when
-        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
+        Integer deletedCounts = scheduleRepository.deleteById(scheduleId);
 
         //then
         assertThat(deletedCounts).isOne();
     }
 
     @ParameterizedTest
-    @DisplayName("존재하지 않는 공연 ID와 스케줄 ID에 대해서는 스케줄을 삭제하지 못한다.")
-    @CsvSource(value = {"0,1", "1,0", "9999999,9999999", "-1,2", "2,-1"})
+    @DisplayName("존재하지 않는 스케줄 ID에 대해서는 스케줄을 삭제하지 못한다.")
+    @CsvSource(value = {"0", "9999999", "-100", "-1"})
     @Transactional
-    void test_delete_schedule_fail(Long performanceId, Long scheduleId) {
+    void test_delete_schedule_fail(Long scheduleId) {
         //when
-        Integer deletedCounts = scheduleRepository.deleteById(performanceId, scheduleId);
+        Integer deletedCounts = scheduleRepository.deleteById(scheduleId);
 
         //then
         assertThat(deletedCounts).isZero();

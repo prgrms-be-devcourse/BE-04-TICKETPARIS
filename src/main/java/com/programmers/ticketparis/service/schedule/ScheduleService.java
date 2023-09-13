@@ -23,26 +23,25 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public ScheduleResponse createSchedule(Long performanceId, ScheduleCreateRequest request) {
+    public ScheduleResponse createSchedule(ScheduleCreateRequest scheduleCreateRequest) {
         // TODO: performanceId에 해당하는 공연 데이터가 없는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
         // TODO: startDatetime이 공연의 시작, 종료날짜 범위를 벗어나는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
 
-        Integer seatsCount = scheduleRepository.findHallSeatsCountByPerformanceId(performanceId);
-        Schedule schedule = request.toEntity(seatsCount, performanceId);
+        Integer seatsCount = scheduleRepository.findHallSeatsCountByPerformanceId(
+            scheduleCreateRequest.getPerformanceId());
+        Schedule schedule = scheduleCreateRequest.toEntity(seatsCount);
         Long savedScheduleId = scheduleRepository.save(schedule);
 
         return ScheduleResponse.from(savedScheduleId);
     }
 
     @Transactional
-    public void deleteScheduleById(Long performanceId, Long scheduleId) {
-        if (scheduleRepository.existsById(performanceId, scheduleId)) {
-            scheduleRepository.deleteById(performanceId, scheduleId);
-            return;
+    public void deleteScheduleById(Long scheduleId) {
+        if (!scheduleRepository.existsById(scheduleId)) {
+            List<String> rejectedValues = List.of(String.valueOf(scheduleId));
+            throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
         }
 
-        List<String> rejectedValues = List.of(String.valueOf(performanceId), String.valueOf(scheduleId));
-
-        throw new ScheduleException(SCHEDULE_NOT_FOUND, rejectedValues);
+        scheduleRepository.deleteById(scheduleId);
     }
 }

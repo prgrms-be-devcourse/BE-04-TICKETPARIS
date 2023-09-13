@@ -19,12 +19,12 @@ class ScheduleServiceTest {
     private ScheduleService scheduleService;
 
     @ParameterizedTest
-    @DisplayName("존재하지 않는 공연 ID와 스케줄 ID에 대한 스케줄 삭제 시, 예외가 발생한다.")
-    @CsvSource(value = {"0,1", "1,0", "9999999,9999999", "-1,2", "2,-1"})
+    @DisplayName("존재하지 않는 스케줄 ID에 대한 스케줄 삭제 시, 예외가 발생한다.")
+    @CsvSource(value = {"0", "9999999", "-100", "-1"})
     @Transactional
-    void test_delete_schedule_throw_exception(Long performanceId, Long scheduleId) {
+    void test_delete_schedule_throw_exception(Long scheduleId) {
         //when, then
-        assertThatThrownBy(() -> scheduleService.deleteScheduleById(performanceId, scheduleId))
+        assertThatThrownBy(() -> scheduleService.deleteScheduleById(scheduleId))
             .isInstanceOf(ScheduleException.class)
             .hasMessage(SCHEDULE_NOT_FOUND.getMessage());
     }

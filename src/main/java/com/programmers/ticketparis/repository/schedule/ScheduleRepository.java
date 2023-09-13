@@ -10,9 +10,9 @@ public interface ScheduleRepository {
 
     Integer findHallSeatsCountByPerformanceId(Long performanceId);
 
-    Optional<Schedule> findById(Long performanceId, Long scheduleId);
+    Optional<Schedule> findById(Long scheduleId);
 
-    Boolean existsById(Long performanceId, Long scheduleId);
+    Boolean existsById(Long scheduleId);
 
-    Integer deleteById(Long performanceId, Long scheduleId);
+    Integer deleteById(Long scheduleId);
 }
