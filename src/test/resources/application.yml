@@ -4,6 +4,12 @@ spring:
     url: jdbc:h2:mem:ticketparis
     username: sa
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
 mybatis:
   type-aliases-package: com.programmers.ticketparis.domain
   configuration:

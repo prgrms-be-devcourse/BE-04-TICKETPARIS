@@ -10,6 +10,11 @@ jobs:
   deploy-ec2:
     environment: develop # 환경 develop
     runs-on: ubuntu-latest # 대여해주는 서버
+    env:
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v3 # 코드 저장소에 올려둔 코드 CI 서버 내려받은 후 특정 브랜치 전환하는 행위
       - name: Set up JDK 17
@@ -56,6 +61,9 @@ jobs:
           echo 'DATABASE_DEV_MYSQL_PASSWORD=${{ secrets.DATABASE_DEV_MYSQL_PASSWORD }}' >> spring.env
           echo 'DATABASE_DEV_MYSQL_URL=${{ secrets.DATABASE_DEV_MYSQL_URL }}' >> spring.env
           echo 'DATABASE_DEV_MYSQL_USERNAME=${{ secrets.DATABASE_DEV_MYSQL_USERNAME }}' >> spring.env
+          echo 'REDIS_HOST=${{ secrets.REDIS_HOST }}' >> spring.env
+          echo 'REDIS_PORT=${{ secrets.REDIS_PORT }}' >> spring.env
+          echo 'REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}' >> spring.env
 
       # docker-compose 파일과 env파일 EC2 서버로 전달하기
       - name: send file to EC2
