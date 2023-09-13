@@ -48,14 +48,14 @@ public class CustomerCreateRequest {
     private String address;
 
     @Builder
-    private CustomerCreateRequest(String username, String password, String name, String email, LocalDate birthDate,
-        String phone, String address) {
+    private CustomerCreateRequest(String username, String password, String name, String email, String phone,
+        LocalDate birthDate, String address) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
-        this.birthDate = birthDate;
         this.phone = phone;
+        this.birthDate = birthDate;
         this.address = address;
     }
 

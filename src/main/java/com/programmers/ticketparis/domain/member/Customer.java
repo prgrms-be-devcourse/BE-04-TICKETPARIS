@@ -31,7 +31,7 @@ public class Customer {
 
     @NotNull
     private String phone;
-    
+
     @NotNull
     private LocalDate birthDate;
 
@@ -42,14 +42,15 @@ public class Customer {
     private LocalDateTime updatedDatetime;
 
     @Builder
-    private Customer(String username, String password, String name, String email, LocalDate birthDate, String phone,
-        String address) {
+    private Customer(String username, String password, String name, String email, String phone, LocalDate birthDate,
+        String address
+    ) {
         this.username = username;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.name = name;
         this.email = email;
-        this.birthDate = birthDate;
         this.phone = phone;
+        this.birthDate = birthDate;
         this.address = address;
     }
 }

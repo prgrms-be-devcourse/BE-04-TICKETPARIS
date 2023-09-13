@@ -39,14 +39,15 @@ public class Seller {
     private LocalDateTime updatedDatetime;
 
     @Builder
-    private Seller(String username, String password, String name, String registrationNumber, String storeName,
-        String email, String phone) {
+    private Seller(String username, String password, String name, String email, String phone, String registrationNumber,
+        String storeName
+    ) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.registrationNumber = registrationNumber;
-        this.storeName = storeName;
         this.email = email;
         this.phone = phone;
+        this.registrationNumber = registrationNumber;
+        this.storeName = storeName;
     }
 }
