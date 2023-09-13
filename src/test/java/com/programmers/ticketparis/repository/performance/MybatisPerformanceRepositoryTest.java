@@ -26,7 +26,7 @@ import com.programmers.ticketparis.exception.PerformanceException;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD) // 추가된 부분
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class MybatisPerformanceRepositoryTest {
 
     private static Performance testPerformance1;
