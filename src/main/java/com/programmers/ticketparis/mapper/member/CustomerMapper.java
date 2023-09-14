@@ -11,7 +11,7 @@ public interface CustomerMapper {
 
     Long save(Customer item);
 
-    Optional<Customer> findById(Long id);
+    Optional<Customer> findById(Long customerId);
 
     Boolean existsById(Long customerId);
 

@@ -21,8 +21,8 @@ public class MyBatisSellerRepository implements SellerRepository {
     }
 
     @Override
-    public Optional<Seller> findById(Long id) {
-        return sellerMapper.findById(id);
+    public Optional<Seller> findById(Long sellerId) {
+        return sellerMapper.findById(sellerId);
     }
 
     @Override

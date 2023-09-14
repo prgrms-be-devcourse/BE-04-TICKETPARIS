@@ -8,7 +8,7 @@ public interface SellerRepository {
 
     Long save(Seller item);
 
-    Optional<Seller> findById(Long id);
+    Optional<Seller> findById(Long sellerId);
 
     Boolean existsById(Long sellerId);
 
