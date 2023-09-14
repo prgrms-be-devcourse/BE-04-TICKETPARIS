@@ -15,4 +15,4 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/**/*.xml
-  type-handlers-package: com.programmers.ticketparis.domain
+  type-handlers-package: com.programmers.ticketparis

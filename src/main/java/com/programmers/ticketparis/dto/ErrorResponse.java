@@ -1,11 +1,10 @@
 package com.programmers.ticketparis.dto;
 
+import com.programmers.ticketparis.exception.ExceptionRule;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.programmers.ticketparis.exception.ExceptionRule;
-
-import lombok.Getter;
 
 @Getter
 public class ErrorResponse {
@@ -27,10 +26,12 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse of(ExceptionRule rule) {
+
         return new ErrorResponse(rule.name(), rule.getMessage());
     }
 
     public static ErrorResponse of(ExceptionRule rule, List<String> rejectedValues) {
+
         return new ErrorResponse(rule.name(), rule.getMessage(), rejectedValues);
     }
 }

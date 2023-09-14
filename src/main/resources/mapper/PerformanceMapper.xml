@@ -1,0 +1,52 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programmers.ticketparis.mapper.PerformanceMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="performanceId">
+        INSERT INTO performance (title, poster_url, start_date, end_date, duration,
+                                 age_rating, price, description, category, seller_id, hall_id)
+        VALUES (#{title}, #{posterUrl}, #{startDate},
+                #{endDate}, #{duration},
+                #{ageRating}, #{price}, #{description},
+                #{category},
+                #{sellerId}, #{hallId})
+    </insert>
+
+    <update id="update">
+        UPDATE performance
+        SET title       = #{updateRequest.title},
+            poster_url  = #{updateRequest.posterUrl},
+            start_date  = #{updateRequest.startDate},
+            end_date    = #{updateRequest.endDate},
+            duration    = #{updateRequest.duration},
+            age_rating  = #{updateRequest.ageRating},
+            price       = #{updateRequest.price},
+            category    = #{updateRequest.category},
+            description = #{updateRequest.description},
+            hall_Id = #{updateRequest.hallId}
+            WHERE performance_id = #{performanceId}
+
+    </update>
+
+    <select id="findById" resultType="Performance">
+        SELECT *
+        FROM performance
+        WHERE performance_id = #{performanceId}
+    </select>
+
+    <select id="findAll" resultType="Performance">
+        SELECT *
+        FROM performance
+    </select>
+
+    <select id="existsById" resultType="Boolean">
+        SELECT EXISTS(select 1 from performance where performance_id = #{performanceId})
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM performance
+        WHERE performance_id = #{performanceId}
+    </delete>
+
+</mapper>
