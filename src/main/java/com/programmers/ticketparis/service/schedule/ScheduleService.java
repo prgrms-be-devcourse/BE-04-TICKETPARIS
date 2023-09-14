@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.schedule.Schedule;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleIdResponse;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
@@ -66,5 +68,11 @@ public class ScheduleService {
         List<Schedule> schedules = scheduleRepository.findSchedulesByPage(pageable);
 
         return schedules.stream().map(ScheduleResponse::from).toList();
+    }
+
+    public List<ReservationResponse> findReservationsByScheduleIdWithPage(Integer scheduleId, Pageable pageable) {
+        List<Reservation> reservations = scheduleRepository.findReservationsByScheduleIdWithPage(scheduleId, pageable);
+
+        return reservations.stream().map(ReservationResponse::from).toList();
     }
 }

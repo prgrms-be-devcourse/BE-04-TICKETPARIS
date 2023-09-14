@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleIdResponse;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
@@ -51,8 +52,21 @@ public class ScheduleController {
             .size(size)
             .build();
 
-        List<ScheduleResponse> scheduleResponses = scheduleService.findSchedulesByPage(pageable);
+        return scheduleService.findSchedulesByPage(pageable);
+    }
 
-        return scheduleResponses;
+    @GetMapping("/{scheduleId}/reservations")
+    public List<ReservationResponse> findReservationsByScheduleIdWithPage(
+        @RequestParam Integer pageNum,
+        @RequestParam Integer size,
+        @PathVariable Integer scheduleId
+    ) {
+        Pageable pageable = Pageable.builder()
+            .pageNum(pageNum)
+            .size(size)
+            .build();
+
+        return scheduleService.findReservationsByScheduleIdWithPage(
+            scheduleId, pageable);
     }
 }

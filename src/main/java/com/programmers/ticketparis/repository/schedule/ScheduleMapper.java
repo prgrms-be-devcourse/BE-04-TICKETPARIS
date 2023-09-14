@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.schedule.Schedule;
 
 @Mapper
@@ -24,4 +25,6 @@ public interface ScheduleMapper {
     void updateSeatsCountById(Long scheduleId, Integer seatsCount);
 
     List<Schedule> findSchedulesByPage(Pageable pageable);
+
+    List<Reservation> findReservationsByScheduleIdWithPage(Integer scheduleId, Pageable pageable);
 }
