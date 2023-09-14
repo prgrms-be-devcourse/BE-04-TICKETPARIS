@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.member.Seller;
 import com.programmers.ticketparis.dto.member.SellerCreateRequest;
+import com.programmers.ticketparis.dto.member.SellerIdResponse;
 import com.programmers.ticketparis.dto.member.SellerResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.SellerException;
@@ -21,12 +22,13 @@ public class SellerService {
     private final SellerRepository sellerRepository;
 
     @Transactional
-    public Long createAccount(SellerCreateRequest sellerCreateRequest) {
+    public SellerIdResponse createAccount(SellerCreateRequest sellerCreateRequest) {
         validateSellerNotExistsByUniqueFields(sellerCreateRequest.getUsername(),
             sellerCreateRequest.getEmail(), sellerCreateRequest.getRegistrationNumber());
 
         Seller seller = sellerCreateRequest.toEntity();
-        return sellerRepository.save(seller);
+        Long sellerId = sellerRepository.save(seller);
+        return SellerIdResponse.from(sellerId);
     }
 
     public SellerResponse findSellerById(Long sellerId) {

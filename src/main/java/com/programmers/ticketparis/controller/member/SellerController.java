@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.member.SellerCreateRequest;
+import com.programmers.ticketparis.dto.member.SellerIdResponse;
 import com.programmers.ticketparis.dto.member.SellerResponse;
 import com.programmers.ticketparis.service.member.SellerService;
 
@@ -27,16 +28,16 @@ public class SellerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createAccount(@Valid @RequestBody SellerCreateRequest sellerCreateRequest,
+    public ApiResponse<SellerIdResponse> createAccount(@Valid @RequestBody SellerCreateRequest sellerCreateRequest,
         HttpServletRequest httpServletRequest
     ) {
-        Long sellerId = sellerService.createAccount(sellerCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerId);
+        SellerIdResponse sellerIdResponse = sellerService.createAccount(sellerCreateRequest);
+        
+        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerIdResponse);
     }
 
     @GetMapping("/{sellerId}")
-    public ApiResponse<SellerResponse> findSellerById(@PathVariable("sellerId") Long sellerId,
+    public ApiResponse<SellerResponse> findSellerById(@PathVariable Long sellerId,
         HttpServletRequest httpServletRequest
     ) {
         return ApiResponse.of(httpServletRequest.getRequestURI(), sellerService.findSellerById(sellerId));

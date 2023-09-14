@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.member.CustomerCreateRequest;
+import com.programmers.ticketparis.dto.member.CustomerIdResponse;
 import com.programmers.ticketparis.dto.member.CustomerResponse;
 import com.programmers.ticketparis.service.member.CustomerService;
 
@@ -27,12 +28,13 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest,
+    public ApiResponse<CustomerIdResponse> createAccount(
+        @Valid @RequestBody CustomerCreateRequest customerCreateRequest,
         HttpServletRequest httpServletRequest
     ) {
-        Long customerId = customerService.createAccount(customerCreateRequest);
+        CustomerIdResponse customerIdResponse = customerService.createAccount(customerCreateRequest);
 
-        return ApiResponse.of(httpServletRequest.getRequestURI(), customerId);
+        return ApiResponse.of(httpServletRequest.getRequestURI(), customerIdResponse);
     }
 
     @GetMapping("/{customerId}")
