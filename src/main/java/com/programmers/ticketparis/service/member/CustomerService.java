@@ -36,7 +36,7 @@ public class CustomerService {
         return customerRepository.findById(customerId)
             .map(CustomerResponse::from)
             .orElseThrow(
-                () -> new CustomerException(ExceptionRule.NOT_EXIST_CUSTOMER, List.of(String.valueOf(customerId))));
+                () -> new CustomerException(ExceptionRule.CUSTOMER_NOT_EXIST, List.of(String.valueOf(customerId))));
     }
 
     private void validateCustomerNotExistsByUserNameOrEmail(String username, String email) {
@@ -48,7 +48,7 @@ public class CustomerService {
     //todo: 추후 [명세서 우선순위:2] 기능인 update, delete 메서드 구현되면 해당 메서드 활용
     private void validateCustomerExists(Long customerId) {
         if (!customerRepository.existsById(customerId)) {
-            throw new CustomerException(ExceptionRule.NOT_EXIST_CUSTOMER, List.of(String.valueOf(customerId)));
+            throw new CustomerException(ExceptionRule.CUSTOMER_NOT_EXIST, List.of(String.valueOf(customerId)));
         }
     }
 }

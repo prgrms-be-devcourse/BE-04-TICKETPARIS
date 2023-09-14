@@ -35,7 +35,7 @@ public class SellerService {
         return sellerRepository.findById(sellerId)
             .map(SellerResponse::from)
             .orElseThrow(
-                () -> new SellerException(ExceptionRule.NOT_EXIST_SELLER, List.of(String.valueOf(sellerId))));
+                () -> new SellerException(ExceptionRule.SELLER_NOT_EXIST, List.of(String.valueOf(sellerId))));
     }
 
     private void validateSellerNotExistsByUniqueFields(String username, String email, String registrationNumber) {
@@ -48,7 +48,7 @@ public class SellerService {
     //todo: 추후 [명세서 우선순위:2] 기능인 update, delete 메서드 구현되면 해당 메서드 활용
     private void validateSellerExists(Long sellerId) {
         if (!sellerRepository.existsById(sellerId)) {
-            throw new SellerException(ExceptionRule.NOT_EXIST_SELLER, List.of(String.valueOf(sellerId)));
+            throw new SellerException(ExceptionRule.SELLER_NOT_EXIST, List.of(String.valueOf(sellerId)));
         }
     }
 }
