@@ -28,6 +28,6 @@ class CustomerTest {
             .build();
 
         //then
-        assertThat(BCrypt.checkpw(password, BCrypt.hashpw(password, BCrypt.gensalt()))).isTrue();
+        assertThat(BCrypt.checkpw(password, customer.getPassword())).isTrue();
     }
 }
