@@ -15,4 +15,6 @@ public interface ScheduleRepository {
     Boolean existsById(Long scheduleId);
 
     Integer deleteById(Long scheduleId);
+
+    void updateSeatsCountById(Long scheduleId, Integer seatsCount);
 }

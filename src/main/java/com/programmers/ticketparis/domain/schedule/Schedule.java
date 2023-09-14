@@ -1,6 +1,11 @@
 package com.programmers.ticketparis.domain.schedule;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.programmers.ticketparis.exception.ScheduleException;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -35,5 +40,19 @@ public class Schedule {
         this.sequence = sequence;
         this.seatsCount = seatsCount;
         this.performanceId = performanceId;
+    }
+
+    public void decreaseSeatsCount() {
+        if (seatsCount == 0) {
+            throw new ScheduleException(SCHEDULE_NO_SEATS, List.of(String.valueOf(seatsCount)));
+        }
+        seatsCount -= 1;
+    }
+
+    public void increaseSeatsCount(Integer totalSeatsCount) {
+        if (seatsCount == totalSeatsCount) {
+            throw new ScheduleException(SCHEDULE_FULL_SEATS, List.of(String.valueOf(seatsCount)));
+        }
+        seatsCount += 1;
     }
 }
