@@ -41,6 +41,8 @@ public class ReservationService {
         validateReservationExists(reservationId);
         Reservation reservation = getReservationById(reservationId);
         Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
+        Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
+        schedule.increaseSeatsCount(totalSeatsCount);
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
 
         return reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);

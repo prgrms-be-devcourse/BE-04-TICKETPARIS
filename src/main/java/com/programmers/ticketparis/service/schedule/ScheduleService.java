@@ -27,7 +27,7 @@ public class ScheduleService {
         // TODO: performanceId에 해당하는 공연 데이터가 없는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
         // TODO: startDatetime이 공연의 시작, 종료날짜 범위를 벗어나는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
 
-        Integer seatsCount = scheduleRepository.findHallSeatsCountByPerformanceId(
+        Integer seatsCount = findHallSeatsCountByPerformanceId(
             scheduleCreateRequest.getPerformanceId());
         Schedule schedule = scheduleCreateRequest.toEntity(seatsCount);
         Long savedScheduleId = scheduleRepository.save(schedule);
@@ -53,5 +53,9 @@ public class ScheduleService {
     @Transactional
     public void updateSeatsCountById(Long scheduleId, Integer seatsCount) {
         scheduleRepository.updateSeatsCountById(scheduleId, seatsCount);
+    }
+
+    public Integer findHallSeatsCountByPerformanceId(Long performanceId) {
+        return scheduleRepository.findHallSeatsCountByPerformanceId(performanceId);
     }
 }
