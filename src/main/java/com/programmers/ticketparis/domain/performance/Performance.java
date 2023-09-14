@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.NOT_START_DATE_AFTER_END_DATE;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Performance {
