@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.programmers.ticketparis.domain.member.Customer;
-import com.programmers.ticketparis.mapper.member.CustomerMapper;
 
 import lombok.RequiredArgsConstructor;
 

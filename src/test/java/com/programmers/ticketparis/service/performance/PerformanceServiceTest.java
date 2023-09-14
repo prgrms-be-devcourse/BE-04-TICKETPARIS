@@ -93,7 +93,12 @@ class PerformanceServiceTest {
     @DisplayName("저장된 모든 공연을 조회한다.")
     void findAllPerformanceTest() {
         //given & when
-        List<PerformanceResponse> performances = performanceService.findAllPerformances();
+        Pageable pageable = Pageable.builder()
+            .pageNum(1)
+            .size(10)
+            .build();
+
+        List<PerformanceResponse> performances = performanceService.findPerformancesByPage(pageable);
 
         //then
         assertFalse(performances.isEmpty());
