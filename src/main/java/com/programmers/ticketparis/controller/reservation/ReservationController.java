@@ -55,9 +55,7 @@ public class ReservationController {
             .pageNum(pageNum)
             .size(size)
             .build();
-        
-        List<ReservationResponse> reservationResponses = reservationService.findReservationsByPage(pageable);
 
-        return reservationResponses;
+        return reservationService.findReservationsByPage(pageable);
     }
 }

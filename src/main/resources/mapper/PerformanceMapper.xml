@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.mapper.PerformanceMapper">
+<mapper namespace="com.programmers.ticketparis.repository.performance.PerformanceMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="performanceId">
         INSERT INTO performance (title, poster_url, start_date, end_date, duration,
@@ -23,8 +23,8 @@
             price       = #{updateRequest.price},
             category    = #{updateRequest.category},
             description = #{updateRequest.description},
-            hall_Id = #{updateRequest.hallId}
-            WHERE performance_id = #{performanceId}
+            hall_Id     = #{updateRequest.hallId}
+        WHERE performance_id = #{performanceId}
 
     </update>
 
@@ -34,10 +34,26 @@
         WHERE performance_id = #{performanceId}
     </select>
 
-    <select id="findAll" resultType="Performance">
+    <select id="findPerformancesByPage" resultType="Performance">
         SELECT *
         FROM performance
+        LIMIT #{skipData}, #{size}
     </select>
+
+    <select id="findReservationsByPerformanceIdWithPage" resultMap="resultReservation">
+        SELECT r.reservation_id, r.status, r.created_datetime, r.updated_datetime, r.customer_id, r.schedule_id
+        FROM performance AS p
+                 JOIN schedule AS s
+                      ON p.performance_id = s.performance_id
+                 JOIN reservation AS r
+                      ON r.schedule_id = s.schedule_id
+        where p.performance_id = ${performanceId}
+        LIMIT #{pageable.skipData}, #{pageable.size}
+    </select>
+
+    <resultMap id="resultReservation" type="Reservation">
+        <result column="status" property="reservationStatus"/>
+    </resultMap>
 
     <select id="existsById" resultType="Boolean">
         SELECT EXISTS(select 1 from performance where performance_id = #{performanceId})
