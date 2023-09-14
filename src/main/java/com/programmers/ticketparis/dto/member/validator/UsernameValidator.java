@@ -19,8 +19,7 @@ public class UsernameValidator implements ConstraintValidator<UsernameValid, Str
 
     //todo: 에러 응답 형식 협의 된 후에 ConstraintValidatorContext 전달 로직 구현
     @Override
-    public boolean isValid(String username,
-        ConstraintValidatorContext context) {
+    public boolean isValid(String username, ConstraintValidatorContext context) {
         if (username == null) {
             return false;
         }

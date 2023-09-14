@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = UsernameValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = UsernameValidator.class)
 public @interface UsernameValid {
 
     String message() default "아이디는 8자 이상 15자 이하(영어, 숫자, 공백불가)";

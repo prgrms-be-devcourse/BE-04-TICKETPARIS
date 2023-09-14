@@ -10,10 +10,10 @@ import jakarta.validation.Payload;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PhoneValidator.class)
-public @interface PhoneValid {
+@Constraint(validatedBy = RegistrationNumberValidator.class)
+public @interface RegistrationNumberValid {
 
-    String message() default "핸드폰 번호는 다음 형식(000-0000-0000)에 맞추어 입력";
+    String message() default "사업자 등록 번호는 다음 형식(00-00-00000)에 맞추어 입력";
 
     Class<?>[] groups() default {};
 

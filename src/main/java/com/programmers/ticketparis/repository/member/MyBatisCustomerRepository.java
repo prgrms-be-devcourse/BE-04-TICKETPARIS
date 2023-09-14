@@ -21,8 +21,8 @@ public class MyBatisCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
-        return customerMapper.findById(id);
+    public Optional<Customer> findById(Long customerId) {
+        return customerMapper.findById(customerId);
     }
 
     @Override

@@ -1,13 +1,10 @@
 package com.programmers.ticketparis.dto.member;
 
-import java.time.LocalDate;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.programmers.ticketparis.domain.member.Customer;
+import com.programmers.ticketparis.domain.member.Seller;
 import com.programmers.ticketparis.dto.member.validator.EmailValid;
 import com.programmers.ticketparis.dto.member.validator.PasswordValid;
 import com.programmers.ticketparis.dto.member.validator.PhoneValid;
+import com.programmers.ticketparis.dto.member.validator.RegistrationNumberValid;
 import com.programmers.ticketparis.dto.member.validator.UsernameValid;
 
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CustomerCreateRequest {
+public class SellerCreateRequest {
 
     @UsernameValid(message = "아이디는 8자 이상 15자 이하(영어, 숫자, 공백불가)")
     private String username;
@@ -37,33 +34,33 @@ public class CustomerCreateRequest {
     private String phone;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+    @RegistrationNumberValid
+    private String registrationNumber;
 
     @NotNull
-    @Size(min = 0, max = 255, message = "주소는 255자 이하로 입력해주세요")
-    private String address;
+    @Size(min = 1, max = 100, message = "주소는 1자 이상, 100자 이하로 입력")
+    private String storeName;
 
-    private CustomerCreateRequest(String username, String password, String name, String email, String phone,
-        LocalDate birthDate, String address) {
+    private SellerCreateRequest(String username, String password, String name, String email, String phone,
+        String registrationNumber, String storeName) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.birthDate = birthDate;
-        this.address = address;
+        this.registrationNumber = registrationNumber;
+        this.storeName = storeName;
     }
 
-    public Customer toEntity() {
-        return Customer.builder()
+    public Seller toEntity() {
+        return Seller.builder()
             .username(username)
             .password(password)
             .name(name)
             .email(email)
-            .birthDate(birthDate)
             .phone(phone)
-            .address(address)
+            .registrationNumber(registrationNumber)
+            .storeName(storeName)
             .build();
     }
 }
