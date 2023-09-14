@@ -20,8 +20,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/sellers")
 @RequiredArgsConstructor
+@RequestMapping("/api/sellers")
 public class SellerController {
 
     private final SellerService sellerService;
@@ -41,7 +41,7 @@ public class SellerController {
         HttpServletRequest httpServletRequest
     ) {
         SellerResponse sellerResponse = sellerService.findSellerById(sellerId);
-
+        
         return ApiResponse.of(httpServletRequest.getRequestURI(), sellerResponse);
     }
 }

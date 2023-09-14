@@ -20,8 +20,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/customers")
 @RequiredArgsConstructor
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -38,11 +38,11 @@ public class CustomerController {
     }
 
     @GetMapping("/{customerId}")
-    public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
+    public ApiResponse<CustomerResponse> findCustomerById(@PathVariable Long customerId,
         HttpServletRequest httpServletRequest
     ) {
         CustomerResponse customerResponse = customerService.findCustomerById(customerId);
-        
+
         return ApiResponse.of(httpServletRequest.getRequestURI(), customerResponse);
     }
 }

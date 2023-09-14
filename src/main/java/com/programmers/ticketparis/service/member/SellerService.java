@@ -28,6 +28,7 @@ public class SellerService {
 
         Seller seller = sellerCreateRequest.toEntity();
         Long sellerId = sellerRepository.save(seller);
+        
         return SellerIdResponse.from(sellerId);
     }
 
