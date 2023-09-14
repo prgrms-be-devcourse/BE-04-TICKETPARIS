@@ -20,10 +20,6 @@ public class RegistrationNumberValidator implements ConstraintValidator<Registra
             return false;
         }
 
-        if (!VALIDATE_REGISTRATION_NUMBER.matcher(registrationNumber).matches()) {
-            return false;
-        }
-
-        return true;
+        return VALIDATE_REGISTRATION_NUMBER.matcher(registrationNumber).matches();
     }
 }
