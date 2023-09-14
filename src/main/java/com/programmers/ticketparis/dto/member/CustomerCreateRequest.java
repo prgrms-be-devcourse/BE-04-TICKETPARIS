@@ -13,14 +13,11 @@ import com.programmers.ticketparis.dto.member.validator.UsernameValid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CustomerCreateRequest {
 
     @UsernameValid(message = "아이디는 8자 이상 15자 이하(영어, 숫자, 공백불가)")
@@ -47,7 +44,6 @@ public class CustomerCreateRequest {
     @Size(min = 0, max = 255, message = "주소는 255자 이하로 입력해주세요")
     private String address;
 
-    @Builder
     private CustomerCreateRequest(String username, String password, String name, String email, String phone,
         LocalDate birthDate, String address) {
         this.username = username;
