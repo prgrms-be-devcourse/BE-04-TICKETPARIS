@@ -41,7 +41,7 @@ public class CustomerService {
 
     private void validateCustomerNotExistsByUserNameOrEmail(String username, String email) {
         if (customerRepository.existsByUsernameOrEmail(username, email)) {
-            throw new CustomerException(ExceptionRule.CUSTOMER_ALREADY_CREATED, List.of(username, email));
+            throw new CustomerException(ExceptionRule.CUSTOMER_ALREADY_EXIST, List.of(username, email));
         }
     }
 

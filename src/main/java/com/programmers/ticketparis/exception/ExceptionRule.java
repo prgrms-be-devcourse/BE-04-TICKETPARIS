@@ -20,10 +20,10 @@ public enum ExceptionRule {
     NOT_EXIST_RESERVATION_STATUS(HttpStatus.NOT_FOUND, "존재하지 않는 예약 상태"),
 
     CUSTOMER_NOT_EXIST(HttpStatus.NOT_FOUND, "요청한 구매자 ID가 존재하지 않음"),
-    CUSTOMER_ALREADY_CREATED(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email로 요청"),
+    CUSTOMER_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email로 요청"),
 
     SELLER_NOT_EXIST(HttpStatus.NOT_FOUND, "요청한 판매자 ID가 존재하지 않음"),
-    SELLER_ALREADY_CREATED(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email 또는 registrationNumber로 요청"),
+    SELLER_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email 또는 registrationNumber로 요청"),
 
     NOT_START_DATE_AFTER_END_DATE(HttpStatus.BAD_REQUEST, "공연 시작 날짜는 공연 종료 날짜 이후가 될 수 없음"),
     NOT_FOUND_PERFORMANCE(HttpStatus.NOT_FOUND, "해당 공연이 존재하지 않음"),

@@ -40,7 +40,7 @@ public class SellerService {
 
     private void validateSellerNotExistsByUniqueFields(String username, String email, String registrationNumber) {
         if (sellerRepository.existsByUniqueFields(username, email, registrationNumber)) {
-            throw new SellerException(ExceptionRule.SELLER_ALREADY_CREATED,
+            throw new SellerException(ExceptionRule.SELLER_ALREADY_EXIST,
                 List.of(username, email, registrationNumber));
         }
     }
