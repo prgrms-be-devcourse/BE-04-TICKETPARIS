@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.mapper.member;
+package com.programmers.ticketparis.repository.member;
 
 import java.util.Optional;
 

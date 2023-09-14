@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.mapper.member.CustomerMapper">
+<mapper namespace="com.programmers.ticketparis.repository.member.CustomerMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="customerId">
         INSERT INTO customer (username, password, name, email, birth_date, phone, address)
@@ -9,7 +9,15 @@
     </insert>
 
     <select id="findById" resultType="Customer">
-        SELECT customer_id, username, name, email, birth_date, phone, address, created_datetime, updated_datetime
+        SELECT customer_id,
+               username,
+               name,
+               email,
+               birth_date,
+               phone,
+               address,
+               created_datetime,
+               updated_datetime
         FROM customer
         WHERE customer_id = #{customerId}
     </select>
