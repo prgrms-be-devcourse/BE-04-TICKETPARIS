@@ -41,6 +41,8 @@ public class CustomerController {
     public ApiResponse<CustomerResponse> findCustomerById(@PathVariable("customerId") Long customerId,
         HttpServletRequest httpServletRequest
     ) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(), customerService.findCustomerById(customerId));
+        CustomerResponse customerResponse = customerService.findCustomerById(customerId);
+        
+        return ApiResponse.of(httpServletRequest.getRequestURI(), customerResponse);
     }
 }

@@ -32,7 +32,7 @@ public class SellerController {
         HttpServletRequest httpServletRequest
     ) {
         SellerIdResponse sellerIdResponse = sellerService.createAccount(sellerCreateRequest);
-        
+
         return ApiResponse.of(httpServletRequest.getRequestURI(), sellerIdResponse);
     }
 
@@ -40,6 +40,8 @@ public class SellerController {
     public ApiResponse<SellerResponse> findSellerById(@PathVariable Long sellerId,
         HttpServletRequest httpServletRequest
     ) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerService.findSellerById(sellerId));
+        SellerResponse sellerResponse = sellerService.findSellerById(sellerId);
+
+        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerResponse);
     }
 }
