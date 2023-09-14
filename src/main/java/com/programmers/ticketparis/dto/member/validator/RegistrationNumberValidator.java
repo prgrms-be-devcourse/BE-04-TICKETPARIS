@@ -14,8 +14,7 @@ public class RegistrationNumberValidator implements ConstraintValidator<Registra
     }
 
     @Override
-    public boolean isValid(String registrationNumber,
-        ConstraintValidatorContext context) {
+    public boolean isValid(String registrationNumber, ConstraintValidatorContext context) {
         if (registrationNumber == null) {
             return false;
         }
