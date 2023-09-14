@@ -1,11 +1,7 @@
 package com.programmers.ticketparis.exception;
 
-import static com.programmers.ticketparis.exception.ExceptionRule.*;
-
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Objects;
-
+import com.programmers.ticketparis.dto.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -16,9 +12,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.programmers.ticketparis.dto.ErrorResponse;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Objects;
 
-import lombok.extern.slf4j.Slf4j;
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -34,19 +32,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-        HttpRequestMethodNotSupportedException e) {
-<<<<<<< HEAD
+            HttpRequestMethodNotSupportedException e) {
         log.error(
-            "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
-            METHOD_NOT_ALLOWED.getMessage(),
-            e.getSupportedMethods(),
-            e.getMethod(),
-            e
+                "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
+                METHOD_NOT_ALLOWED.getMessage(),
+                e.getSupportedMethods(),
+                e.getMethod(),
+                e
         );
-=======
-        log.error("{} : 지원 메서드 - {}, 실제 요청 메서드 - {}", METHOD_NOT_ALLOWED.getMessage(), e.getSupportedMethods(),
-            e.getMethod(), e);
->>>>>>> a1bf027 (feat: Performance 관련 예외 로직 추가)
         ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 
         return ResponseEntity.status(METHOD_NOT_ALLOWED.getStatus()).body(response);
@@ -57,12 +50,12 @@ public class GlobalExceptionHandler {
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
 
         List<String> rejectedValues = allErrors.stream()
-            .map(FieldError.class::cast)
-            .map(error -> {
-                Object rejectedValue = error.getRejectedValue();
-                return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
-            })
-            .toList();
+                .map(FieldError.class::cast)
+                .map(error -> {
+                    Object rejectedValue = error.getRejectedValue();
+                    return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
+                })
+                .toList();
 
         log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
         ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);
