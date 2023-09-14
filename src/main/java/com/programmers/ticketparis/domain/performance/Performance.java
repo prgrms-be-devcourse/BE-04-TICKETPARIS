@@ -1,5 +1,6 @@
 package com.programmers.ticketparis.domain.performance;
 
+import com.programmers.ticketparis.exception.PerformanceException;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -52,6 +54,9 @@ public class Performance {
     private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration,
                         Integer ageRating, Integer price, Category category,
                         String description, Long sellerId, Long hallId) {
+        
+        validatePerformanceDates(startDate, endDate);
+
         this.title = title;
         this.posterUrl = posterUrl;
         this.startDate = startDate;
@@ -63,5 +68,12 @@ public class Performance {
         this.description = description;
         this.sellerId = sellerId;
         this.hallId = hallId;
+    }
+
+    private void validatePerformanceDates(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new PerformanceException(NOT_STARTDATE_AFTER_ENDDATE,
+                    List.of(String.valueOf(startDate), String.valueOf(endDate)));
+        }
     }
 }
