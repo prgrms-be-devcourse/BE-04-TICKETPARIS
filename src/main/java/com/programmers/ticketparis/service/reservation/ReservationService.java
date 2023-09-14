@@ -30,6 +30,7 @@ public class ReservationService {
     public Long createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
         Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
+
         schedule.decreaseSeatsCount();
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
 
@@ -39,9 +40,11 @@ public class ReservationService {
     @Transactional
     public Long cancelReservationById(Long reservationId) {
         validateReservationExists(reservationId);
+
         Reservation reservation = getReservationById(reservationId);
         Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
         Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
+
         schedule.increaseSeatsCount(totalSeatsCount);
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
 
