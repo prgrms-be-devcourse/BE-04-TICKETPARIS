@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
+import com.programmers.ticketparis.dto.schedule.response.ScheduleIdResponse;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
 import com.programmers.ticketparis.service.schedule.ScheduleService;
 
@@ -30,7 +31,7 @@ public class ScheduleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ScheduleResponse createSchedule(@Valid @RequestBody ScheduleCreateRequest request) {
+    public ScheduleIdResponse createSchedule(@Valid @RequestBody ScheduleCreateRequest request) {
         return scheduleService.createSchedule(request);
     }
 

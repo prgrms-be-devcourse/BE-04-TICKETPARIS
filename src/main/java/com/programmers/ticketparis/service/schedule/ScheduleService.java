@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
+import com.programmers.ticketparis.dto.schedule.response.ScheduleIdResponse;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
 import com.programmers.ticketparis.exception.ScheduleException;
 import com.programmers.ticketparis.repository.schedule.ScheduleRepository;
@@ -24,7 +25,8 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public ScheduleResponse createSchedule(ScheduleCreateRequest scheduleCreateRequest) {
+    public ScheduleIdResponse createSchedule(ScheduleCreateRequest scheduleCreateRequest) {
+
         // TODO: performanceId에 해당하는 공연 데이터가 없는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
         // TODO: startDatetime이 공연의 시작, 종료날짜 범위를 벗어나는 경우 예외 처리 예정 (2023.09.06 김영주 작성)
 
@@ -33,7 +35,7 @@ public class ScheduleService {
         Schedule schedule = scheduleCreateRequest.toEntity(seatsCount);
         Long savedScheduleId = scheduleRepository.save(schedule);
 
-        return ScheduleResponse.from(savedScheduleId);
+        return ScheduleIdResponse.from(savedScheduleId);
     }
 
     public Schedule findByScheduleId(Long scheduleId) {
