@@ -1,14 +1,19 @@
 package com.programmers.ticketparis.dto.performance.request;
 
+import java.time.LocalDate;
+
 import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.domain.performance.Performance;
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -54,17 +59,17 @@ public class PerformanceCreateRequest {
     public Performance toEntity() {
 
         return Performance.builder()
-                .title(title)
-                .posterUrl(posterUrl)
-                .startDate(startDate)
-                .endDate(endDate)
-                .duration(duration)
-                .ageRating(ageRating)
-                .price(price)
-                .category(category)
-                .description(description)
-                .sellerId(sellerId)
-                .hallId(hallId)
-                .build();
+            .title(title)
+            .posterUrl(posterUrl)
+            .startDate(startDate)
+            .endDate(endDate)
+            .duration(duration)
+            .ageRating(ageRating)
+            .price(price)
+            .category(category)
+            .description(description)
+            .sellerId(sellerId)
+            .hallId(hallId)
+            .build();
     }
 }

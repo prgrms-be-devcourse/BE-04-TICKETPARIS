@@ -25,10 +25,6 @@ public class UsernameValidator implements ConstraintValidator<UsernameValid, Str
             return false;
         }
 
-        if (!VALIDATE_USERNAME.matcher(username).matches()) {
-            return false;
-        }
-
-        return true;
+        return VALIDATE_USERNAME.matcher(username).matches();
     }
 }

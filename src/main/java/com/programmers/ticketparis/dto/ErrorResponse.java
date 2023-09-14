@@ -1,10 +1,11 @@
 package com.programmers.ticketparis.dto;
 
-import com.programmers.ticketparis.exception.ExceptionRule;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.programmers.ticketparis.exception.ExceptionRule;
+
+import lombok.Getter;
 
 @Getter
 public class ErrorResponse {

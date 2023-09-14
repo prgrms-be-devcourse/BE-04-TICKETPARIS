@@ -1,7 +1,11 @@
 package com.programmers.ticketparis.exception;
 
-import com.programmers.ticketparis.dto.ErrorResponse;
-import lombok.extern.slf4j.Slf4j;
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
+
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -12,11 +16,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Objects;
+import com.programmers.ticketparis.dto.ErrorResponse;
 
-import static com.programmers.ticketparis.exception.ExceptionRule.*;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -32,13 +34,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-            HttpRequestMethodNotSupportedException e) {
+        HttpRequestMethodNotSupportedException e) {
         log.error(
-                "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
-                METHOD_NOT_ALLOWED.getMessage(),
-                e.getSupportedMethods(),
-                e.getMethod(),
-                e
+            "{} : 지원 메서드 - {}, 실제 요청 메서드 - {}",
+            METHOD_NOT_ALLOWED.getMessage(),
+            e.getSupportedMethods(),
+            e.getMethod(),
+            e
         );
         ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 
@@ -50,12 +52,12 @@ public class GlobalExceptionHandler {
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
 
         List<String> rejectedValues = allErrors.stream()
-                .map(FieldError.class::cast)
-                .map(error -> {
-                    Object rejectedValue = error.getRejectedValue();
-                    return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
-                })
-                .toList();
+            .map(FieldError.class::cast)
+            .map(error -> {
+                Object rejectedValue = error.getRejectedValue();
+                return Objects.isNull(rejectedValue) ? "null" : rejectedValue.toString();
+            })
+            .toList();
 
         log.error("{} : 원인 값 - {}", BAD_REQUEST.getMessage(), rejectedValues, e);
         ErrorResponse response = ErrorResponse.of(BAD_REQUEST, rejectedValues);

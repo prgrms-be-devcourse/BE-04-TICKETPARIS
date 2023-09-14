@@ -20,11 +20,7 @@ public class PhoneValidator implements ConstraintValidator<PhoneValid, String> {
             return false;
         }
 
-        if (!VALIDATE_PHONE.matcher(phone).matches()) {
-            return false;
-        }
-
-        return true;
+        return VALIDATE_PHONE.matcher(phone).matches();
     }
 }
 

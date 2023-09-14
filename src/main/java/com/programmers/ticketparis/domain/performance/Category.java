@@ -1,14 +1,15 @@
 package com.programmers.ticketparis.domain.performance;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.RequiredArgsConstructor;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Category {
@@ -19,8 +20,8 @@ public enum Category {
     EXHIBITION_AND_EVENT("전시/행사"),
     CHILD_AND_FAMILY("아동/가족");
 
-    private static Map<String, Category> stringToEnum = Collections.unmodifiableMap(
-            Stream.of(values()).collect(Collectors.toMap(Category::getName, Function.identity())));
+    private static final Map<String, Category> stringToEnum = Collections.unmodifiableMap(
+        Stream.of(values()).collect(Collectors.toMap(Category::getName, Function.identity())));
     private final String name;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)

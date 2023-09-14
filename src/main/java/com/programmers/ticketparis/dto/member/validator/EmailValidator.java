@@ -15,17 +15,12 @@ public class EmailValidator implements ConstraintValidator<EmailValid, String> {
     }
 
     @Override
-    public boolean isValid(String email,
-        ConstraintValidatorContext context) {
+    public boolean isValid(String email, ConstraintValidatorContext context) {
         if (email == null) {
             return false;
         }
 
-        if (!VALIDATE_EMAIL.matcher(email).matches()) {
-            return false;
-        }
-
-        return true;
+        return VALIDATE_EMAIL.matcher(email).matches();
     }
 }
 
