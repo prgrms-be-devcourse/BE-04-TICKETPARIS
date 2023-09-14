@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.programmers.ticketparis.domain.pageable.Pageable;
 import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
@@ -57,5 +58,11 @@ public class ScheduleService {
 
     public Integer findHallSeatsCountByPerformanceId(Long performanceId) {
         return scheduleRepository.findHallSeatsCountByPerformanceId(performanceId);
+    }
+
+    public List<ScheduleResponse> findSchedulesByPage(Pageable pageable) {
+        List<Schedule> schedules = scheduleRepository.findSchedulesByPage(pageable);
+
+        return schedules.stream().map(ScheduleResponse::from).toList();
     }
 }
