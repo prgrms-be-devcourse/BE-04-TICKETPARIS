@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
+import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.exception.ReservationException;
@@ -28,6 +29,9 @@ public class ReservationService {
     @Transactional
     public Long createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
+        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
+        schedule.decreaseSeatsCount();
+        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
 
         return reservationRepository.save(reservation);
     }
@@ -35,6 +39,9 @@ public class ReservationService {
     @Transactional
     public Long cancelReservationById(Long reservationId) {
         validateReservationExists(reservationId);
+        Reservation reservation = getReservationById(reservationId);
+        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
+        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
 
         return reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
     }

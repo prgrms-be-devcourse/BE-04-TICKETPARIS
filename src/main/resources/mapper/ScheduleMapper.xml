@@ -16,25 +16,19 @@
         WHERE p.performance_id = #{performanceId};
     </select>
 
-    <select id="findByPerformanceIdAndScheduleId" resultType="Schedule">
+    <select id="findById" resultType="Schedule">
         SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
         FROM schedule
         WHERE schedule_id = #{scheduleId};
     </select>
 
-    <select id="findByScheduleId" resultType="Schedule">
-        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
-        FROM schedule
-        WHERE schedule_id = #{scheduleId};
-    </select>
-
-    <select id="existsByPerformanceIdAndScheduleId" resultType="Boolean">
+    <select id="existsById" resultType="Boolean">
         SELECT EXISTS(SELECT schedule_id
                       FROM schedule
                       WHERE schedule_id = #{scheduleId});
     </select>
 
-    <delete id="deleteByPerformanceIdAndScheduleId">
+    <delete id="deleteById">
         DELETE
         FROM schedule
         WHERE schedule_id = #{scheduleId};

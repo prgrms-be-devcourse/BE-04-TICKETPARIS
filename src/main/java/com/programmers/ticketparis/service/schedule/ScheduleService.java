@@ -36,7 +36,7 @@ public class ScheduleService {
     }
 
     public Schedule findByScheduleId(Long scheduleId) {
-        return scheduleRepository.findByScheduleId(scheduleId)
+        return scheduleRepository.findById(scheduleId)
             .orElseThrow(() -> new ScheduleException(SCHEDULE_NOT_EXIST, List.of(String.valueOf(scheduleId))));
     }
 
