@@ -39,6 +39,6 @@ class ReservationTest {
             .reservationStatus(ReservationStatus.CANCELED)
             .scheduleId(1L)
             .customerId(1L)
-            .build()).isInstanceOf(ReservationException.class).hasMessage("존재하지 않는 예약 상태");
+            .build()).isInstanceOf(ReservationException.class).hasMessage("올바르지 않은 예매 상태");
     }
 }
