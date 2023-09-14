@@ -54,7 +54,7 @@ public class Performance {
     private Performance(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration,
                         Integer ageRating, Integer price, Category category,
                         String description, Long sellerId, Long hallId) {
-        
+
         validatePerformanceDates(startDate, endDate);
 
         this.title = title;
@@ -72,7 +72,7 @@ public class Performance {
 
     private void validatePerformanceDates(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate)) {
-            throw new PerformanceException(NOT_STARTDATE_AFTER_ENDDATE,
+            throw new PerformanceException(NOT_START_DATE_AFTER_END_DATE,
                     List.of(String.valueOf(startDate), String.valueOf(endDate)));
         }
     }
