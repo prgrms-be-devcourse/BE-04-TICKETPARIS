@@ -21,10 +21,6 @@ public class PasswordValidator implements ConstraintValidator<PasswordValid, Str
             return false;
         }
 
-        if (!VALIDATE_PASSWORD.matcher(password).matches()) {
-            return false;
-        }
-
-        return true;
+        return VALIDATE_PASSWORD.matcher(password).matches();
     }
 }

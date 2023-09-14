@@ -1,13 +1,14 @@
 package com.programmers.ticketparis.dto.performance.response;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.domain.performance.Performance;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -30,8 +31,8 @@ public class PerformanceResponse {
 
     @Builder
     public PerformanceResponse(Long performanceId, String title, String posterUrl, LocalDate startDate,
-                               LocalDate endDate, String duration, Integer ageRating, Integer price, Category category, String description,
-                               LocalDateTime createdDateTime, LocalDateTime updateDateTime, Long sellerId, Long hallId) {
+        LocalDate endDate, String duration, Integer ageRating, Integer price, Category category, String description,
+        LocalDateTime createdDateTime, LocalDateTime updateDateTime, Long sellerId, Long hallId) {
         this.performanceId = performanceId;
         this.title = title;
         this.posterUrl = posterUrl;
@@ -51,20 +52,20 @@ public class PerformanceResponse {
     public static PerformanceResponse fromEntity(Performance performance) {
 
         return PerformanceResponse.builder()
-                .performanceId(performance.getPerformanceId())
-                .title(performance.getTitle())
-                .posterUrl(performance.getPosterUrl())
-                .startDate(performance.getStartDate())
-                .endDate(performance.getEndDate())
-                .duration(performance.getDuration())
-                .ageRating(performance.getAgeRating())
-                .price(performance.getPrice())
-                .category(performance.getCategory())
-                .description(performance.getDescription())
-                .createdDateTime(performance.getCreatedDatetime())
-                .updateDateTime(performance.getUpdatedDatetime())
-                .sellerId(performance.getSellerId())
-                .hallId(performance.getHallId())
-                .build();
+            .performanceId(performance.getPerformanceId())
+            .title(performance.getTitle())
+            .posterUrl(performance.getPosterUrl())
+            .startDate(performance.getStartDate())
+            .endDate(performance.getEndDate())
+            .duration(performance.getDuration())
+            .ageRating(performance.getAgeRating())
+            .price(performance.getPrice())
+            .category(performance.getCategory())
+            .description(performance.getDescription())
+            .createdDateTime(performance.getCreatedDatetime())
+            .updateDateTime(performance.getUpdatedDatetime())
+            .sellerId(performance.getSellerId())
+            .hallId(performance.getHallId())
+            .build();
     }
 }

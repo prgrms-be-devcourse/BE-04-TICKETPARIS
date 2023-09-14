@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(staticName = "from")
 public class PerformanceIdResponse {
-    
+
     private Long performanceId;
 }
