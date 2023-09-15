@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.member.CustomerCreateRequest;
 import com.programmers.ticketparis.dto.member.CustomerIdResponse;
 import com.programmers.ticketparis.dto.member.CustomerResponse;
 import com.programmers.ticketparis.service.member.CustomerService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -28,21 +26,12 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<CustomerIdResponse> createAccount(
-        @Valid @RequestBody CustomerCreateRequest customerCreateRequest,
-        HttpServletRequest httpServletRequest
-    ) {
-        CustomerIdResponse customerIdResponse = customerService.createAccount(customerCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), customerIdResponse);
+    public CustomerIdResponse createAccount(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
+        return customerService.createAccount(customerCreateRequest);
     }
 
     @GetMapping("/{customerId}")
-    public ApiResponse<CustomerResponse> findCustomerById(@PathVariable Long customerId,
-        HttpServletRequest httpServletRequest
-    ) {
-        CustomerResponse customerResponse = customerService.findCustomerById(customerId);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), customerResponse);
+    public CustomerResponse findCustomerById(@PathVariable Long customerId) {
+        return customerService.findCustomerById(customerId);
     }
 }

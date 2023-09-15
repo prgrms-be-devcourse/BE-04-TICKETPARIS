@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.exception.ReservationException;
 import com.programmers.ticketparis.repository.reservation.ReservationRepository;
@@ -27,52 +27,38 @@ public class ReservationService {
     private final ScheduleService scheduleService;
 
     @Transactional
-    public Long createReservation(ReservationCreateRequest reservationCreateRequest) {
+    public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
-        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
+        Long reservationId = reservationRepository.save(reservation);
 
-        schedule.decreaseSeatsCount();
-        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
-
-        return reservationRepository.save(reservation);
+        return ReservationIdResponse.from(reservationId);
     }
 
     @Transactional
-    public Long cancelReservationById(Long reservationId) {
+    public ReservationIdResponse cancelReservationById(Long reservationId) {
         validateReservationExists(reservationId);
+        Long canceledReservationId = reservationRepository.updateReservationStatusById(
+            reservationId, ReservationStatus.CANCELED);
 
-        Reservation reservation = getReservationById(reservationId);
-        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
-        Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
-
-        schedule.increaseSeatsCount(totalSeatsCount);
-        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
-
-        return reservationRepository.updateReservationStatusById(reservationId, ReservationStatus.CANCELED);
+        return ReservationIdResponse.from(canceledReservationId);
     }
 
     public ReservationResponse findReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId)
             .map(ReservationResponse::from)
-            .orElseThrow(() -> new ReservationException(NOT_EXIST_RESERVATION,
-                List.of(String.valueOf(reservationId))));
-    }
-
-    private Reservation getReservationById(Long reservationId) {
-        return reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST,
-                List.of(String.valueOf(reservationId))));
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId));
     }
 
     public List<ReservationResponse> findAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
 
-        return reservations.stream().map(ReservationResponse::from).toList();
+        return reservations.stream()
+            .map(ReservationResponse::from).toList();
     }
 
     private void validateReservationExists(Long reservationId) {
         if (!reservationRepository.existsById(reservationId)) {
-            throw new ReservationException(NOT_EXIST_RESERVATION, List.of(String.valueOf(reservationId)));
+            throw new ReservationException(RESERVATION_NOT_EXIST, reservationId);
         }
     }
 }

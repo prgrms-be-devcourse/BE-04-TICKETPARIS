@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.service.reservation.ReservationService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -30,34 +29,23 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createReservation(
-        @Valid @RequestBody ReservationCreateRequest reservationCreateRequest,
-        HttpServletRequest httpServletRequest
-    ) {
-        Long reservationId = reservationService.createReservation(reservationCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationId);
+    public ReservationIdResponse createReservation(
+        @Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
+        return reservationService.createReservation(reservationCreateRequest);
     }
 
     @PatchMapping("/{reservationId}")
-    public ApiResponse<Long> cancelReservationById(@PathVariable Long reservationId,
-        HttpServletRequest httpServletRequest) {
-        Long canceledReservationId = reservationService.cancelReservationById(reservationId);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), canceledReservationId);
+    public ReservationIdResponse cancelReservationById(@PathVariable Long reservationId) {
+        return reservationService.cancelReservationById(reservationId);
     }
 
     @GetMapping("/{reservationId}")
-    public ApiResponse<ReservationResponse> findReservationById(
-        @PathVariable Long reservationId,
-        HttpServletRequest httpServletRequest
-    ) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(),
-            reservationService.findReservationById(reservationId));
+    public ReservationResponse findReservationById(@PathVariable Long reservationId) {
+        return reservationService.findReservationById(reservationId);
     }
 
     @GetMapping
-    public ApiResponse<List<ReservationResponse>> findAllReservations(HttpServletRequest httpServletRequest) {
-        return ApiResponse.of(httpServletRequest.getRequestURI(), reservationService.findAllReservations());
+    public List<ReservationResponse> findAllReservations() {
+        return reservationService.findAllReservations();
     }
 }

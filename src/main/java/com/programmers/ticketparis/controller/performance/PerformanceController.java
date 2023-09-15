@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
 import com.programmers.ticketparis.dto.performance.response.PerformanceIdResponse;
 import com.programmers.ticketparis.dto.performance.response.PerformanceResponse;
 import com.programmers.ticketparis.service.performance.PerformanceService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -35,28 +33,22 @@ public class PerformanceController {
     @ResponseStatus(HttpStatus.CREATED)
     public PerformanceIdResponse createPerformance(
         @Valid @RequestBody PerformanceCreateRequest performanceCreateRequest) {
-
         return performanceService.createPerformance(performanceCreateRequest);
     }
 
     @GetMapping("/{performanceId}")
-    public ApiResponse<PerformanceResponse> findPerformanceById(@PathVariable Long performanceId,
-        HttpServletRequest httpServletRequest) {
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(),
-            performanceService.findPerformanceById(performanceId));
+    public PerformanceResponse findPerformanceById(@PathVariable Long performanceId) {
+        return performanceService.findPerformanceById(performanceId);
     }
 
     @GetMapping
-    public ApiResponse<List<PerformanceResponse>> findAllPerformances(HttpServletRequest httpServletRequest) {
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), performanceService.findAllPerformances());
+    public List<PerformanceResponse> findAllPerformances() {
+        return performanceService.findAllPerformances();
     }
 
     @PatchMapping("/{performanceId}")
     public PerformanceIdResponse updatePerformance(@PathVariable Long performanceId,
         @Valid @RequestBody PerformanceUpdateRequest performanceUpdateRequest) {
-
         return performanceService.updatePerformance(performanceId, performanceUpdateRequest);
     }
 

@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.member.SellerCreateRequest;
 import com.programmers.ticketparis.dto.member.SellerIdResponse;
 import com.programmers.ticketparis.dto.member.SellerResponse;
 import com.programmers.ticketparis.service.member.SellerService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -28,20 +26,12 @@ public class SellerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<SellerIdResponse> createAccount(@Valid @RequestBody SellerCreateRequest sellerCreateRequest,
-        HttpServletRequest httpServletRequest
-    ) {
-        SellerIdResponse sellerIdResponse = sellerService.createAccount(sellerCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerIdResponse);
+    public SellerIdResponse createAccount(@Valid @RequestBody SellerCreateRequest sellerCreateRequest) {
+        return sellerService.createAccount(sellerCreateRequest);
     }
 
     @GetMapping("/{sellerId}")
-    public ApiResponse<SellerResponse> findSellerById(@PathVariable Long sellerId,
-        HttpServletRequest httpServletRequest
-    ) {
-        SellerResponse sellerResponse = sellerService.findSellerById(sellerId);
-        
-        return ApiResponse.of(httpServletRequest.getRequestURI(), sellerResponse);
+    public SellerResponse findSellerById(@PathVariable Long sellerId) {
+        return sellerService.findSellerById(sellerId);
     }
 }

@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.dto.ApiResponse;
 import com.programmers.ticketparis.dto.schedule.request.ScheduleCreateRequest;
 import com.programmers.ticketparis.dto.schedule.response.ScheduleResponse;
 import com.programmers.ticketparis.service.schedule.ScheduleService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,13 +25,8 @@ public class ScheduleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<ScheduleResponse> createSchedule(
-        @Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest,
-        HttpServletRequest httpServletRequest
-    ) {
-        ScheduleResponse scheduleResponse = scheduleService.createSchedule(scheduleCreateRequest);
-
-        return ApiResponse.of(httpServletRequest.getRequestURI(), scheduleResponse);
+    public ScheduleResponse createSchedule(@Valid @RequestBody ScheduleCreateRequest request) {
+        return scheduleService.createSchedule(request);
     }
 
     @DeleteMapping("/{scheduleId}")

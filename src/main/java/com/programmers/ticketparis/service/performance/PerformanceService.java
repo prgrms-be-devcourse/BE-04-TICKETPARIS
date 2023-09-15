@@ -45,7 +45,7 @@ public class PerformanceService {
         return performanceRepository.findById(performanceId)
             .map(PerformanceResponse::fromEntity)
             .orElseThrow(
-                () -> new PerformanceException(ExceptionRule.NOT_FOUND_PERFORMANCE,
+                () -> new PerformanceException(ExceptionRule.PERFORMANCE_NOT_EXIST,
                     List.of(String.valueOf(performanceId))));
     }
 
@@ -64,7 +64,7 @@ public class PerformanceService {
 
     private void validatePerformanceExists(Long performanceId) {
         if (!performanceRepository.existsById(performanceId)) {
-            throw new PerformanceException(ExceptionRule.NOT_FOUND_PERFORMANCE, List.of(String.valueOf(performanceId)));
+            throw new PerformanceException(ExceptionRule.PERFORMANCE_NOT_EXIST, List.of(String.valueOf(performanceId)));
         }
     }
 }

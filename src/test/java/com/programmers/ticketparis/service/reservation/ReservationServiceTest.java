@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.repository.reservation.ReservationRepository;
 
@@ -49,12 +50,14 @@ public class ReservationServiceTest {
     @ParameterizedTest
     @MethodSource("createReservationRequest")
     @DisplayName("고객은 공연을 예매할 수 있다.")
-    void createReservation_Save_Sucess(ReservationCreateRequest reservationCreateRequest) {
+    void createReservation_Save_Success(ReservationCreateRequest reservationCreateRequest) {
         // given & when
-        Long reservationId = reservationService.createReservation(reservationCreateRequest);
+        ReservationIdResponse reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
 
         // then
-        ReservationResponse reservationResponse = reservationService.findReservationById(reservationId);
+        ReservationResponse reservationResponse = reservationService.findReservationById(
+            reservationIdResponse.getReservationId());
+
         assertThat(reservationResponse).isNotNull();
     }
 
@@ -62,17 +65,18 @@ public class ReservationServiceTest {
     @ParameterizedTest
     @MethodSource("createReservationRequest")
     @DisplayName("고객은 예매한 공연을 취소할 수 있다.")
-    void cancleReservation_Update_Success(ReservationCreateRequest reservationCreateRequest) {
+    void cancelReservation_Update_Success(ReservationCreateRequest reservationCreateRequest) {
         // given
-        Long reservationId = reservationService.createReservation(reservationCreateRequest);
+        ReservationIdResponse reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
 
         // when
-        reservationService.cancelReservationById(reservationId);
+        reservationService.cancelReservationById(reservationIdResponse.getReservationId());
 
         // then
-        ReservationStatus actualReservationStatus = reservationService.findReservationById(reservationId)
+        ReservationStatus actualReservationStatus = reservationService.findReservationById(
+                reservationIdResponse.getReservationId())
             .getReservationStatus();
-        
+
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
 

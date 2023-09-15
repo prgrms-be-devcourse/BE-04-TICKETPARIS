@@ -131,6 +131,6 @@ class PerformanceServiceTest {
         //then
         assertThrows(PerformanceException.class, () -> {
             performanceService.findPerformanceById(performanceId);
-        }, ExceptionRule.NOT_FOUND_PERFORMANCE.getMessage());
+        }, ExceptionRule.PERFORMANCE_NOT_EXIST.getMessage());
     }
 }

@@ -1,8 +1,8 @@
 package com.programmers.ticketparis.repository.reservation;
 
+import static com.programmers.ticketparis.exception.ExceptionRule.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
-import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.ReservationException;
 
 @SpringBootTest
@@ -55,8 +54,7 @@ class MybatisReservationRepositoryTest {
 
         // then
         Reservation actualReservation = reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(
-                String.valueOf(reservationId))));
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId));
 
         assertThat(actualReservation).isNotNull();
     }
@@ -74,10 +72,9 @@ class MybatisReservationRepositoryTest {
 
         // then
         ReservationStatus actualReservationStatus = reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new ReservationException(ExceptionRule.NOT_EXIST_RESERVATION, List.of(
-                String.valueOf(reservationId))))
+            .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId))
             .getReservationStatus();
-        
+
         assertThat(actualReservationStatus).isEqualTo(ReservationStatus.CANCELED);
     }
 
