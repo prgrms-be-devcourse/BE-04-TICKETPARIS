@@ -13,6 +13,8 @@ public interface CustomerMapper {
 
     Optional<Customer> findById(Long customerId);
 
+    Optional<Customer> findByUsername(String userName);
+
     Boolean existsById(Long customerId);
 
     Boolean existsByUsernameOrEmail(String username, String email);
