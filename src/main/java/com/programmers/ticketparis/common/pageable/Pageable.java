@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.domain.pageable;
+package com.programmers.ticketparis.common.pageable;
 
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 

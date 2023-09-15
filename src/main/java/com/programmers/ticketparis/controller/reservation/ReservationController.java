@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
 import com.programmers.ticketparis.dto.reservation.response.ReservationIdResponse;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;

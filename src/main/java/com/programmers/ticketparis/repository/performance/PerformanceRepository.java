@@ -3,7 +3,7 @@ package com.programmers.ticketparis.repository.performance;
 import java.util.List;
 import java.util.Optional;
 
-import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.performance.Performance;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;

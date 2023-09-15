@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 

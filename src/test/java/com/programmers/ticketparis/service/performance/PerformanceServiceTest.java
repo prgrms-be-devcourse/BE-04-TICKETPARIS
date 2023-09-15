@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;

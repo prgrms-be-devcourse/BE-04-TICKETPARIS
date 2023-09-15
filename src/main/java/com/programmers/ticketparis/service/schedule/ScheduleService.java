@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.programmers.ticketparis.domain.pageable.Pageable;
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.schedule.Schedule;
 import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
