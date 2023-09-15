@@ -47,7 +47,7 @@
                       ON p.performance_id = s.performance_id
                  JOIN reservation AS r
                       ON r.schedule_id = s.schedule_id
-        where p.performance_id = ${performanceId}
+        WHERE p.performance_id = ${performanceId}
         LIMIT #{pageable.offset}, #{pageable.size}
     </select>
 

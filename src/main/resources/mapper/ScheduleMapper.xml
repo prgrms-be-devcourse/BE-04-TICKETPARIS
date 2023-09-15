@@ -50,8 +50,8 @@
         FROM schedule AS s
                  JOIN reservation AS r
                       ON s.schedule_id = r.schedule_id
-        WHERE s.schedule_id = ${scheduleId} LIMIT #{pageable.offset}
-            , #{pageable.size};
+        WHERE s.schedule_id = ${scheduleId}
+        LIMIT #{pageable.offset}, #{pageable.size};
     </select>
 
     <resultMap id="resultReservation" type="Reservation">
