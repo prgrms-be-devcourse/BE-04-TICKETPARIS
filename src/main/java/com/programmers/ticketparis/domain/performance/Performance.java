@@ -75,7 +75,7 @@ public class Performance {
 
     private void validatePerformanceDates(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate)) {
-            throw new PerformanceException(NOT_START_DATE_AFTER_END_DATE,
+            throw new PerformanceException(PERFORMANCE_START_DATE_AFTER_END_DATE,
                 List.of(String.valueOf(startDate), String.valueOf(endDate)));
         }
     }

@@ -13,10 +13,4 @@ public class BusinessException extends RuntimeException {
         this.exceptionRule = exceptionRule;
         this.rejectedValues = rejectedValues;
     }
-
-    public BusinessException(String message, Throwable cause, ExceptionRule rule, List<String> rejectedValues) {
-        super(message, cause);
-        this.rule = rule;
-        this.rejectedValues = rejectedValues;
-    }
 }

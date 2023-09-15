@@ -69,7 +69,7 @@ class MybatisPerformanceRepositoryTest {
 
         //then
         Performance savePerformance = mybatisPerformanceRepository.findById(savedPerformanceId)
-                .orElseThrow(() -> new PerformanceException(ExceptionRule.NOT_FOUND_PERFORMANCE,
+                .orElseThrow(() -> new PerformanceException(ExceptionRule.PERFORMANCE_NOT_EXIST,
                         List.of(String.valueOf(savedPerformanceId))));
 
         assertThat(savePerformance).isNotNull();
@@ -84,7 +84,7 @@ class MybatisPerformanceRepositoryTest {
 
         //when
         Performance foundPerformance = mybatisPerformanceRepository.findById(findPerformanceById)
-                .orElseThrow(() -> new PerformanceException(ExceptionRule.NOT_FOUND_PERFORMANCE,
+                .orElseThrow(() -> new PerformanceException(ExceptionRule.PERFORMANCE_NOT_EXIST,
                         List.of(String.valueOf(findPerformanceById))));
 
         //then
@@ -131,7 +131,7 @@ class MybatisPerformanceRepositoryTest {
 
         //then
         Performance updatedPerformance = mybatisPerformanceRepository.findById(savedPerformanceId)
-                .orElseThrow(() -> new PerformanceException(ExceptionRule.NOT_FOUND_PERFORMANCE,
+                .orElseThrow(() -> new PerformanceException(ExceptionRule.PERFORMANCE_NOT_EXIST,
                         List.of(String.valueOf(savedPerformanceId))));
 
         assertThat(updatedPerformance.getTitle()).isEqualTo(performanceUpdateRequest.getTitle());
