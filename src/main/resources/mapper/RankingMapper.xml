@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programmers.ticketparis.repository.ranking.RankingMapper">
+
+    <select id="findTopRankings" resultType="RankingResponse">
+        SELECT
+            performance_id,
+            title,
+            poster_url,
+            start_date,
+            end_date,
+            hall_name,
+            reservation_rate,
+            RANK() OVER (ORDER BY reservation_rate DESC) ranking
+
+        FROM (
+            SELECT
+                p.performance_id performance_id,
+                p.title title,
+                p.poster_url poster_url,
+                p.start_date start_date,
+                p.end_date end_date,
+                h.name hall_name,
+                ROUND((1 - (s.remaining_seats_count / CAST((h.seats_count * s.schedules_count) AS DOUBLE))) * 100, 1)
+                    AS reservation_rate
+
+            FROM performance p
+
+            JOIN hall h
+            ON p.hall_id = h.hall_id
+
+            JOIN (
+                SELECT
+                    performance_id,
+                    COUNT(schedule_id) schedules_count,
+                    SUM(seats_count) remaining_seats_count
+                FROM schedule
+                GROUP BY performance_id
+            ) s
+            ON p.performance_id = s.performance_id
+        ) r
+
+        ORDER BY ranking, title
+        LIMIT 50;
+    </select>
+
+</mapper>
