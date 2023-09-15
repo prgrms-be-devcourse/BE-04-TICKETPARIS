@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.programmers.ticketparis.exception.ExceptionRule;
+import com.programmers.ticketparis.exception.GlobalExceptionHandler;
 
-@RestControllerAdvice(basePackages = "com.programmers.ticketparis.controller")
+@RestControllerAdvice(
+    basePackages = "com.programmers.ticketparis.controller",
+    basePackageClasses = GlobalExceptionHandler.class
+)
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
     @Override
