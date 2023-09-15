@@ -19,14 +19,14 @@ public class Pageable {
 
     @Builder
     private Pageable(Integer pageNum, Integer size) {
-        isNumberPositive(pageNum);
-        isNumberPositive(size);
+        validateNumberIsPositive(pageNum);
+        validateNumberIsPositive(size);
         this.offset = (pageNum - 1) * size;
         this.pageNum = pageNum;
         this.size = size;
     }
 
-    private void isNumberPositive(Integer number) {
+    private void validateNumberIsPositive(Integer number) {
         if (number <= 0) {
             throw new CommonException(COMMON_NUMBER_IS_NOT_POSITIVE, number);
         }
