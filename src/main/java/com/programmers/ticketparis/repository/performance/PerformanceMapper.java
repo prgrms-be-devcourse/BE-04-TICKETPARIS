@@ -13,7 +13,7 @@ import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequ
 @Mapper
 public interface PerformanceMapper {
 
-    Long save(Performance performance);
+    void save(Performance performance);
 
     Long update(Long performanceId, PerformanceUpdateRequest updateRequest);
 

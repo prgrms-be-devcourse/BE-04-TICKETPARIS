@@ -19,7 +19,9 @@ public class MybatisReservationRepository implements ReservationRepository {
 
     @Override
     public Long save(Reservation reservation) {
-        return reservationMapper.save(reservation);
+        reservationMapper.save(reservation);
+
+        return reservation.getReservationId();
     }
 
     @Override

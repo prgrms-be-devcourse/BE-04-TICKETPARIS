@@ -9,7 +9,7 @@ import com.programmers.ticketparis.domain.member.Customer;
 @Mapper
 public interface CustomerMapper {
 
-    Long save(Customer item);
+    void save(Customer item);
 
     Optional<Customer> findById(Long customerId);
 

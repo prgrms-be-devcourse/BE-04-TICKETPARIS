@@ -16,7 +16,9 @@ public class MyBatisSellerRepository implements SellerRepository {
 
     @Override
     public Long save(Seller seller) {
-        return sellerMapper.save(seller);
+        sellerMapper.save(seller);
+
+        return seller.getSellerId();
     }
 
     @Override

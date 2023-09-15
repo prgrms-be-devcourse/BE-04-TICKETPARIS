@@ -12,7 +12,7 @@ import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 @Mapper
 public interface ReservationMapper {
 
-    Long save(Reservation reservation);
+    void save(Reservation reservation);
 
     Long updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
 
