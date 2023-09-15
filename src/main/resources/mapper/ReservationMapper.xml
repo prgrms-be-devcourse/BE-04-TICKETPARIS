@@ -25,7 +25,7 @@
     <select id="findReservationsByPage" resultMap="resultReservation">
         SELECT reservation_id, status, created_datetime, updated_datetime, customer_id, schedule_id
         FROM reservation
-        LIMIT #{skipData}, #{size};
+        LIMIT #{offset}, #{size};
     </select>
 
     <resultMap id="resultReservation" type="Reservation">

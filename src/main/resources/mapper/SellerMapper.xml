@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.mapper.member.SellerMapper">
+<mapper namespace="com.programmers.ticketparis.repository.member.SellerMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="sellerId">
         INSERT INTO seller (username, password, name, email, phone, registration_number, store_name)
         VALUES (#{username}, #{password}, #{name}, #{email}, #{phone}, #{registrationNumber}, #{storeName})
     </insert>
-    
+
     <select id="findById" resultType="Seller">
-        SELECT seller_id, username, name, email, phone, registration_number, store_name, created_datetime, updated_datetime
+        SELECT seller_id,
+               username,
+               name,
+               email,
+               phone,
+               registration_number,
+               store_name,
+               created_datetime,
+               updated_datetime
         FROM seller
         WHERE seller_id = #{sellerId}
     </select>
@@ -19,7 +27,11 @@
     </select>
 
     <select id="existsByUniqueFields" resultType="Boolean">
-        SELECT EXISTS(select 1 from seller where username = #{username} OR email = #{email} OR registration_number = #{registrationNumber})
+        SELECT EXISTS(select 1
+                      from seller
+                      where username = #{username}
+                         OR email = #{email}
+                         OR registration_number = #{registrationNumber})
     </select>
 
 </mapper>

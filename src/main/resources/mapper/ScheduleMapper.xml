@@ -42,7 +42,7 @@
 
     <select id="findSchedulesByPage" resultType="Schedule">
         SELECT schedule_id, start_datetime, sequence, seats_count, performance_id
-        FROM schedule LIMIT #{skipData}, #{size};
+        FROM schedule LIMIT #{offset}, #{size};
     </select>
 
     <select id="findReservationsByScheduleIdWithPage" resultMap="resultReservation">
@@ -50,7 +50,7 @@
         FROM schedule AS s
                  JOIN reservation AS r
                       ON s.schedule_id = r.schedule_id
-        WHERE s.schedule_id = ${scheduleId} LIMIT #{pageable.skipData}
+        WHERE s.schedule_id = ${scheduleId} LIMIT #{pageable.offset}
             , #{pageable.size};
     </select>
 

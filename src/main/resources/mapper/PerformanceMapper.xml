@@ -37,7 +37,7 @@
     <select id="findPerformancesByPage" resultType="Performance">
         SELECT *
         FROM performance
-        LIMIT #{skipData}, #{size}
+        LIMIT #{offset}, #{size}
     </select>
 
     <select id="findReservationsByPerformanceIdWithPage" resultMap="resultReservation">
@@ -48,7 +48,7 @@
                  JOIN reservation AS r
                       ON r.schedule_id = s.schedule_id
         where p.performance_id = ${performanceId}
-        LIMIT #{pageable.skipData}, #{pageable.size}
+        LIMIT #{pageable.offset}, #{pageable.size}
     </select>
 
     <resultMap id="resultReservation" type="Reservation">

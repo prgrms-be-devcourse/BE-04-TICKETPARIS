@@ -17,13 +17,13 @@ public class Pageable {
 
     private Integer pageNum;
     private Integer size;
-    private Integer skipData;
+    private Integer offset;
 
     @Builder
     private Pageable(Integer pageNum, Integer size) {
         isNumberPositive(pageNum);
         isNumberPositive(size);
-        this.skipData = (pageNum - 1) * size;
+        this.offset = (pageNum - 1) * size;
         this.pageNum = pageNum;
         this.size = size;
     }
