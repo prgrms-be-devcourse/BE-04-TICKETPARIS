@@ -2,8 +2,6 @@ package com.programmers.ticketparis.common.pageable;
 
 import static com.programmers.ticketparis.exception.ExceptionRule.*;
 
-import java.util.List;
-
 import com.programmers.ticketparis.exception.CommonException;
 
 import lombok.AccessLevel;
@@ -30,7 +28,7 @@ public class Pageable {
 
     private void isNumberPositive(Integer number) {
         if (number <= 0) {
-            throw new CommonException(NUMBER_IS_NOT_POSITIVE, List.of(String.valueOf(number)));
+            throw new CommonException(COMMON_NUMBER_IS_NOT_POSITIVE, number);
         }
     }
 }

@@ -1,10 +1,8 @@
 package com.programmers.ticketparis.exception;
 
-import java.util.List;
-
 public class CommonException extends BusinessException {
 
-    public CommonException(ExceptionRule rule, List<String> rejectedValues) {
+    public CommonException(ExceptionRule rule, Object... rejectedValues) {
         super(rule, rejectedValues);
     }
 }
