@@ -5,9 +5,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.performance.Performance;
+import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
-import com.programmers.ticketparis.mapper.PerformanceMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,8 +38,13 @@ public class MybatisPerformanceRepository implements PerformanceRepository {
     }
 
     @Override
-    public List<Performance> findAll() {
-        return performanceMapper.findAll();
+    public List<Performance> findPerformancesByPage(Pageable pageable) {
+        return performanceMapper.findPerformancesByPage(pageable);
+    }
+
+    @Override
+    public List<Reservation> findReservationsByPerformanceIdWithPage(Long performanceId, Pageable pageable) {
+        return performanceMapper.findReservationsByPerformanceIdWithPage(performanceId, pageable);
     }
 
     @Override

@@ -1,9 +1,12 @@
 package com.programmers.ticketparis.repository.schedule;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.programmers.ticketparis.common.pageable.Pageable;
+import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.schedule.Schedule;
 
 import lombok.RequiredArgsConstructor;
@@ -44,5 +47,15 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     @Override
     public void updateSeatsCountById(Long scheduleId, Integer seatsCount) {
         scheduleMapper.updateSeatsCountById(scheduleId, seatsCount);
+    }
+
+    @Override
+    public List<Schedule> findSchedulesByPage(Pageable pageable) {
+        return scheduleMapper.findSchedulesByPage(pageable);
+    }
+
+    @Override
+    public List<Reservation> findReservationsByScheduleIdWithPage(Integer scheduleId, Pageable pageable) {
+        return scheduleMapper.findReservationsByScheduleIdWithPage(scheduleId, pageable);
     }
 }

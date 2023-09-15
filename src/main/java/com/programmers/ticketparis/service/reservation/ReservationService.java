@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
@@ -49,8 +50,8 @@ public class ReservationService {
             .orElseThrow(() -> new ReservationException(RESERVATION_NOT_EXIST, reservationId));
     }
 
-    public List<ReservationResponse> findAllReservations() {
-        List<Reservation> reservations = reservationRepository.findAll();
+    public List<ReservationResponse> findReservationsByPage(Pageable pageable) {
+        List<Reservation> reservations = reservationRepository.findReservationsByPage(pageable);
 
         return reservations.stream()
             .map(ReservationResponse::from).toList();

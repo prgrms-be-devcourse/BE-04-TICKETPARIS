@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.performance.Performance;
 import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
 import com.programmers.ticketparis.dto.performance.response.PerformanceIdResponse;
 import com.programmers.ticketparis.dto.performance.response.PerformanceResponse;
+import com.programmers.ticketparis.dto.reservation.response.ReservationResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.PerformanceException;
 import com.programmers.ticketparis.repository.performance.PerformanceRepository;
@@ -41,7 +43,6 @@ public class PerformanceService {
     }
 
     public PerformanceResponse findPerformanceById(Long performanceId) {
-
         return performanceRepository.findById(performanceId)
             .map(PerformanceResponse::fromEntity)
             .orElseThrow(
@@ -49,10 +50,15 @@ public class PerformanceService {
                     List.of(String.valueOf(performanceId))));
     }
 
-    public List<PerformanceResponse> findAllPerformances() {
+    public List<PerformanceResponse> findPerformancesByPage(Pageable pageable) {
+        return performanceRepository.findPerformancesByPage(pageable).stream()
+            .map(PerformanceResponse::fromEntity)
+            .toList();
+    }
 
-        return performanceRepository.findAll().stream()
-            .map(performance -> PerformanceResponse.fromEntity(performance))
+    public List<ReservationResponse> findReservationsByPerformanceIdWithPage(Long performanceId, Pageable pageable) {
+        return performanceRepository.findReservationsByPerformanceIdWithPage(performanceId, pageable).stream()
+            .map(ReservationResponse::from)
             .toList();
     }
 

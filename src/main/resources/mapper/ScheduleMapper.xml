@@ -40,4 +40,22 @@
         WHERE schedule_id = #{scheduleId}
     </update>
 
+    <select id="findSchedulesByPage" resultType="Schedule">
+        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id
+        FROM schedule LIMIT #{offset}, #{size};
+    </select>
+
+    <select id="findReservationsByScheduleIdWithPage" resultMap="resultReservation">
+        SELECT r.reservation_id, r.status, r.created_datetime, r.updated_datetime, r.customer_id, r.schedule_id
+        FROM schedule AS s
+                 JOIN reservation AS r
+                      ON s.schedule_id = r.schedule_id
+        WHERE s.schedule_id = ${scheduleId}
+        LIMIT #{pageable.offset}, #{pageable.size};
+    </select>
+
+    <resultMap id="resultReservation" type="Reservation">
+        <result column="status" property="reservationStatus"/>
+    </resultMap>
+
 </mapper>

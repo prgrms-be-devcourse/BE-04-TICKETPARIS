@@ -1,5 +1,22 @@
 package com.programmers.ticketparis.service.performance;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.performance.Category;
 import com.programmers.ticketparis.dto.performance.request.PerformanceCreateRequest;
 import com.programmers.ticketparis.dto.performance.request.PerformanceUpdateRequest;
@@ -8,15 +25,6 @@ import com.programmers.ticketparis.dto.performance.response.PerformanceResponse;
 import com.programmers.ticketparis.exception.ExceptionRule;
 import com.programmers.ticketparis.exception.PerformanceException;
 import com.programmers.ticketparis.repository.performance.MybatisPerformanceRepository;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -35,29 +43,29 @@ class PerformanceServiceTest {
     @BeforeAll
     void setUp() {
         performanceCreateRequest = new PerformanceCreateRequest(
-                "제4회 더 싱어즈 정기연주회",
-                "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif",
-                LocalDate.of(2023, 9, 20),
-                LocalDate.of(2023, 12, 20),
-                "2시간",
-                15,
-                15000,
-                Category.MUSICAL,
-                "테스트 공연 입니다.",
-                1L,
-                1L);
+            "제4회 더 싱어즈 정기연주회",
+            "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif",
+            LocalDate.of(2023, 9, 20),
+            LocalDate.of(2023, 12, 20),
+            "2시간",
+            15,
+            15000,
+            Category.MUSICAL,
+            "테스트 공연 입니다.",
+            1L,
+            1L);
 
         performanceUpdateRequest = new PerformanceUpdateRequest(
-                "수정된 타이틀",
-                "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif",
-                LocalDate.of(2023, 9, 11),
-                LocalDate.of(2023, 11, 13),
-                "3시간",
-                15,
-                30000,
-                Category.MUSICAL,
-                "테스트 설명입니다.",
-                1L);
+            "수정된 타이틀",
+            "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif",
+            LocalDate.of(2023, 9, 11),
+            LocalDate.of(2023, 11, 13),
+            "3시간",
+            15,
+            30000,
+            Category.MUSICAL,
+            "테스트 설명입니다.",
+            1L);
     }
 
     @Transactional
@@ -93,7 +101,12 @@ class PerformanceServiceTest {
     @DisplayName("저장된 모든 공연을 조회한다.")
     void findAllPerformanceTest() {
         //given & when
-        List<PerformanceResponse> performances = performanceService.findAllPerformances();
+        Pageable pageable = Pageable.builder()
+            .pageNum(1)
+            .size(10)
+            .build();
+
+        List<PerformanceResponse> performances = performanceService.findPerformancesByPage(pageable);
 
         //then
         assertFalse(performances.isEmpty());
@@ -109,11 +122,13 @@ class PerformanceServiceTest {
         Long performanceId = 6L;
 
         //when
-        PerformanceIdResponse updatedPerformanceIdResponse = performanceService.updatePerformance(performanceId, performanceUpdateRequest);
+        PerformanceIdResponse updatedPerformanceIdResponse = performanceService.updatePerformance(performanceId,
+            performanceUpdateRequest);
 
         //then
         assertNotNull(updatedPerformanceIdResponse);
-        PerformanceResponse updatedPerformance = performanceService.findPerformanceById(updatedPerformanceIdResponse.getPerformanceId());
+        PerformanceResponse updatedPerformance = performanceService.findPerformanceById(
+            updatedPerformanceIdResponse.getPerformanceId());
         assertEquals(performanceUpdateRequest.getTitle(), updatedPerformance.getTitle());
     }
 
@@ -124,7 +139,7 @@ class PerformanceServiceTest {
     void deletePerformanceByIdTest() {
         //given
         Long performanceId = 6L;
-        
+
         //when
         performanceService.deletePerformanceById(performanceId);
 

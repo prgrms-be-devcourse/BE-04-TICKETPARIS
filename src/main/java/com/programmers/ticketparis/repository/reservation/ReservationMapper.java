@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.domain.reservation.Reservation;
 import com.programmers.ticketparis.domain.reservation.ReservationStatus;
 
@@ -17,7 +18,7 @@ public interface ReservationMapper {
 
     Optional<Reservation> findById(Long reservationId);
 
-    List<Reservation> findAll();
+    List<Reservation> findReservationsByPage(Pageable pageable);
 
     Boolean existsById(Long reservationId);
 }
