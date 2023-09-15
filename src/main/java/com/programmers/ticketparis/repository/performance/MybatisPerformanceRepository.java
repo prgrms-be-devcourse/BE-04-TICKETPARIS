@@ -21,8 +21,9 @@ public class MybatisPerformanceRepository implements PerformanceRepository {
 
     @Override
     public Long save(Performance performance) {
+        performanceMapper.save(performance);
 
-        return performanceMapper.save(performance);
+        return performance.getPerformanceId();
     }
 
     @Override

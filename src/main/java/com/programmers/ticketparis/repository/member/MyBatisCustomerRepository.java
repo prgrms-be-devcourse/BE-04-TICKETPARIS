@@ -16,7 +16,9 @@ public class MyBatisCustomerRepository implements CustomerRepository {
 
     @Override
     public Long save(Customer customer) {
-        return customerMapper.save(customer);
+        customerMapper.save(customer);
+        
+        return customer.getCustomerId();
     }
 
     @Override
