@@ -4,12 +4,7 @@ server:
 spring:
   # DATABASE 기본 설정
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:ticketparis
-    username: sa
-
-  # H2 콘솔 접속 허용 설정
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    driver-class-name: ${DATABASE_LOCAL_MYSQL_CLASSNAME}
+    url: ${DATABASE_LOCAL_MYSQL_URL}
+    username: ${DATABASE_LOCAL_MYSQL_USERNAME}
+    password: ${DATABASE_LOCAL_MYSQL_PASSWORD}
