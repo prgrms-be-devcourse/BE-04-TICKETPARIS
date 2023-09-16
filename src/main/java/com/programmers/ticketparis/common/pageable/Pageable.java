@@ -1,8 +1,8 @@
 package com.programmers.ticketparis.common.pageable;
 
-import static com.programmers.ticketparis.exception.ExceptionRule.*;
+import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
 
-import com.programmers.ticketparis.exception.CommonException;
+import com.programmers.ticketparis.common.exception.CommonException;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,6 +21,7 @@ public class Pageable {
     private Pageable(Integer pageNum, Integer size) {
         validateNumberIsPositive(pageNum);
         validateNumberIsPositive(size);
+
         this.offset = (pageNum - 1) * size;
         this.pageNum = pageNum;
         this.size = size;

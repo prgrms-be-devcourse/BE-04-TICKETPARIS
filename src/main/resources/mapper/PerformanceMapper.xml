@@ -1,31 +1,28 @@
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.repository.performance.PerformanceMapper">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programmers.ticketparis.performance.repository.mapper.PerformanceMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="performanceId">
         INSERT INTO performance (title, poster_url, start_date, end_date, duration,
                                  age_rating, price, description, category, seller_id, hall_id)
-        VALUES (#{title}, #{posterUrl}, #{startDate},
-                #{endDate}, #{duration},
-                #{ageRating}, #{price}, #{description},
-                #{category},
-                #{sellerId}, #{hallId})
+        VALUES (#{title}, #{posterUrl}, #{startDate}, #{endDate}, #{duration},
+                #{ageRating}, #{price}, #{description}, #{category}, #{sellerId}, #{hallId})
     </insert>
 
     <update id="update">
         UPDATE performance
-        SET title       = #{updateRequest.title},
-            poster_url  = #{updateRequest.posterUrl},
-            start_date  = #{updateRequest.startDate},
-            end_date    = #{updateRequest.endDate},
-            duration    = #{updateRequest.duration},
-            age_rating  = #{updateRequest.ageRating},
-            price       = #{updateRequest.price},
-            category    = #{updateRequest.category},
-            description = #{updateRequest.description},
-            hall_Id     = #{updateRequest.hallId}
+        SET title       = #{performanceUpdateRequest.title},
+            poster_url  = #{performanceUpdateRequest.posterUrl},
+            start_date  = #{performanceUpdateRequest.startDate},
+            end_date    = #{performanceUpdateRequest.endDate},
+            duration    = #{performanceUpdateRequest.duration},
+            age_rating  = #{performanceUpdateRequest.ageRating},
+            price       = #{performanceUpdateRequest.price},
+            category    = #{performanceUpdateRequest.category},
+            description = #{performanceUpdateRequest.description},
+            hall_Id     = #{performanceUpdateRequest.hallId}
         WHERE performance_id = #{performanceId}
-
     </update>
 
     <select id="findById" resultType="Performance">
@@ -42,10 +39,10 @@
 
     <select id="findReservationsByPerformanceIdWithPage" resultMap="resultReservation">
         SELECT r.reservation_id, r.status, r.created_datetime, r.updated_datetime, r.customer_id, r.schedule_id
-        FROM performance AS p
-                 JOIN schedule AS s
+        FROM performance p
+                 JOIN schedule s
                       ON p.performance_id = s.performance_id
-                 JOIN reservation AS r
+                 JOIN reservation r
                       ON r.schedule_id = s.schedule_id
         WHERE p.performance_id = ${performanceId}
         LIMIT #{pageable.offset}, #{pageable.size}
