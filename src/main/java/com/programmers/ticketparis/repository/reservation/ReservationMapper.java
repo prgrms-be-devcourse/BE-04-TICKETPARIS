@@ -14,7 +14,7 @@ public interface ReservationMapper {
 
     void save(Reservation reservation);
 
-    Long updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
+    void updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
 
     Optional<Reservation> findById(Long reservationId);
 

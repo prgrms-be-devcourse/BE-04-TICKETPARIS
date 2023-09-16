@@ -28,8 +28,9 @@ public class MybatisPerformanceRepository implements PerformanceRepository {
 
     @Override
     public Long update(Long performanceId, PerformanceUpdateRequest performanceUpdateRequest) {
-
-        return performanceMapper.update(performanceId, performanceUpdateRequest);
+        performanceMapper.update(performanceId, performanceUpdateRequest);
+        
+        return performanceId;
     }
 
     @Override

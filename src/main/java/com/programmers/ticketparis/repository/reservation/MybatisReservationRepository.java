@@ -26,7 +26,9 @@ public class MybatisReservationRepository implements ReservationRepository {
 
     @Override
     public Long updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus) {
-        return reservationMapper.updateReservationStatusById(reservationId, reservationStatus);
+        reservationMapper.updateReservationStatusById(reservationId, reservationStatus);
+
+        return reservationId;
     }
 
     @Override
