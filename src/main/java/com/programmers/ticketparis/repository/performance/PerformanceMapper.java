@@ -15,7 +15,7 @@ public interface PerformanceMapper {
 
     void save(Performance performance);
 
-    Long update(Long performanceId, PerformanceUpdateRequest updateRequest);
+    void update(Long performanceId, PerformanceUpdateRequest updateRequest);
 
     Optional<Performance> findById(Long performanceId);
 
