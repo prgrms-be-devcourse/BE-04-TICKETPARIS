@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.repository.reservation.ReservationMapper">
+
+<mapper namespace="com.programmers.ticketparis.reservation.repository.mapper.ReservationMapper">
+
     <insert id="save" useGeneratedKeys="true" keyProperty="reservationId">
         INSERT INTO reservation (status, customer_id, schedule_id)
-        VALUES (#{reservationStatus}, #{customerId}, #{scheduleId})
+        VALUES (#{reservationStatus}, #{customerId}, #{scheduleId});
     </insert>
 
     <update id="updateReservationStatusById">
         UPDATE reservation
-        SET status=#{reservationStatus}
-        WHERE reservation_id = #{reservationId}
+        SET status = #{reservationStatus}
+        WHERE reservation_id = #{reservationId};
     </update>
 
     <select id="existsById" resultType="Boolean">
-        SELECT EXISTS(select 1 from reservation where reservation_id = #{reservationId})
+        SELECT EXISTS(SELECT 1 FROM reservation WHERE reservation_id = #{reservationId});
     </select>
 
     <select id="findById" resultMap="resultReservation">
@@ -31,4 +33,5 @@
     <resultMap id="resultReservation" type="Reservation">
         <result column="status" property="reservationStatus"/>
     </resultMap>
+
 </mapper>

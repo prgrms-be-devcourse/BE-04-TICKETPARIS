@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.programmers.ticketparis.repository.schedule.ScheduleMapper">
+<mapper namespace="com.programmers.ticketparis.schedule.repository.mapper.ScheduleMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="scheduleId">
         INSERT INTO schedule (start_datetime, sequence, seats_count, performance_id)
@@ -10,8 +10,8 @@
 
     <select id="findHallSeatsCountByPerformanceId" resultType="Integer">
         SELECT h.seats_count
-        FROM performance as p
-                 JOIN hall as h
+        FROM performance p
+                 JOIN hall h
                       ON p.hall_id = h.hall_id
         WHERE p.performance_id = #{performanceId};
     </select>
@@ -23,9 +23,7 @@
     </select>
 
     <select id="existsById" resultType="Boolean">
-        SELECT EXISTS(SELECT schedule_id
-                      FROM schedule
-                      WHERE schedule_id = #{scheduleId});
+        SELECT EXISTS(SELECT 1 FROM schedule WHERE schedule_id = #{scheduleId});
     </select>
 
     <delete id="deleteById">
@@ -42,13 +40,14 @@
 
     <select id="findSchedulesByPage" resultType="Schedule">
         SELECT schedule_id, start_datetime, sequence, seats_count, performance_id
-        FROM schedule LIMIT #{offset}, #{size};
+        FROM schedule
+        LIMIT #{offset}, #{size};
     </select>
 
     <select id="findReservationsByScheduleIdWithPage" resultMap="resultReservation">
         SELECT r.reservation_id, r.status, r.created_datetime, r.updated_datetime, r.customer_id, r.schedule_id
-        FROM schedule AS s
-                 JOIN reservation AS r
+        FROM schedule s
+                 JOIN reservation r
                       ON s.schedule_id = r.schedule_id
         WHERE s.schedule_id = ${scheduleId}
         LIMIT #{pageable.offset}, #{pageable.size};

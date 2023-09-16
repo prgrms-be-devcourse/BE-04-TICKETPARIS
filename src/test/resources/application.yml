@@ -11,7 +11,7 @@ spring:
       password: ${REDIS_PASSWORD}
 
 mybatis:
-  type-aliases-package: com.programmers.ticketparis.domain, com.programmers.ticketparis.dto
+  type-aliases-package: com.programmers.ticketparis
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/**/*.xml

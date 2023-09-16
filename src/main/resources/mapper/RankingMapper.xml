@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.programmers.ticketparis.repository.ranking.RankingMapper">
+<mapper namespace="com.programmers.ticketparis.ranking.repository.mapper.RankingMapper">
 
-    <select id="findTopRankings" resultType="RankingResponse">
+    <select id="findTopRankingPerformances" resultType="RankingResponse">
         SELECT
             performance_id,
             title,
@@ -22,8 +22,7 @@
                 p.start_date start_date,
                 p.end_date end_date,
                 h.name hall_name,
-                ROUND((1 - (s.remaining_seats_count / CAST((h.seats_count * s.schedules_count) AS DOUBLE))) * 100, 1)
-                    AS reservation_rate
+                ROUND((1 - (s.remaining_seats_count / CAST((h.seats_count * s.schedules_count) AS DOUBLE))) * 100, 1) reservation_rate
 
             FROM performance p
 

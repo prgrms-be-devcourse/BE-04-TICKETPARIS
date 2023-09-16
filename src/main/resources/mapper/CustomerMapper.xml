@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.programmers.ticketparis.repository.member.CustomerMapper">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programmers.ticketparis.member.repository.mapper.CustomerMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="customerId">
         INSERT INTO customer (username, password, name, email, birth_date, phone, address)
@@ -9,25 +9,17 @@
     </insert>
 
     <select id="findById" resultType="Customer">
-        SELECT customer_id,
-               username,
-               name,
-               email,
-               birth_date,
-               phone,
-               address,
-               created_datetime,
-               updated_datetime
+        SELECT customer_id, username, name, email, birth_date, phone, address, created_datetime, updated_datetime
         FROM customer
         WHERE customer_id = #{customerId}
     </select>
 
     <select id="existsById" resultType="Boolean">
-        SELECT EXISTS(select 1 from customer where customer_id = #{customerId})
+        SELECT EXISTS(SELECT 1 FROM customer WHERE customer_id = #{customerId})
     </select>
 
     <select id="existsByUsernameOrEmail" resultType="Boolean">
-        SELECT EXISTS(select 1 from customer where username = #{username} OR email = #{email})
+        SELECT EXISTS(SELECT 1 FROM customer WHERE username = #{username} OR email = #{email})
     </select>
 
 </mapper>
