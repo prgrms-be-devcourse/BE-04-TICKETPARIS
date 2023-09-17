@@ -44,24 +44,6 @@ public class CustomerCreateRequest {
     @Size(min = 0, max = 255, message = "주소는 255자 이하로 입력")
     private String address;
 
-    private CustomerCreateRequest(
-        String username,
-        String password,
-        String name,
-        String email,
-        String phone,
-        LocalDate birthDate,
-        String address
-    ) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.address = address;
-    }
-
     public Customer toEntity() {
         return Customer.builder()
             .username(username)
