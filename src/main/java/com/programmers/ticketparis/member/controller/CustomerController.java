@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.programmers.ticketparis.member.dto.CustomerLoginForm;
 import com.programmers.ticketparis.member.dto.request.CustomerCreateRequest;
 import com.programmers.ticketparis.member.dto.response.CustomerIdResponse;
 import com.programmers.ticketparis.member.dto.response.CustomerResponse;
@@ -28,6 +29,16 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerIdResponse createCustomer(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
         return customerService.createCustomer(customerCreateRequest);
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerResponse login(@Valid @RequestBody CustomerLoginForm customerLoginForm) {
+        CustomerResponse loginCustomerResponse = customerService.login(customerLoginForm);
+
+        //todo: 로그인 성공 처리
+
+        return loginCustomerResponse;
     }
 
     @GetMapping("/{customerId}")
