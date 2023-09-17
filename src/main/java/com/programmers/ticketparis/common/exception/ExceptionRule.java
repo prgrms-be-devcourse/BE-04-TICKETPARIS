@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 public enum ExceptionRule {
 
     CUSTOMER_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 구매자를 찾을 수 없음"),
+    CUSTOMER_USERNAME_NOT_EXIST(HttpStatus.NOT_FOUND, "username에 해당하는 구매자를 찾을 수 없음"),
     CUSTOMER_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email로 요청"),
 
     SELLER_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 판매자를 찾을 수 없음"),
