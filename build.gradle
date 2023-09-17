@@ -38,6 +38,11 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+    testImplementation 'io.rest-assured:rest-assured:5.3.2'
+    testImplementation 'io.rest-assured:json-path:5.3.2'
+    testImplementation 'io.rest-assured:json-schema-validator:5.3.2'
+    testImplementation 'org.testng:testng:7.4.0'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
 // 자바 빌드시 plain.jar 생성 안되게 설정
@@ -47,4 +52,16 @@ jar {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+//Test에서 ControllerTest로 끝나지 않는 테스트는 Junit 테스트를 사용하도록 변경
+test {
+    useJUnitPlatform()
+    exclude '**/*ControllerTest*'
+}
+
+//Test에서 ControllerTest로 끝나는 테스트는 TestNg를 사용하도록 변경
+task testTestng(type: Test) {
+    useTestNG()
+    include '**/*ControllerTest*'
 }
