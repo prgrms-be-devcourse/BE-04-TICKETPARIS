@@ -10,6 +10,7 @@ import com.programmers.ticketparis.member.dto.CustomerLoginForm;
 import com.programmers.ticketparis.member.dto.request.CustomerCreateRequest;
 import com.programmers.ticketparis.member.dto.response.CustomerIdResponse;
 import com.programmers.ticketparis.member.dto.response.CustomerResponse;
+import com.programmers.ticketparis.member.dto.response.LoginResponse;
 import com.programmers.ticketparis.member.exception.CustomerException;
 import com.programmers.ticketparis.member.repository.CustomerRepository;
 
@@ -35,10 +36,10 @@ public class CustomerService {
         return CustomerIdResponse.from(customerId);
     }
 
-    public CustomerResponse login(CustomerLoginForm customerLoginForm) {
+    public LoginResponse login(CustomerLoginForm customerLoginForm) {
         return customerRepository.findByUsername(customerLoginForm.getUsername())
-            .filter(m -> m.checkPassword(customerLoginForm.getPassword()))
-            .map(CustomerResponse::from)
+            .filter(customer -> customer.checkPassword(customerLoginForm.getPassword()))
+            .map(LoginResponse::from)
             .orElseThrow(() -> new CustomerException(LOGIN_FAILED, customerLoginForm.getUsername()));
     }
 
