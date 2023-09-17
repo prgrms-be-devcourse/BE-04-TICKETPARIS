@@ -14,12 +14,6 @@
         WHERE customer_id = #{customerId}
     </select>
 
-    <select id="findByUsername" resultType="Customer">
-        SELECT customer_id, username, password, name, email, birth_date, phone, address, created_datetime, updated_datetime
-        FROM customer
-        WHERE username = #{username}
-    </select>
-
     <select id="existsById" resultType="Boolean">
         SELECT EXISTS(SELECT 1 FROM customer WHERE customer_id = #{customerId})
     </select>
