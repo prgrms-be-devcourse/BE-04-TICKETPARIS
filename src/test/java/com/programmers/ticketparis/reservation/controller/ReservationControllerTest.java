@@ -1,6 +1,6 @@
-package com.programmers.ticketparis.controller.reservation;
+package com.programmers.ticketparis.reservation.controller;
 
-import com.programmers.ticketparis.dto.reservation.request.ReservationCreateRequest;
+import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
 import io.restassured.http.ContentType;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
@@ -87,4 +87,5 @@ public class ReservationControllerTest {
             .body("data.reservationId", equalTo(434))
             .body("message", nullValue());
     }
+
 }
