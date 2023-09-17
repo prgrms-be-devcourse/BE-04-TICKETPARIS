@@ -18,17 +18,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-            .title("Springdoc 테스트")
-            .description("Springdoc을 사용한 Swagger UI 테스트")
+            .title("TicketParis API 목록")
+            .description("TicketParis의 도메인별 Swagger API 목록")
             .version("1.0.0");
     }
-
-//    @Bean
-//    public Docket apiDocket() {
-//        return new Docket(DocumentationType.OAS_30)
-//            .select()
-//            .apis(RequestHandlerSelectors.basePackage("com.programmers.ticketparis.controller"))
-//            .paths(PathSelectors.any())
-//            .build();
-//    }
 }
