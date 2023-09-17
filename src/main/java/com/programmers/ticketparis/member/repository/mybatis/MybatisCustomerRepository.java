@@ -29,6 +29,11 @@ public class MybatisCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    public Optional<Customer> findByUsername(String userName) {
+        return customerMapper.findByUsername(userName);
+    }
+
+    @Override
     public Boolean existsById(Long customerId) {
         return customerMapper.existsById(customerId);
     }

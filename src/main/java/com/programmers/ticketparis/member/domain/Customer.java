@@ -59,4 +59,8 @@ public class Customer {
         this.birthDate = birthDate;
         this.address = address;
     }
+
+    public Boolean checkPassword(String plainPassword) {
+        return BCrypt.checkpw(plainPassword, this.password);
+    }
 }

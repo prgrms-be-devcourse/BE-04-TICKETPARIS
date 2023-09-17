@@ -41,24 +41,6 @@ public class SellerCreateRequest {
     @Size(min = 1, max = 100, message = "주소는 255자 이하로 입력")
     private String storeName;
 
-    private SellerCreateRequest(
-        String username,
-        String password,
-        String name,
-        String email,
-        String phone,
-        String registrationNumber,
-        String storeName
-    ) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.registrationNumber = registrationNumber;
-        this.storeName = storeName;
-    }
-
     public Seller toEntity() {
         return Seller.builder()
             .username(username)
