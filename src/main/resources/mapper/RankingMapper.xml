@@ -12,17 +12,20 @@
             end_date,
             hall_name,
             reservation_rate,
-            RANK() OVER (ORDER BY reservation_rate DESC) ranking
-
+            RANK() OVER (ORDER BY reservation_rate DESC) ranking,
+            created_datetime,
+            updated_datetime
         FROM (
             SELECT
-                p.performance_id performance_id,
-                p.title title,
-                p.poster_url poster_url,
-                p.start_date start_date,
-                p.end_date end_date,
+                p.performance_id,
+                p.title,
+                p.poster_url,
+                p.start_date,
+                p.end_date,
                 h.name hall_name,
-                ROUND((1 - (s.remaining_seats_count / CAST((h.seats_count * s.schedules_count) AS DOUBLE))) * 100, 1) reservation_rate
+                ROUND((c.total_reservations_count / (h.seats_count * c.schedules_count)) * 100, 1) reservation_rate,
+                p.created_datetime,
+                p.updated_datetime
 
             FROM performance p
 
@@ -31,15 +34,26 @@
 
             JOIN (
                 SELECT
-                    performance_id,
-                    COUNT(schedule_id) schedules_count,
-                    SUM(seats_count) remaining_seats_count
-                FROM schedule
-                GROUP BY performance_id
-            ) s
-            ON p.performance_id = s.performance_id
-        ) r
+                    s.performance_id,
+                    COUNT(s.schedule_id) schedules_count,
+                    SUM(r.reservations_count) total_reservations_count
 
+                FROM schedule s
+
+                JOIN (
+                    SELECT
+                        schedule_id,
+                        COUNT(reservation_id) reservations_count
+                    FROM reservation
+                    WHERE status = 'COMPLETED'
+                    GROUP BY schedule_id
+                ) r
+                ON s.schedule_id = r.schedule_id
+
+                GROUP BY s.performance_id
+            ) c
+            ON p.performance_id = c.performance_id
+        ) result
         ORDER BY ranking, title
         LIMIT 50;
     </select>
