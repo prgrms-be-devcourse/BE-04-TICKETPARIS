@@ -2,13 +2,9 @@ package com.programmers.ticketparis.member.service;
 
 import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
 
-import java.util.List;
-
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.programmers.ticketparis.common.exception.ExceptionRule;
 import com.programmers.ticketparis.member.domain.Customer;
 import com.programmers.ticketparis.member.dto.CustomerLoginForm;
 import com.programmers.ticketparis.member.dto.request.CustomerCreateRequest;
@@ -40,18 +36,10 @@ public class CustomerService {
     }
 
     public CustomerResponse login(CustomerLoginForm customerLoginForm) {
-        Customer customer = customerRepository.findByUsername(customerLoginForm.getUsername())
-            .orElseThrow(() -> new CustomerException(ExceptionRule.CUSTOMER_NOT_EXIST,
-                List.of(String.valueOf(customerLoginForm.getUsername()))));
-
-        System.out.println(customer.getPassword());
-
         return customerRepository.findByUsername(customerLoginForm.getUsername())
-            .filter(m -> BCrypt.checkpw(customerLoginForm.getPassword(), m.getPassword()))
+            .filter(m -> m.checkPassword(customerLoginForm.getPassword()))
             .map(CustomerResponse::from)
-            .orElseThrow(
-                () -> new CustomerException(ExceptionRule.CUSTOMER_NOT_EXIST,
-                    List.of(String.valueOf(customerLoginForm.getUsername()))));
+            .orElseThrow(() -> new CustomerException(LOGIN_FAILED, customerLoginForm.getUsername()));
     }
 
     public CustomerResponse findCustomerById(Long customerId) {
