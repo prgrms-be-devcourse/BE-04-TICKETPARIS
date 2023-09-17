@@ -13,6 +13,7 @@ import com.programmers.ticketparis.member.dto.CustomerLoginForm;
 import com.programmers.ticketparis.member.dto.request.CustomerCreateRequest;
 import com.programmers.ticketparis.member.dto.response.CustomerIdResponse;
 import com.programmers.ticketparis.member.dto.response.CustomerResponse;
+import com.programmers.ticketparis.member.dto.response.LoginResponse;
 import com.programmers.ticketparis.member.service.CustomerService;
 
 import jakarta.validation.Valid;
@@ -33,12 +34,12 @@ public class CustomerController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResponse login(@Valid @RequestBody CustomerLoginForm customerLoginForm) {
-        CustomerResponse loginCustomerResponse = customerService.login(customerLoginForm);
+    public LoginResponse login(@Valid @RequestBody CustomerLoginForm customerLoginForm) {
+        LoginResponse loginResponse = customerService.login(customerLoginForm);
 
         //todo: 로그인 성공 처리
 
-        return loginCustomerResponse;
+        return loginResponse;
     }
 
     @GetMapping("/{customerId}")
