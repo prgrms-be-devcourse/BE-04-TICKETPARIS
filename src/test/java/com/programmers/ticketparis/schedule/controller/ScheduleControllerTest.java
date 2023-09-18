@@ -46,7 +46,8 @@ public class ScheduleControllerTest {
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/schedules"))
             .body("data.scheduleId", notNullValue())
-            .body("message", nullValue());
+            .body("message", nullValue())
+            .log().all();
     }
 
     @Test
@@ -63,7 +64,8 @@ public class ScheduleControllerTest {
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/schedules"))
-            .body("data.size()", is(size));
+            .body("data.size()", is(size))
+            .log().all();
     }
 
     @Test
@@ -80,7 +82,8 @@ public class ScheduleControllerTest {
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/schedules/1/reservations"))
-            .body("data.size()", equalTo(2));
+            .body("data.size()", equalTo(2))
+            .log().all();
     }
 
     @Test
@@ -95,6 +98,7 @@ public class ScheduleControllerTest {
             .delete(deleteScheduleByIdURI)
             .then()
             .statusCode(HttpStatus.NO_CONTENT.value())
-            .body(isEmptyOrNullString());
+            .body(isEmptyOrNullString())
+            .log().all();
     }
 }
