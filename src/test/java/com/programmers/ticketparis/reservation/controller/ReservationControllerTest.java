@@ -44,7 +44,8 @@ public class ReservationControllerTest {
             .statusCode(HttpStatus.CREATED.value())
             .body("localDateTime", notNullValue())
             .body("data.reservationId", notNullValue())
-            .body("message", nullValue());
+            .body("message", nullValue())
+            .log().all();
     }
 
     @Test
@@ -64,7 +65,8 @@ public class ReservationControllerTest {
             .body("data.reservationStatus", equalTo("COMPLETED"))
             .body("data.customerId", equalTo(1))
             .body("data.scheduleId", equalTo(4))
-            .body("message", nullValue());
+            .body("message", nullValue())
+            .log().all();
     }
 
     @Test
@@ -81,7 +83,8 @@ public class ReservationControllerTest {
             .then()
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
-            .body("data.size()", is(size));
+            .body("data.size()", is(size))
+            .log().all();
     }
 
     @Test
@@ -100,6 +103,7 @@ public class ReservationControllerTest {
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
             .body("data.reservationId", equalTo(1))
-            .body("message", nullValue());
+            .body("message", nullValue())
+            .log().all();
     }
 }
