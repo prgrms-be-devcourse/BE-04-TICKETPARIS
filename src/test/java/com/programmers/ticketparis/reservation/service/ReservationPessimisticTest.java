@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
 import com.programmers.ticketparis.schedule.domain.Schedule;
@@ -43,6 +44,7 @@ class ReservationPessimisticTest {
 
     @Test
     @Order(1)
+    @Transactional
     @DisplayName("고객 100명이 동시에 예약을 한다.")
     void concurrentReservationBy100Users_Success() throws InterruptedException {
         int threadCount = 100;
@@ -68,6 +70,7 @@ class ReservationPessimisticTest {
 
     @Test
     @Order(2)
+    @Transactional
     @DisplayName("고객 100명이 동시에 예약 취소한다.")
     void concurrentReservationCancelBy100Users_Success() throws InterruptedException {
         int threadCount = 100;
