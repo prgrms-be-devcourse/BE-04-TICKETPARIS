@@ -58,7 +58,8 @@ class PerformanceControllerTest {
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/performances"))
             .body("data.performanceId", notNullValue())
-            .body("message", nullValue());
+            .body("message", nullValue())
+            .log().all();
     }
 
     @Test
@@ -88,7 +89,8 @@ class PerformanceControllerTest {
             .body("data.createdDateTime", notNullValue())
             .body("data.updatedDateTime", notNullValue())
             .body("data.sellerId", notNullValue())
-            .body("data.hallId", notNullValue());
+            .body("data.hallId", notNullValue())
+            .log().all();
     }
 
     @Test
@@ -105,7 +107,8 @@ class PerformanceControllerTest {
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/performances"))
-            .body("data.size()", is(size));
+            .body("data.size()", is(size))
+            .log().all();
     }
 
     @Test
@@ -123,7 +126,8 @@ class PerformanceControllerTest {
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/performances/1/reservations"))
-            .body("data.size()", equalTo(2));
+            .body("data.size()", equalTo(2))
+            .log().all();
     }
 
     @Test
@@ -145,13 +149,15 @@ class PerformanceControllerTest {
 
         PerformanceUpdateRequest performanceUpdateRequest = new PerformanceUpdateRequest(title, posterUrl, startDate, endDate, duration, ageRating, price, category, description, hallId);
 
-        given().
-            contentType(ContentType.JSON).
-            body(performanceUpdateRequest).
-            when().
-            patch("/api/performances/" + performanceId).
-            then().
-            statusCode(HttpStatus.OK.value());
+        given()
+            .contentType(ContentType.JSON)
+            .body(performanceUpdateRequest)
+            .when()
+            .patch("/api/performances/" + performanceId)
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .log().all();
+
     }
 
     @Test
@@ -166,6 +172,8 @@ class PerformanceControllerTest {
             .delete(deletePerformanceByIdURI)
             .then()
             .statusCode(HttpStatus.NO_CONTENT.value())
-            .body(isEmptyOrNullString());
+            .body(isEmptyOrNullString())
+            .log().all();
+        ;
     }
 }
