@@ -21,7 +21,7 @@ import com.programmers.ticketparis.reservation.dto.response.ReservationResponse;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ReservationServiceTest {
+class ReservationServiceTest {
 
     private static ReservationCreateRequest reservationCreateRequest1;
     private static ReservationCreateRequest reservationCreateRequest2;
