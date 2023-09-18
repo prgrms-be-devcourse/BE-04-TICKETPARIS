@@ -25,6 +25,7 @@ class ReservationPessimisticTest {
 
     private static ReservationCreateRequest reservationCreateRequest;
     private static int seatsCount;
+    private static int reservationedSeatsCount;
 
     @Autowired
     private ReservationService reservationService;
@@ -65,7 +66,8 @@ class ReservationPessimisticTest {
 
         Schedule schedule = scheduleService.findByScheduleId(reservationCreateRequest.getScheduleId());
 
-        assertThat(schedule.getSeatsCount()).isEqualTo(seatsCount - 100);
+        reservationedSeatsCount = schedule.getSeatsCount();
+        assertThat(reservationedSeatsCount).isEqualTo(seatsCount - 100);
     }
 
     @Test
@@ -97,7 +99,7 @@ class ReservationPessimisticTest {
 
         Schedule schedule = scheduleService.findByScheduleId(reservationCreateRequest.getScheduleId());
 
-        assertThat(schedule.getSeatsCount()).isEqualTo(seatsCount);
+        assertThat(schedule.getSeatsCount()).isEqualTo(reservationedSeatsCount + threadCount);
     }
 
 }
