@@ -32,9 +32,7 @@ public class ReservationService {
     public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
 
-        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
-        schedule.decreaseSeatsCount();
-        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
+        decreaseSeatsCount(reservation);
 
         Long reservationId = reservationRepository.save(reservation);
 
@@ -46,10 +44,11 @@ public class ReservationService {
         validateReservationExists(reservationId);
         Reservation reservation = getReservationById(reservationId);
 
-        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
-        Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
-        schedule.increaseSeatsCount(totalSeatsCount);
-        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
+        if (isReservationStatusCanceled(reservation)) {
+            throw new ReservationException(RESERVATION_ALREADY_CANCELED, reservationId);
+        }
+
+        increaseSeatsCount(reservation);
 
         Long canceledReservationId = reservationRepository.updateReservationStatusById(reservationId,
             ReservationStatus.CANCELED);
@@ -80,5 +79,22 @@ public class ReservationService {
         if (!reservationRepository.existsById(reservationId)) {
             throw new ReservationException(RESERVATION_NOT_EXIST, reservationId);
         }
+    }
+
+    private boolean isReservationStatusCanceled(Reservation reservation) {
+        return reservation.getReservationStatus() == ReservationStatus.CANCELED;
+    }
+
+    private void decreaseSeatsCount(Reservation reservation) {
+        Schedule schedule = scheduleService.findByIdWithPessimisticLock(reservation.getScheduleId());
+        schedule.decreaseSeatsCount();
+        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
+    }
+
+    private void increaseSeatsCount(Reservation reservation) {
+        Schedule schedule = scheduleService.findByIdWithPessimisticLock(reservation.getScheduleId());
+        Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
+        schedule.increaseSeatsCount(totalSeatsCount);
+        scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
     }
 }

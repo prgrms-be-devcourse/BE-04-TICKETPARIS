@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.programmers.ticketparis.schedule.repository.mapper.ScheduleMapper">
-
     <insert id="save" useGeneratedKeys="true" keyProperty="scheduleId">
         INSERT INTO schedule (start_datetime, sequence, seats_count, performance_id)
         VALUES (#{startDatetime}, #{sequence}, #{seatsCount}, #{performanceId});
@@ -31,6 +30,13 @@
         FROM schedule
         WHERE schedule_id = #{scheduleId};
     </delete>
+
+    <select id="findByIdWithPessimisticLock" resultType="Schedule">
+        SELECT schedule_id, start_datetime, sequence, seats_count, performance_id, created_datetime, updated_datetime
+        FROM schedule
+        WHERE schedule_id = #{scheduleId}
+        FOR UPDATE;
+    </select>
 
     <update id="updateSeatsCountById">
         UPDATE schedule

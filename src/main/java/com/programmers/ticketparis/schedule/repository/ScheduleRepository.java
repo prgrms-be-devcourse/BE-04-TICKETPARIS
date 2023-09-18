@@ -15,6 +15,8 @@ public interface ScheduleRepository {
 
     Optional<Schedule> findById(Long scheduleId);
 
+    Optional<Schedule> findByIdWithPessimisticLock(Long scheduleId);
+
     Boolean existsById(Long scheduleId);
 
     Integer deleteById(Long scheduleId);
