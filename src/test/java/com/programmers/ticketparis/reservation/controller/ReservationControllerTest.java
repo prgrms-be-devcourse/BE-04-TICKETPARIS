@@ -1,9 +1,12 @@
 package com.programmers.ticketparis.reservation.controller;
 
 import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +14,20 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ReservationControllerTest {
 
-    static String baseURI = "http://localhost:8080/api/reservations";
+    @LocalServerPort
+    public int port;
+
+    @BeforeEach
+    void setUp() {
+        RestAssured.port = port;
+    }
 
     @Test
+    @Order(1)
     void createReservationTest() {
 
         ReservationCreateRequest reservationCreateRequest = ReservationCreateRequest.builder()
@@ -27,7 +39,7 @@ public class ReservationControllerTest {
             .contentType(ContentType.JSON)
             .body(reservationCreateRequest)
             .when()
-            .post(baseURI)
+            .post("/api/reservations")
             .then()
             .statusCode(HttpStatus.CREATED.value())
             .body("localDateTime", notNullValue())
@@ -36,9 +48,10 @@ public class ReservationControllerTest {
     }
 
     @Test
+    @Order(2)
     void findReservationByIdTest() {
-        Long reservationId = 429L;
-        String findReservationByIdURI = baseURI + "/" + reservationId;
+        Long reservationId = 5L;
+        String findReservationByIdURI = "/api/reservations/" + reservationId;
 
 
         given()
@@ -47,18 +60,19 @@ public class ReservationControllerTest {
             .then()
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
-            .body("data.reservationId", equalTo(429))
+            .body("data.reservationId", equalTo(5))
             .body("data.reservationStatus", equalTo("COMPLETED"))
-            .body("data.customerId", equalTo(83))
-            .body("data.scheduleId", equalTo(3562))
+            .body("data.customerId", equalTo(1))
+            .body("data.scheduleId", equalTo(4))
             .body("message", nullValue());
     }
 
     @Test
+    @Order(3)
     void findReservationsByPageTest() {
         int pageNum = 1;
         int size = 10;
-        String findReservationsByPageURI = baseURI + "?pageNum=" + pageNum + "&size=" + size;
+        String findReservationsByPageURI = "/api/reservations?pageNum=" + pageNum + "&size=" + size;
 
 
         given()
@@ -71,9 +85,10 @@ public class ReservationControllerTest {
     }
 
     @Test
+    @Order(4)
     void cancelReservationByIdTest() {
-        Long reservationId = 434L;
-        String cancelReservationByIdURI = baseURI + "/" + reservationId;
+        Long reservationId = 1L;
+        String cancelReservationByIdURI = "/api/reservations/" + reservationId;
 
         Map<String, Object> ReservationRequestBody = new HashMap<>();
         ReservationRequestBody.put("reservationId", reservationId);
@@ -84,8 +99,7 @@ public class ReservationControllerTest {
             .then()
             .statusCode(HttpStatus.OK.value())
             .body("localDateTime", notNullValue())
-            .body("data.reservationId", equalTo(434))
+            .body("data.reservationId", equalTo(1))
             .body("message", nullValue());
     }
-
 }
