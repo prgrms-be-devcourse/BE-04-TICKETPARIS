@@ -33,9 +33,9 @@ public class ReservationController {
         @ApiResponse(responseCode = "201", description = "예매 생성 성공"),
         @ApiResponse(responseCode = "400", description = "잘못된 예매 생성 요청"),
     })
-
     public ReservationIdResponse createReservation(
         @Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
+        
         return reservationService.createReservation(reservationCreateRequest);
     }
 
@@ -48,8 +48,8 @@ public class ReservationController {
         @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음"),
         @ApiResponse(responseCode = "500", description = "올바르지 않은 예매 상태")
     })
-
     public ReservationIdResponse cancelReservationById(@PathVariable Long reservationId) {
+
         return reservationService.cancelReservationById(reservationId);
     }
 
@@ -57,11 +57,9 @@ public class ReservationController {
     @Operation(
         summary = "예매 조회",
         description = "특정 예매를 조회 API")
-    @ApiResponses({
-        @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음"),
-    })
-
+    @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음")
     public ReservationResponse findReservationById(@PathVariable Long reservationId) {
+
         return reservationService.findReservationById(reservationId);
     }
 
@@ -69,9 +67,7 @@ public class ReservationController {
     @Operation(
         summary = "페이지별 예매 조회",
         description = "페이지 번호와 크기에 따라 예매 목록 조회 API")
-    @ApiResponses({
-        @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음"),
-    })
+    @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음")
     public List<ReservationResponse> findReservationsByPage(@RequestParam Integer pageNum, @RequestParam Integer size) {
         Pageable pageable = Pageable.builder()
             .pageNum(pageNum)
