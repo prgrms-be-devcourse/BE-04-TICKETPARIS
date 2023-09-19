@@ -2,6 +2,8 @@ package com.programmers.ticketparis.member.domain;
 
 import java.time.LocalDateTime;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,11 +51,15 @@ public class Seller {
         String storeName
     ) {
         this.username = username;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.registrationNumber = registrationNumber;
         this.storeName = storeName;
+    }
+
+    public Boolean checkPassword(String plainPassword) {
+        return BCrypt.checkpw(plainPassword, this.password);
     }
 }

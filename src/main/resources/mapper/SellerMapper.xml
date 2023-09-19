@@ -9,17 +9,15 @@
     </insert>
 
     <select id="findById" resultType="Seller">
-        SELECT seller_id,
-               username,
-               name,
-               email,
-               phone,
-               registration_number,
-               store_name,
-               created_datetime,
-               updated_datetime
+        SELECT seller_id, username, name, email, phone, registration_number, store_name, created_datetime, updated_datetime
         FROM seller
         WHERE seller_id = #{sellerId}
+    </select>
+
+    <select id="findByUsername" resultType="Seller">
+        SELECT seller_id, username, password, name, email, phone, registration_number, store_name, created_datetime, updated_datetime
+        FROM seller
+        WHERE username = #{username}
     </select>
 
     <select id="existsById" resultType="Boolean">

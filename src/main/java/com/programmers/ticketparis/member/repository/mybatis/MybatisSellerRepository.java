@@ -29,6 +29,11 @@ public class MybatisSellerRepository implements SellerRepository {
     }
 
     @Override
+    public Optional<Seller> findByUsername(String userName) {
+        return sellerMapper.findByUsername(userName);
+    }
+
+    @Override
     public Boolean existsById(Long sellerId) {
         return sellerMapper.existsById(sellerId);
     }
