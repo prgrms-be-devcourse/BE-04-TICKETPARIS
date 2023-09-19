@@ -37,6 +37,11 @@ public class MybatisScheduleRepository implements ScheduleRepository {
     }
 
     @Override
+    public Optional<Schedule> findByIdWithPessimisticLock(Long scheduleId) {
+        return scheduleMapper.findByIdWithPessimisticLock(scheduleId);
+    }
+
+    @Override
     public Boolean existsById(Long scheduleId) {
         return scheduleMapper.existsById(scheduleId);
     }

@@ -27,4 +27,6 @@ public interface ScheduleMapper {
     List<Schedule> findSchedulesByPage(Pageable pageable);
 
     List<Reservation> findReservationsByScheduleIdWithPage(Integer scheduleId, Pageable pageable);
+
+    Optional<Schedule> findByIdWithPessimisticLock(Long scheduleId);
 }

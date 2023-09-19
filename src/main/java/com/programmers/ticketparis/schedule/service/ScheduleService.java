@@ -43,6 +43,11 @@ public class ScheduleService {
             .orElseThrow(() -> new ScheduleException(SCHEDULE_NOT_EXIST, scheduleId));
     }
 
+    public Schedule findByIdWithPessimisticLock(Long scheduleId) {
+        return scheduleRepository.findByIdWithPessimisticLock(scheduleId)
+            .orElseThrow(() -> new ScheduleException(SCHEDULE_NOT_EXIST, scheduleId));
+    }
+
     @Transactional
     public void deleteScheduleById(Long scheduleId) {
         if (!scheduleRepository.existsById(scheduleId)) {
