@@ -35,7 +35,6 @@ public class ReservationController {
     })
     public ReservationIdResponse createReservation(
         @Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
-        
         return reservationService.createReservation(reservationCreateRequest);
     }
 
@@ -49,7 +48,6 @@ public class ReservationController {
         @ApiResponse(responseCode = "500", description = "올바르지 않은 예매 상태")
     })
     public ReservationIdResponse cancelReservationById(@PathVariable Long reservationId) {
-
         return reservationService.cancelReservationById(reservationId);
     }
 
@@ -59,7 +57,6 @@ public class ReservationController {
         description = "특정 예매를 조회 API")
     @ApiResponse(responseCode = "404", description = "해당 예매를 찾을 수 없음")
     public ReservationResponse findReservationById(@PathVariable Long reservationId) {
-
         return reservationService.findReservationById(reservationId);
     }
 
