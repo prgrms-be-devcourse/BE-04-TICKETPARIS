@@ -6,8 +6,10 @@ on:
   pull_request: # 아래 브랜치에 PullRequest 되면 작동
     branches: [ "develop" ]
 
+# PR check, Comment 권한 설정
 permissions:
-  contents: read
+  checks: write
+  pull-requests: write
 
 # 작업들
 jobs:
@@ -31,3 +33,18 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
+
+      # https://github.com/EnricoMi/publish-unit-test-result-action
+      - name: 테스트 결과를 'PR 코멘트'로 자동 작성
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()  # 실패 여부 상관없이 항상 실행~
+        with:
+          files: build/test-results/test/TEST-*.xml
+
+      # https://github.com/mikepenz/action-junit-report
+      - name: 테스트 코드 중 테스트 실패한 부분에 'PR check'로 자동 작성
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: build/test-results/test/TEST-*.xml
+
