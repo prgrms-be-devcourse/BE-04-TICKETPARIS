@@ -1,23 +1,17 @@
 package com.programmers.ticketparis.performance.dto.request;
 
-import java.time.LocalDate;
-
 import com.programmers.ticketparis.performance.domain.Category;
 import com.programmers.ticketparis.performance.domain.Performance;
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class PerformanceCreateRequest {
 
     @NotBlank(message = "공연의 제목은 필수로 입력")
@@ -54,6 +48,21 @@ public class PerformanceCreateRequest {
     private Long sellerId;
 
     private Long hallId;
+
+    @Builder
+    private PerformanceCreateRequest(String title, String posterUrl, LocalDate startDate, LocalDate endDate, String duration, Integer ageRating, Integer price, Category category, String description, Long sellerId, Long hallId) {
+        this.title = title;
+        this.posterUrl = posterUrl;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.ageRating = ageRating;
+        this.price = price;
+        this.category = category;
+        this.description = description;
+        this.sellerId = sellerId;
+        this.hallId = hallId;
+    }
 
     public Performance toEntity() {
         return Performance.builder()
