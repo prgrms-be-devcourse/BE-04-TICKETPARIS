@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.3'
     id 'io.spring.dependency-management' version '1.1.3'
+    id 'jacoco'
 }
 
 group = 'com.programmers'
@@ -48,6 +49,62 @@ jar {
     enabled = false
 }
 
+jacoco {
+    toolVersion = '0.8.10'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true     // sonarqube 연동용
+        html.required = true    // 로컬 확인용
+        csv.required = false
+    }
+
+    // 결과 리포트에서 제외할 클래스
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            '**/TicketparisApplication.class'
+                    ])
+                })
+        )
+    }
+
+    finalizedBy jacocoTestCoverageVerification
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+
+            // 커버리지 체크 단위
+            // BUNDLE, CLASS, GROUP, METHOD, PACKAGE, SOURCEFILE
+            element = 'BUNDLE'
+
+            // 실패 기준
+            limit {
+                // 커버리지 측정 단위
+                // LINE, BRANCH, CLASS, METHOD, INSTRUCTION, COMPLEXITY
+                counter = 'LINE'
+
+                // 측정결과 표현 방식
+                // COVEREDCOUNT, COVEREDRATIO, MISSEDCOUNT, MISSEDRATIO, TOTALCOUNT
+                value = 'COVEREDRATIO'
+                minimum = 0.10
+            }
+
+            // ignore 클래스 지정
+            excludes = [
+                    '*.TicketparisApplication'
+            ]
+        }
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+    // 테스트 태스크마다 커버리지 검사 -> 빌드시에도 검사함
+    finalizedBy jacocoTestReport
 }
