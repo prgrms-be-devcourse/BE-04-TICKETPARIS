@@ -35,7 +35,7 @@ public class ScheduleControllerTest {
         Long performanceId = 1L;
         ScheduleCreateRequest scheduleCreateRequest = new ScheduleCreateRequest(startDatetime, sequence, performanceId);
 
-        given()
+        given().log().all()
             .port(port)
             .contentType(ContentType.JSON)
             .body(scheduleCreateRequest)
@@ -57,7 +57,7 @@ public class ScheduleControllerTest {
 
         String findSchedulesByPageURI = "/api/schedules?pageNum=" + PAGE_NUM + "&size=" + size;
 
-        given()
+        given().log().all()
             .when()
             .get(findSchedulesByPageURI)
             .then()
@@ -75,7 +75,7 @@ public class ScheduleControllerTest {
 
         String findReservationsByScheduleIdByPageURI = "/api/schedules/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
 
-        given()
+        given().log().all()
             .when()
             .get(findReservationsByScheduleIdByPageURI)
             .then()
@@ -93,7 +93,7 @@ public class ScheduleControllerTest {
 
         String deleteScheduleByIdURI = "/api/schedules/" + scheduleId;
 
-        given()
+        given().log().all()
             .when()
             .delete(deleteScheduleByIdURI)
             .then()
