@@ -35,6 +35,11 @@ public class SellerService {
         return SellerIdResponse.from(sellerId);
     }
 
+    public Seller findSellerByUsername(String username) {
+        return sellerRepository.findByUsername(username)
+            .orElseThrow(() -> new SellerException(LOGIN_FAILED_USERNAME_NOT_EXIST, username));
+    }
+
     public SellerResponse findSellerById(Long sellerId) {
         return sellerRepository.findById(sellerId)
             .map(SellerResponse::from)
@@ -53,4 +58,5 @@ public class SellerService {
             throw new SellerException(SELLER_NOT_EXIST, sellerId);
         }
     }
+
 }

@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.member.domain.Customer;
-import com.programmers.ticketparis.member.dto.CustomerLoginForm;
 import com.programmers.ticketparis.member.dto.request.CustomerCreateRequest;
 import com.programmers.ticketparis.member.dto.response.CustomerIdResponse;
 import com.programmers.ticketparis.member.dto.response.CustomerResponse;
-import com.programmers.ticketparis.member.dto.response.LoginResponse;
 import com.programmers.ticketparis.member.exception.CustomerException;
 import com.programmers.ticketparis.member.repository.CustomerRepository;
 
@@ -36,11 +34,9 @@ public class CustomerService {
         return CustomerIdResponse.from(customerId);
     }
 
-    public LoginResponse login(CustomerLoginForm customerLoginForm) {
-        return customerRepository.findByUsername(customerLoginForm.getUsername())
-            .filter(customer -> customer.checkPassword(customerLoginForm.getPassword()))
-            .map(LoginResponse::from)
-            .orElseThrow(() -> new CustomerException(LOGIN_FAILED, customerLoginForm.getUsername()));
+    public Customer findCustomerByUsername(String username) {
+        return customerRepository.findByUsername(username)
+            .orElseThrow(() -> new CustomerException(LOGIN_FAILED_USERNAME_NOT_EXIST, username));
     }
 
     public CustomerResponse findCustomerById(Long customerId) {
