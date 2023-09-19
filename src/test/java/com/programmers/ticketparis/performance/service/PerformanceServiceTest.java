@@ -1,22 +1,5 @@
 package com.programmers.ticketparis.performance.service;
 
-import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.performance.domain.Category;
 import com.programmers.ticketparis.performance.dto.request.PerformanceCreateRequest;
@@ -25,6 +8,16 @@ import com.programmers.ticketparis.performance.dto.response.PerformanceIdRespons
 import com.programmers.ticketparis.performance.dto.response.PerformanceResponse;
 import com.programmers.ticketparis.performance.exception.PerformanceException;
 import com.programmers.ticketparis.performance.repository.mybatis.MybatisPerformanceRepository;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.programmers.ticketparis.common.exception.ExceptionRule.PERFORMANCE_NOT_EXIST;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -42,18 +35,18 @@ class PerformanceServiceTest {
 
     @BeforeAll
     void setUp() {
-        performanceCreateRequest = new PerformanceCreateRequest(
-            "제4회 더 싱어즈 정기연주회",
-            "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif",
-            LocalDate.of(2023, 9, 20),
-            LocalDate.of(2023, 12, 20),
-            "2시간",
-            15,
-            15000,
-            Category.MUSICAL,
-            "테스트 공연 입니다.",
-            1L,
-            1L);
+        performanceCreateRequest = PerformanceCreateRequest.builder()
+            .title("제4회 더 싱어즈 정기연주회")
+            .posterUrl("http://www.kopis.or.kr/upload/pfmPoster/PF_PF224754_230828_165705.gif")
+            .startDate(LocalDate.of(2023, 9, 20))
+            .endDate(LocalDate.of(2023, 12, 20))
+            .duration("2시간")
+            .ageRating(15)
+            .price(15000)
+            .category(Category.MUSICAL)
+            .description("테스트 공연 입니다.")
+            .sellerId(1L)
+            .hallId(1L).build();
 
         performanceUpdateRequest = new PerformanceUpdateRequest(
             "수정된 타이틀",
