@@ -8,14 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ReservationControllerTest {
 
     @LocalServerPort
@@ -29,7 +26,6 @@ public class ReservationControllerTest {
     @Test
     @Order(1)
     void createReservationTest() {
-
         ReservationCreateRequest reservationCreateRequest = ReservationCreateRequest.builder()
             .customerId(1L)
             .scheduleId(3L)
@@ -54,7 +50,6 @@ public class ReservationControllerTest {
         Long reservationId = 5L;
         String findReservationByIdURI = "/api/reservations/" + reservationId;
 
-
         given()
             .when()
             .get(findReservationByIdURI)
@@ -76,7 +71,6 @@ public class ReservationControllerTest {
         int size = 10;
         String findReservationsByPageURI = "/api/reservations?pageNum=" + pageNum + "&size=" + size;
 
-
         given()
             .when()
             .get(findReservationsByPageURI)
@@ -85,6 +79,7 @@ public class ReservationControllerTest {
             .body("localDateTime", notNullValue())
             .body("data.size()", is(size))
             .log().all();
+
     }
 
     @Test
@@ -92,9 +87,6 @@ public class ReservationControllerTest {
     void cancelReservationByIdTest() {
         Long reservationId = 1L;
         String cancelReservationByIdURI = "/api/reservations/" + reservationId;
-
-        Map<String, Object> ReservationRequestBody = new HashMap<>();
-        ReservationRequestBody.put("reservationId", reservationId);
 
         given()
             .when()
