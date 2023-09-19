@@ -31,7 +31,7 @@ public class ReservationControllerTest {
             .scheduleId(3L)
             .build();
 
-        given()
+        given().log().all()
             .contentType(ContentType.JSON)
             .body(reservationCreateRequest)
             .when()
@@ -50,7 +50,7 @@ public class ReservationControllerTest {
         Long reservationId = 5L;
         String findReservationByIdURI = "/api/reservations/" + reservationId;
 
-        given()
+        given().log().all()
             .when()
             .get(findReservationByIdURI)
             .then()
@@ -71,7 +71,7 @@ public class ReservationControllerTest {
         int size = 10;
         String findReservationsByPageURI = "/api/reservations?pageNum=" + pageNum + "&size=" + size;
 
-        given()
+        given().log().all()
             .when()
             .get(findReservationsByPageURI)
             .then()
@@ -88,7 +88,7 @@ public class ReservationControllerTest {
         Long reservationId = 1L;
         String cancelReservationByIdURI = "/api/reservations/" + reservationId;
 
-        given()
+        given().log().all()
             .when()
             .patch(cancelReservationByIdURI)
             .then()
