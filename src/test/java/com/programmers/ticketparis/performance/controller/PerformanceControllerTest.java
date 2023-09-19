@@ -15,8 +15,8 @@ import java.time.LocalDate;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PerformanceControllerTest {
 
     private static final int PAGE_NUM = 1;
@@ -33,21 +33,20 @@ class PerformanceControllerTest {
     @Order(1)
     void createPeroformanceTest() {
 
-        String title = "할루할루";
-        String posterUrl = "http://www.kopis.or.kr/upload/pfmPoster/PF_PF224446_230823_123946.jpg";
-        LocalDate startDate = LocalDate.of(2023, 9, 14);
-        LocalDate endDate = LocalDate.of(2023, 12, 12);
-        String duration = "2시간";
-        Integer ageRating = 15;
-        Integer price = 25000;
-        Category category = Category.MUSICAL;
-        String description = "테스트 설명 변경";
-        Long sellerId = 1L;
-        Long hallId = 2L;
-        PerformanceCreateRequest performanceCreateRequest = new PerformanceCreateRequest(title, posterUrl, startDate, endDate, duration, ageRating, price, category, description, sellerId, hallId);
+        PerformanceCreateRequest performanceCreateRequest = PerformanceCreateRequest.builder()
+            .title("할루할루")
+            .posterUrl("http://www.kopis.or.kr/upload/pfmPoster/PF_PF224446_230823_123946.jpg")
+            .startDate(LocalDate.of(2023, 9, 14))
+            .endDate(LocalDate.of(2023, 12, 12))
+            .duration("2시간")
+            .ageRating(15)
+            .price(125000)
+            .category(Category.MUSICAL)
+            .description("테스트 공연 입니다.")
+            .sellerId(1L)
+            .hallId(2L).build();
 
-
-        given()
+        given().log().all()
             .port(port)
             .contentType(ContentType.JSON)
             .body(performanceCreateRequest)
@@ -59,7 +58,7 @@ class PerformanceControllerTest {
             .body("path", equalTo("/api/performances"))
             .body("data.performanceId", notNullValue())
             .body("message", nullValue())
-            .log().all();
+            .log().all().extract();
     }
 
     @Test
@@ -69,7 +68,7 @@ class PerformanceControllerTest {
 
         String findPerformanceByIdURI = "/api/performances/" + performanceId;
 
-        given()
+        given().log().all()
             .when()
             .get(findPerformanceByIdURI)
             .then()
@@ -77,19 +76,19 @@ class PerformanceControllerTest {
             .body("localDateTime", notNullValue())
             .body("path", equalTo("/api/performances/6"))
             .body("data.performanceId", equalTo(6))
-            .body("data.title", notNullValue())
-            .body("data.posterUrl", notNullValue())
-            .body("data.startDate", notNullValue())
-            .body("data.endDate", notNullValue())
-            .body("data.duration", notNullValue())
-            .body("data.ageRating", notNullValue())
-            .body("data.price", notNullValue())
-            .body("data.category", notNullValue())
-            .body("data.description", notNullValue())
+            .body("data.title", equalTo("제14회 금호주니어콘서트, 강예서 플루트 독주회"))
+            .body("data.posterUrl", equalTo("http://www.kopis.or.kr/upload/pfmPoster/PF_PF224644_230825_145427.jpg"))
+            .body("data.startDate", equalTo("2023-08-24"))
+            .body("data.endDate", equalTo("2023-08-24"))
+            .body("data.duration", equalTo("1시간"))
+            .body("data.ageRating", equalTo(7))
+            .body("data.price", equalTo(10000))
+            .body("data.category", equalTo("클래식/무용"))
+            .body("data.description", equalTo("테스트 상세 설명6"))
             .body("data.createdDateTime", notNullValue())
             .body("data.updatedDateTime", notNullValue())
-            .body("data.sellerId", notNullValue())
-            .body("data.hallId", notNullValue())
+            .body("data.sellerId", equalTo(1))
+            .body("data.hallId", equalTo(3))
             .log().all();
     }
 
@@ -100,7 +99,7 @@ class PerformanceControllerTest {
 
         String findPerformancesByPageURI = "/api/performances?pageNum=" + PAGE_NUM + "&size=" + size;
 
-        given()
+        given().log().all()
             .when()
             .get(findPerformancesByPageURI)
             .then()
@@ -118,8 +117,7 @@ class PerformanceControllerTest {
 
         String findReservationsByPerformanceIdWithPageURI = "/api/performances/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
 
-
-        given()
+        given().log().all()
             .when()
             .get(findReservationsByPerformanceIdWithPageURI)
             .then()
@@ -146,10 +144,9 @@ class PerformanceControllerTest {
         String description = "테스트 설명 변경";
         Long hallId = 2L;
 
-
         PerformanceUpdateRequest performanceUpdateRequest = new PerformanceUpdateRequest(title, posterUrl, startDate, endDate, duration, ageRating, price, category, description, hallId);
 
-        given()
+        given().log().all()
             .contentType(ContentType.JSON)
             .body(performanceUpdateRequest)
             .when()
@@ -157,7 +154,6 @@ class PerformanceControllerTest {
             .then()
             .statusCode(HttpStatus.OK.value())
             .log().all();
-
     }
 
     @Test
@@ -167,13 +163,12 @@ class PerformanceControllerTest {
 
         String deletePerformanceByIdURI = "/api/performances/" + performanceId;
 
-        given()
+        given().log().all()
             .when()
             .delete(deletePerformanceByIdURI)
             .then()
             .statusCode(HttpStatus.NO_CONTENT.value())
             .body(isEmptyOrNullString())
             .log().all();
-        ;
     }
 }
