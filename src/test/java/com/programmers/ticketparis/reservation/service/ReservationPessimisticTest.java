@@ -35,7 +35,8 @@ class ReservationPessimisticTest {
             .scheduleId(1L)
             .build();
 
-        seatsCount = scheduleService.findByScheduleId(reservationCreateRequest.getScheduleId()).getSeatsCount();
+        seatsCount = scheduleService.findByScheduleId(reservationCreateRequest.getScheduleId())
+            .getSeatsCount();
     }
 
     @Test
