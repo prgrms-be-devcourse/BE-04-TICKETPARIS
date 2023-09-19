@@ -51,3 +51,15 @@ jar {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//Test에서 ControllerTest로 끝나지 않는 테스트는 Junit 테스트를 사용하도록 변경
+test {
+    useJUnitPlatform()
+    exclude '**/*ControllerTest*'
+}
+
+//Test에서 ControllerTest로 끝나는 테스트는 TestNg를 사용하도록 변경
+task testTestng(type: Test) {
+    useTestNG()
+    include '**/*ControllerTest*'
+}
