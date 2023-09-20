@@ -17,13 +17,13 @@ import com.programmers.ticketparis.schedule.domain.Schedule;
 import com.programmers.ticketparis.schedule.service.ScheduleService;
 
 @SpringBootTest
-class ReservationPessimisticTest {
+class ReservationLockTest {
 
     private static ReservationCreateRequest reservationCreateRequest;
     private static int seatsCount;
 
     @Autowired
-    private ReservationService reservationService;
+    private ReservationRedissonFacade reservationRedissonFacade;
 
     @Autowired
     private ScheduleService scheduleService;
@@ -49,7 +49,7 @@ class ReservationPessimisticTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    reservationService.createReservation(reservationCreateRequest);
+                    reservationRedissonFacade.createReservation(reservationCreateRequest);
                 } finally {
                     latch.countDown();
                 }
