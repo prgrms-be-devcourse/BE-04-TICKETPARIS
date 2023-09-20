@@ -40,11 +40,12 @@ public class PerformanceController {
         return performanceService.createPerformance(performanceCreateRequest);
     }
 
+    //코드 감지 테스트
     @GetMapping("/{performanceId}")
     @Operation(
         summary = "공연 조회",
-        description = "공연 ID를 이용한 조회 API") //
-    @ApiResponse(responseCode = "404", description = "해당 공연을 찾을 수 없음")//
+        description = "공연 ID를 이용한 조회 API") 
+    @ApiResponse(responseCode = "404", description = "해당 공연을 찾을 수 없음")
     public PerformanceResponse findPerformanceById(@PathVariable Long performanceId) {
         return performanceService.findPerformanceById(performanceId);
     }
