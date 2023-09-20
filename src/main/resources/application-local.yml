@@ -5,6 +5,7 @@ spring:
   # DATABASE 기본 설정
   datasource:
     driver-class-name: ${DATABASE_LOCAL_MYSQL_CLASSNAME}
-    url: ${DATABASE_LOCAL_MYSQL_URL}
-    username: ${DATABASE_LOCAL_MYSQL_USERNAME}
-    password: ${DATABASE_LOCAL_MYSQL_PASSWORD}
+    url: jdbc:mysql://localhost:3306/ticketparis
+    username: root
+    password: best14##
+

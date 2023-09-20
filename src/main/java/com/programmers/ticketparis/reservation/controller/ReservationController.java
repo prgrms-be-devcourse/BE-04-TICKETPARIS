@@ -17,6 +17,7 @@ import com.programmers.ticketparis.common.pageable.Pageable;
 import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
 import com.programmers.ticketparis.reservation.dto.response.ReservationIdResponse;
 import com.programmers.ticketparis.reservation.dto.response.ReservationResponse;
+import com.programmers.ticketparis.reservation.service.ReservationRedissonFacade;
 import com.programmers.ticketparis.reservation.service.ReservationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final ReservationRedissonFacade reservationRedissonFacade;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
