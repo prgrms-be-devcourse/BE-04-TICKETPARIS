@@ -16,5 +16,4 @@ public class CustomerLoginForm {
 
     @PasswordValid(message = "비밀번호는 8자 이상 20자 이하 (<영어, 숫자, 특수문자> 포함, 공백불가)")
     private String password;
-    
 }
