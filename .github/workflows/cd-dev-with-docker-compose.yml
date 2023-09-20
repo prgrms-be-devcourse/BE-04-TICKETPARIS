@@ -11,7 +11,7 @@ jobs:
     environment: develop # 환경 develop
     runs-on: ubuntu-latest # 대여해주는 서버
     env:
-      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_HOST: ${{ secrets.LOCAL_REDIS_HOST }}
       REDIS_PORT: ${{ secrets.REDIS_PORT }}
       REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
 
