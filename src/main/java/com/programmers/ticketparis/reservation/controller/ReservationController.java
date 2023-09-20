@@ -47,7 +47,7 @@ public class ReservationController {
     })
     public ReservationIdResponse createReservation(
         @Valid @RequestBody ReservationCreateRequest reservationCreateRequest) {
-        return reservationService.createReservation(reservationCreateRequest);
+        return reservationRedissonFacade.createReservation(reservationCreateRequest);
     }
 
     @PatchMapping("/{reservationId}")

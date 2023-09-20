@@ -3,12 +3,8 @@ package com.programmers.ticketparis.reservation.service;
 import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.ticketparis.common.pageable.Pageable;
@@ -23,9 +19,7 @@ import com.programmers.ticketparis.schedule.domain.Schedule;
 import com.programmers.ticketparis.schedule.service.ScheduleService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -33,33 +27,15 @@ public class ReservationService {
 
     private final ScheduleService scheduleService;
     private final ReservationRepository reservationRepository;
-    private final RedissonClient redissonClient;
 
     @Transactional
     public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
-        log.info("트랜잭션 시작");
         Reservation reservation = reservationCreateRequest.toEntity();
-
-        RLock lock = redissonClient.getLock(reservationCreateRequest.getScheduleId().toString());
-
-        try {
-            boolean available = lock.tryLock(15, 1, TimeUnit.SECONDS);
-
-            if (available) {
-                log.error("락 획득");
-                decreaseSeatsCount(reservation);
-            }
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException();
-        } finally {
-            lock.unlock();
-            log.error("락 해제");
-        }
+        
+        decreaseSeatsCount(reservation);
 
         Long reservationId = reservationRepository.save(reservation);
 
-        log.info("트랜잭션 커밋");
         return ReservationIdResponse.from(reservationId);
     }
 
@@ -109,10 +85,8 @@ public class ReservationService {
         return reservation.getReservationStatus() == ReservationStatus.CANCELED;
     }
 
-    @Transactional(propagation = Propagation.NESTED)
-    public void decreaseSeatsCount(Reservation reservation) {
+    private void decreaseSeatsCount(Reservation reservation) {
         Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
-        log.info("읽어온 좌석 수 : {}", schedule.getSeatsCount());
         schedule.decreaseSeatsCount();
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
     }

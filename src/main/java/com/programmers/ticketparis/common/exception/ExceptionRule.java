@@ -30,6 +30,7 @@ public enum ExceptionRule {
     SCHEDULE_FULL_SEATS(HttpStatus.INTERNAL_SERVER_ERROR, "해당하는 스케줄의 남은 좌석 수는 전체 좌석 수보다 많을 수 없음"),
 
     COMMON_NUMBER_IS_NOT_POSITIVE(HttpStatus.BAD_REQUEST, "입력한 숫자가 양수가 아님"),
+    COMMON_LOCK_ACQUISITION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "락 획득에 실패함"),
 
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "사용자 입력 유효성 검사 실패"),
     NOT_FOUND(HttpStatus.NOT_FOUND, "요청한 URL에 해당하는 리소스를 찾을 수 없음"),

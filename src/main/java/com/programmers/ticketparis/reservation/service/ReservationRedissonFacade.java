@@ -1,47 +1,54 @@
 package com.programmers.ticketparis.reservation.service;
 
+import static com.programmers.ticketparis.common.exception.ExceptionRule.*;
+
 import java.util.concurrent.TimeUnit;
 
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
+import com.programmers.ticketparis.common.exception.CommonException;
 import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
 import com.programmers.ticketparis.reservation.dto.response.ReservationIdResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class ReservationRedissonFacade {
 
     private final RedissonClient redissonClient;
     private final ReservationService reservationService;
 
-    public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
-        RLock lock = redissonClient.getLock(reservationCreateRequest.getScheduleId().toString());
+    private static final String REDISSON_LOCK_PREFIX = "LOCK:";
 
+    public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
+
+        String key = REDISSON_LOCK_PREFIX + reservationCreateRequest.getScheduleId();
+        RLock lock = redissonClient.getLock(key);
+
+        boolean isLocked = false;
         ReservationIdResponse reservationIdResponse = null;
 
         try {
-            boolean available = lock.tryLock(10, 1, TimeUnit.SECONDS);
+            isLocked = lock.tryLock(20, 1, TimeUnit.SECONDS);
 
-            if (available) {
-                reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
-                log.error("락 획득");
-            } else {
-                log.error("락 획득 실패");
+            if (!isLocked) {
+                throw new CommonException(COMMON_LOCK_ACQUISITION_FAILED, reservationCreateRequest);
             }
+
+            reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
         } catch (InterruptedException e) {
-            throw new RuntimeException();
+            Thread.currentThread().interrupt();
         } finally {
-            lock.unlock();
-            log.info("락 해제");
+            if (isLocked) {
+                lock.unlock();
+            }
         }
 
         return reservationIdResponse;
     }
-
 }
