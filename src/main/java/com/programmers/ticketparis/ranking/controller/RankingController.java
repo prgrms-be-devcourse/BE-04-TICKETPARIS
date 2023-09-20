@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.ticketparis.ranking.dto.response.RankingResponse;
-import com.programmers.ticketparis.ranking.service.RankingService;
+import com.programmers.ticketparis.ranking.service.RedisRankingService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/ranking")
 public class RankingController {
 
-    private final RankingService rankingService;
+    private final RedisRankingService rankingService;
 
     @GetMapping
     public List<RankingResponse> findTopRankingPerformances() {

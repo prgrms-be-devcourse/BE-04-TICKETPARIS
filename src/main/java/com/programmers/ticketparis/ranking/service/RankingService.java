@@ -2,20 +2,11 @@ package com.programmers.ticketparis.ranking.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.programmers.ticketparis.ranking.dto.response.RankingResponse;
-import com.programmers.ticketparis.ranking.service.cache.RedisRankingCache;
 
-import lombok.RequiredArgsConstructor;
+public interface RankingService {
 
-@Service
-@RequiredArgsConstructor
-public class RankingService {
+    List<RankingResponse> findTopRankingPerformances();
 
-    private final RedisRankingCache rankingCache;
-
-    public List<RankingResponse> findTopRankingPerformances() {
-        return rankingCache.getRankingFromCache();
-    }
+    List<RankingResponse> putRankingCache();
 }
