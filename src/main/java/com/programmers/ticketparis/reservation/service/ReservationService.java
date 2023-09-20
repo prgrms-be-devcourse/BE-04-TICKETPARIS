@@ -31,7 +31,7 @@ public class ReservationService {
     @Transactional
     public ReservationIdResponse createReservation(ReservationCreateRequest reservationCreateRequest) {
         Reservation reservation = reservationCreateRequest.toEntity();
-
+        
         decreaseSeatsCount(reservation);
 
         Long reservationId = reservationRepository.save(reservation);
@@ -86,13 +86,13 @@ public class ReservationService {
     }
 
     private void decreaseSeatsCount(Reservation reservation) {
-        Schedule schedule = scheduleService.findByIdWithPessimisticLock(reservation.getScheduleId());
+        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
         schedule.decreaseSeatsCount();
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());
     }
 
     private void increaseSeatsCount(Reservation reservation) {
-        Schedule schedule = scheduleService.findByIdWithPessimisticLock(reservation.getScheduleId());
+        Schedule schedule = scheduleService.findByScheduleId(reservation.getScheduleId());
         Integer totalSeatsCount = scheduleService.findHallSeatsCountByPerformanceId(schedule.getPerformanceId());
         schedule.increaseSeatsCount(totalSeatsCount);
         scheduleService.updateSeatsCountById(schedule.getScheduleId(), schedule.getSeatsCount());

@@ -8,3 +8,4 @@ spring:
     url: ${DATABASE_LOCAL_MYSQL_URL}
     username: ${DATABASE_LOCAL_MYSQL_USERNAME}
     password: ${DATABASE_LOCAL_MYSQL_PASSWORD}
+
