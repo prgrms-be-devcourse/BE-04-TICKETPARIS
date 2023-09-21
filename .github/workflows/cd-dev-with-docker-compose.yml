@@ -13,7 +13,7 @@ jobs:
     env:
       REDIS_HOST: ${{ secrets.LOCAL_REDIS_HOST }}
       REDIS_PORT: ${{ secrets.REDIS_PORT }}
-      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      REDIS_PASSWORD: ${{ secrets.LOCAL_REDIS_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v3 # 코드 저장소에 올려둔 코드 CI 서버 내려받은 후 특정 브랜치 전환하는 행위
