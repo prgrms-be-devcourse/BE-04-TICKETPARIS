@@ -1,26 +1,62 @@
 package com.programmers.ticketparis.reservation.controller;
 
-import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.*;
+import static com.programmers.ticketparis.common.util.SessionConst.*;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import com.programmers.ticketparis.auth.dto.LoginRequest;
+import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ReservationControllerTest {
 
     @LocalServerPort
     public int port;
 
-    @BeforeEach
-    void setUp() {
+    private String customerSessionId;
+    private String sellerSessionId;
+
+    @BeforeAll
+    @DisplayName("로그인 및 세션 ID 획득")
+    void beforeAll() {
         RestAssured.port = port;
+
+        Response customerResponse = given()
+            .contentType(ContentType.JSON)
+            .port(port)
+            .body(LoginRequest.of("testCustomer1", "dldasf1211!"))
+            .when()
+            .post("/api/customers/login")
+            .then()
+            .extract().response();
+        customerSessionId = customerResponse.cookie(SESSION_COOKIE_NAME);
+
+        Response sellerResponse = given()
+            .contentType(ContentType.JSON)
+            .port(port)
+            .body(LoginRequest.of("testSeller1", "dldasf1211!"))
+            .when()
+            .post("/api/sellers/login")
+            .then()
+            .extract().response();
+        sellerSessionId = sellerResponse.cookie(SESSION_COOKIE_NAME);
     }
 
     @Test
@@ -33,6 +69,7 @@ public class ReservationControllerTest {
 
         given().log().all()
             .contentType(ContentType.JSON)
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .body(reservationCreateRequest)
             .when()
             .post("/api/reservations")
@@ -51,6 +88,7 @@ public class ReservationControllerTest {
         String findReservationByIdURI = "/api/reservations/" + reservationId;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .get(findReservationByIdURI)
             .then()
@@ -72,6 +110,7 @@ public class ReservationControllerTest {
         String findReservationsByPageURI = "/api/reservations?pageNum=" + pageNum + "&size=" + size;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .get(findReservationsByPageURI)
             .then()
@@ -89,6 +128,7 @@ public class ReservationControllerTest {
         String cancelReservationByIdURI = "/api/reservations/" + reservationId;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .patch(cancelReservationByIdURI)
             .then()

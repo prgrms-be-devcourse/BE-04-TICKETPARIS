@@ -1,30 +1,63 @@
 package com.programmers.ticketparis.schedule.controller;
 
-import com.programmers.ticketparis.schedule.dto.request.ScheduleCreateRequest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.*;
+import static com.programmers.ticketparis.common.util.SessionConst.*;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+import com.programmers.ticketparis.auth.dto.LoginRequest;
+import com.programmers.ticketparis.schedule.dto.request.ScheduleCreateRequest;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ScheduleControllerTest {
 
     private static final int PAGE_NUM = 1;
+    private String customerSessionId;
+    private String sellerSessionId;
 
     @LocalServerPort
     public int port;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    @DisplayName("로그인 및 세션 ID 획득")
+    void beforeAll() {
         RestAssured.port = port;
+
+        Response customerResponse = given()
+            .contentType(ContentType.JSON)
+            .body(LoginRequest.of("testCustomer1", "dldasf1211!"))
+            .when()
+            .post("/api/customers/login")
+            .then()
+            .extract().response();
+        customerSessionId = customerResponse.cookie(SESSION_COOKIE_NAME);
+
+        Response sellerResponse = given()
+            .contentType(ContentType.JSON)
+            .body(LoginRequest.of("testSeller1", "dldasf1211!"))
+            .when()
+            .post("/api/sellers/login")
+            .then()
+            .extract().response();
+        sellerSessionId = sellerResponse.cookie(SESSION_COOKIE_NAME);
     }
 
     @Test
@@ -36,8 +69,8 @@ public class ScheduleControllerTest {
         ScheduleCreateRequest scheduleCreateRequest = new ScheduleCreateRequest(startDatetime, sequence, performanceId);
 
         given().log().all()
-            .port(port)
             .contentType(ContentType.JSON)
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .body(scheduleCreateRequest)
             .when()
             .post("/api/schedules")
@@ -58,6 +91,7 @@ public class ScheduleControllerTest {
         String findSchedulesByPageURI = "/api/schedules?pageNum=" + PAGE_NUM + "&size=" + size;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .get(findSchedulesByPageURI)
             .then()
@@ -73,9 +107,11 @@ public class ScheduleControllerTest {
     void findReservationsByScheduleIdByPageTest() {
         int size = 2;
 
-        String findReservationsByScheduleIdByPageURI = "/api/schedules/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
+        String findReservationsByScheduleIdByPageURI =
+            "/api/schedules/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .when()
             .get(findReservationsByScheduleIdByPageURI)
             .then()
@@ -94,6 +130,7 @@ public class ScheduleControllerTest {
         String deleteScheduleByIdURI = "/api/schedules/" + scheduleId;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .when()
             .delete(deleteScheduleByIdURI)
             .then()
