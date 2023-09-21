@@ -37,6 +37,7 @@ public class PerformanceController {
 
     private final PerformanceService performanceService;
 
+    //테스트 커버리지 적용 테스트
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
