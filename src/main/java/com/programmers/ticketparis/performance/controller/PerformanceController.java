@@ -40,7 +40,6 @@ public class PerformanceController {
         return performanceService.createPerformance(performanceCreateRequest);
     }
 
-    //코드 감지 테스트
     @GetMapping("/{performanceId}")
     @Operation(
         summary = "공연 조회",
