@@ -48,6 +48,7 @@ public class ScheduleController {
         return scheduleService.createSchedule(scheduleCreateRequest);
     }
 
+    //sonar converage Test
     @DeleteMapping("/{scheduleId}")
     @Operation(
         summary = "스케줄 삭제",
