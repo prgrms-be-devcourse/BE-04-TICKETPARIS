@@ -19,7 +19,6 @@ import com.programmers.ticketparis.reservation.dto.response.ReservationResponse;
 
 import lombok.RequiredArgsConstructor;
 
-//테스트 커버리지 적용 테스트
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
