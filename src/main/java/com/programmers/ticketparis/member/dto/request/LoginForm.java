@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.member.dto;
+package com.programmers.ticketparis.member.dto.request;
 
 import com.programmers.ticketparis.member.dto.validator.PasswordValid;
 import com.programmers.ticketparis.member.dto.validator.UsernameValid;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CustomerLoginForm {
+public class LoginForm {
 
     @UsernameValid(message = "아이디는 8자 이상 15자 이하(영어, 숫자, 공백불가)")
     private String username;
