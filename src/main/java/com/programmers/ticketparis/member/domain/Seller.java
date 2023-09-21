@@ -2,6 +2,11 @@ package com.programmers.ticketparis.member.domain;
 
 import java.time.LocalDateTime;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import com.programmers.ticketparis.common.exception.ExceptionRule;
+import com.programmers.ticketparis.member.exception.SellerException;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,11 +54,19 @@ public class Seller {
         String storeName
     ) {
         this.username = username;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.registrationNumber = registrationNumber;
         this.storeName = storeName;
+    }
+
+    public Boolean checkPassword(String plainPassword) {
+        try {
+            return BCrypt.checkpw(plainPassword, this.password);
+        } catch (Exception e) {
+            throw new SellerException(ExceptionRule.LOGIN_FAILED_PASSWORD_INVALID, e, plainPassword);
+        }
     }
 }

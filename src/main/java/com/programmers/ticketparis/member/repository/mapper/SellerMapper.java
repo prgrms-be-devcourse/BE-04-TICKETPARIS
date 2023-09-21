@@ -13,6 +13,8 @@ public interface SellerMapper {
 
     Optional<Seller> findById(Long sellerId);
 
+    Optional<Seller> findByUsername(String userName);
+
     Boolean existsById(Long sellerId);
 
     Boolean existsByUniqueFields(String username, String email, String registrationNumber);

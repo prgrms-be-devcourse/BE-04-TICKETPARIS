@@ -1,32 +1,65 @@
 package com.programmers.ticketparis.performance.controller;
 
-import com.programmers.ticketparis.performance.domain.Category;
-import com.programmers.ticketparis.performance.dto.request.PerformanceCreateRequest;
-import com.programmers.ticketparis.performance.dto.request.PerformanceUpdateRequest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.*;
+import static com.programmers.ticketparis.common.util.SessionConst.*;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
+import com.programmers.ticketparis.auth.dto.LoginRequest;
+import com.programmers.ticketparis.performance.domain.Category;
+import com.programmers.ticketparis.performance.dto.request.PerformanceCreateRequest;
+import com.programmers.ticketparis.performance.dto.request.PerformanceUpdateRequest;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PerformanceControllerTest {
 
     private static final int PAGE_NUM = 1;
+    private String customerSessionId;
+    private String sellerSessionId;
 
     @LocalServerPort
     public int port;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    @DisplayName("로그인 및 세션 ID 획득")
+    void beforeAll() {
         RestAssured.port = port;
+
+        Response customerResponse = given()
+            .contentType(ContentType.JSON)
+            .body(LoginRequest.of("testCustomer1", "dldasf1211!"))
+            .when()
+            .post("/api/customers/login")
+            .then()
+            .extract().response();
+        customerSessionId = customerResponse.cookie(SESSION_COOKIE_NAME);
+
+        Response sellerResponse = given()
+            .contentType(ContentType.JSON)
+            .body(LoginRequest.of("testSeller1", "dldasf1211!"))
+            .when()
+            .post("/api/sellers/login")
+            .then()
+            .extract().response();
+        sellerSessionId = sellerResponse.cookie(SESSION_COOKIE_NAME);
     }
 
     @Test
@@ -47,8 +80,8 @@ class PerformanceControllerTest {
             .hallId(2L).build();
 
         given().log().all()
-            .port(port)
             .contentType(ContentType.JSON)
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .body(performanceCreateRequest)
             .when()
             .post("/api/performances")
@@ -69,6 +102,7 @@ class PerformanceControllerTest {
         String findPerformanceByIdURI = "/api/performances/" + performanceId;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .get(findPerformanceByIdURI)
             .then()
@@ -100,6 +134,7 @@ class PerformanceControllerTest {
         String findPerformancesByPageURI = "/api/performances?pageNum=" + PAGE_NUM + "&size=" + size;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, customerSessionId)
             .when()
             .get(findPerformancesByPageURI)
             .then()
@@ -115,9 +150,11 @@ class PerformanceControllerTest {
     void findReservationsByPerformanceIdWithPageTest() {
         int size = 2;
 
-        String findReservationsByPerformanceIdWithPageURI = "/api/performances/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
+        String findReservationsByPerformanceIdWithPageURI =
+            "/api/performances/1/reservations?pageNum=" + PAGE_NUM + "&size=" + size;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .when()
             .get(findReservationsByPerformanceIdWithPageURI)
             .then()
@@ -144,10 +181,12 @@ class PerformanceControllerTest {
         String description = "테스트 설명 변경";
         Long hallId = 2L;
 
-        PerformanceUpdateRequest performanceUpdateRequest = new PerformanceUpdateRequest(title, posterUrl, startDate, endDate, duration, ageRating, price, category, description, hallId);
+        PerformanceUpdateRequest performanceUpdateRequest = new PerformanceUpdateRequest(title, posterUrl, startDate,
+            endDate, duration, ageRating, price, category, description, hallId);
 
         given().log().all()
             .contentType(ContentType.JSON)
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .body(performanceUpdateRequest)
             .when()
             .patch("/api/performances/" + performanceId)
@@ -164,6 +203,7 @@ class PerformanceControllerTest {
         String deletePerformanceByIdURI = "/api/performances/" + performanceId;
 
         given().log().all()
+            .cookie(SESSION_COOKIE_NAME, sellerSessionId)
             .when()
             .delete(deletePerformanceByIdURI)
             .then()
