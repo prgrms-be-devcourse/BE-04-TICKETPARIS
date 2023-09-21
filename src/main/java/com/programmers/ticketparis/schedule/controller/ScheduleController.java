@@ -73,6 +73,7 @@ public class ScheduleController {
         return scheduleService.findSchedulesByPage(pageable);
     }
 
+    //테스트 커버리지 마지막 테스트
     @GetMapping("/{scheduleId}/reservations")
     @Operation(
         summary = "스케줄별 예매 내역 페이지 조회 ",
