@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.programmers.ticketparis.common.exception.ExceptionRule;
+import com.programmers.ticketparis.member.exception.CustomerException;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -61,6 +64,10 @@ public class Customer {
     }
 
     public Boolean checkPassword(String plainPassword) {
-        return BCrypt.checkpw(plainPassword, this.password);
+        try {
+            return BCrypt.checkpw(plainPassword, this.password);
+        } catch (Exception e) {
+            throw new CustomerException(ExceptionRule.LOGIN_FAILED_PASSWORD_INVALID, e, plainPassword);
+        }
     }
 }

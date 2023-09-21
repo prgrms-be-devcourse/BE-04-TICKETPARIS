@@ -8,4 +8,8 @@ public class SellerException extends BusinessException {
     public SellerException(ExceptionRule rule, Object... rejectedValues) {
         super(rule, rejectedValues);
     }
+
+    public SellerException(ExceptionRule rule, Throwable e, Object... rejectedValues) {
+        super(rule, e, rejectedValues);
+    }
 }
