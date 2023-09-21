@@ -35,6 +35,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    //sonar converage Test
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
