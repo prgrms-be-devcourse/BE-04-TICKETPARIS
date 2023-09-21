@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.member.dto;
+package com.programmers.ticketparis.auth.dto;
 
 import com.programmers.ticketparis.member.enums.MemberRule;
 

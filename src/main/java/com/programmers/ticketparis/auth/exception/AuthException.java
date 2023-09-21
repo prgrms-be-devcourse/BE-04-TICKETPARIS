@@ -1,4 +1,4 @@
-package com.programmers.ticketparis.member.exception;
+package com.programmers.ticketparis.auth.exception;
 
 import com.programmers.ticketparis.common.exception.BusinessException;
 import com.programmers.ticketparis.common.exception.ExceptionRule;
