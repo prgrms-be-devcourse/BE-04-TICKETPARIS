@@ -58,6 +58,14 @@ jobs:
           min-coverage-overall: 30
           min-coverage-changed-files: 50
 
+    #SonarQube 추가 설정 - 설치된 버전 java11 버전과 java 17버전이 충돌 되기 때문에 분리함
+  sonarqube-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
