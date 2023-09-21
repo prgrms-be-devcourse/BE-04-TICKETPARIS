@@ -1,7 +1,5 @@
 package com.programmers.ticketparis.common.config;
 
-import java.text.MessageFormat;
-
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
