@@ -11,8 +11,9 @@ public enum ExceptionRule {
 
     LOGIN_FAILED_USERNAME_NOT_EXIST(HttpStatus.NOT_FOUND, "로그인 실패 : 해당하는 username을 찾을 수 없음"),
     LOGIN_FAILED_PASSWORD_INVALID(HttpStatus.NOT_FOUND, "로그인 실패 : password 불일치"),
-    AUTHENTICATION_FAILED_COOKIE_NOT_EXIST(HttpStatus.BAD_REQUEST, "요청에 쿠키가 포함되어 있지 않음"),
-    AUTHENTICATION_FAILED_SESSION_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 세션 id를 찾을 수 없음"),
+    LOGOUT_FAILED(HttpStatus.BAD_REQUEST, "로그아웃 실패 : 로그인 상태가 아니거나, 유효하지 않은 세션ID"),
+    AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "인증 실패 : 로그인을 하지 않았음"),
+    AUTHORIZATION_FAILED(HttpStatus.FORBIDDEN, "인가 실패 : url에 접근 권한이 없음"),
 
     CUSTOMER_NOT_EXIST(HttpStatus.NOT_FOUND, "해당하는 구매자를 찾을 수 없음"),
     CUSTOMER_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 가입된 username 또는 email로 요청"),
