@@ -30,7 +30,7 @@ public class ReservationRedissonFacade {
         String key = REDISSON_LOCK_PREFIX + reservationCreateRequest.getScheduleId();
         RLock lock = redissonClient.getLock(key);
 
-        boolean isLocked = false;
+        boolean isLocked;
         ReservationIdResponse reservationIdResponse = null;
 
         try {
