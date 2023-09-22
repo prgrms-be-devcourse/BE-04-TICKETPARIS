@@ -30,22 +30,24 @@ public class ReservationRedissonFacade {
         String key = REDISSON_LOCK_PREFIX + reservationCreateRequest.getScheduleId();
         RLock lock = redissonClient.getLock(key);
 
-        boolean isLocked = false;
+        boolean isLocked;
         ReservationIdResponse reservationIdResponse = null;
 
         try {
-            isLocked = lock.tryLock(20, 1, TimeUnit.SECONDS);
+            isLocked = lock.tryLock(30, 1, TimeUnit.SECONDS);
 
             if (!isLocked) {
-                throw new CommonException(COMMON_LOCK_ACQUISITION_FAILED, reservationCreateRequest);
+                throw new CommonException(COMMON_LOCK_ACQUISITION_FAILED, reservationCreateRequest.toString());
             }
 
             reservationIdResponse = reservationService.createReservation(reservationCreateRequest);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
-            if (isLocked) {
+            try {
                 lock.unlock();
+            } catch (IllegalMonitorStateException e) {
+                log.info("Redisson Lock Already UnLock");
             }
         }
 
