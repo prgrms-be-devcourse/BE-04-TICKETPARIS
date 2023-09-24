@@ -1,16 +1,16 @@
 package com.programmers.ticketparis.auth.util;
 
-import com.programmers.ticketparis.auth.dto.LoggedinMemberInfo;
+import com.programmers.ticketparis.auth.dto.Session;
 
 public class SessionThreadLocal {
 
-    private static final ThreadLocal<LoggedinMemberInfo> sessionValueThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<Session> sessionValueThreadLocal = new ThreadLocal<>();
 
-    public static LoggedinMemberInfo getSessionValueDto() {
+    public static Session getSessionValueDto() {
         return sessionValueThreadLocal.get();
     }
 
-    public static void setSessionValueDto(LoggedinMemberInfo loggedInMemberInfo) {
+    public static void setSessionValueDto(Session loggedInMemberInfo) {
         sessionValueThreadLocal.set(loggedInMemberInfo);
     }
 
