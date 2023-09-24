@@ -15,7 +15,9 @@ import com.programmers.ticketparis.common.exception.ExceptionRule;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 
+@Getter
 @Component
 public class localCashSessionRepository implements SessionRepository {
 
