@@ -3,11 +3,15 @@ package com.programmers.ticketparis.common.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.programmers.ticketparis.auth.mvc.filter.AuthenticationFilter;
 import com.programmers.ticketparis.auth.mvc.filter.ExceptionHandlerFilter;
+import com.programmers.ticketparis.auth.mvc.interceptor.AuthorizationInterceptor;
 import com.programmers.ticketparis.auth.service.AuthService;
+import com.programmers.ticketparis.auth.util.UrlToMemberRuleMatcher;
+import com.programmers.ticketparis.member.enums.MemberRole;
 
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
@@ -38,22 +42,22 @@ public class AuthConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
-    // @Bean
-    // public UrlToMemberRuleMatcher urlToMemberRuleMatcher() {
-    //     return new UrlToMemberRuleMatcher()
-    //         .registerUrlRule("/api/performances/**", MemberRole.SELLER)
-    //         .registerUrlRule("/api/schedules/**", MemberRole.SELLER)
-    //         .registerUrlRule("/api/reservations/**", MemberRole.SELLER);
-    // }
-    //
-    // @Override
-    // public void addInterceptors(InterceptorRegistry registry) {
-    //     registry.addInterceptor(new AuthorizationInterceptor(urlToMemberRuleMatcher()))
-    //         .order(1)
-    //         .addPathPatterns(
-    //             "/api/performances/**",
-    //             "/api/schedules/**",
-    //             "/api/reservations/**"
-    //         );
-    // }
+    @Bean
+    public UrlToMemberRuleMatcher urlToMemberRuleMatcher() {
+        return new UrlToMemberRuleMatcher()
+            .registerUrlRule("/api/performances/**", MemberRole.SELLER)
+            .registerUrlRule("/api/schedules/**", MemberRole.SELLER)
+            .registerUrlRule("/api/reservations/**", MemberRole.SELLER);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthorizationInterceptor(urlToMemberRuleMatcher()))
+            .order(1)
+            .addPathPatterns(
+                "/api/performances/**",
+                "/api/schedules/**",
+                "/api/reservations/**"
+            );
+    }
 }
