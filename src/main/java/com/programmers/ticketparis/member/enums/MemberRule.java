@@ -1,7 +1,6 @@
 package com.programmers.ticketparis.member.enums;
 
-public enum MemberRole {
-
+public enum MemberRule {
     CUSTOMER,
     SELLER;
 }
