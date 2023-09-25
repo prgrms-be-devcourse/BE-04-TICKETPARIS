@@ -1,5 +1,7 @@
 package com.programmers.ticketparis.common.dto;
 
+import com.programmers.ticketparis.common.exception.ExceptionRule;
+import com.programmers.ticketparis.common.exception.GlobalExceptionHandler;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -8,9 +10,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import com.programmers.ticketparis.common.exception.ExceptionRule;
-import com.programmers.ticketparis.common.exception.GlobalExceptionHandler;
 
 @RestControllerAdvice(
     basePackages = {
@@ -44,14 +43,14 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
             ExceptionRule exceptionRule = errorData.getExceptionRule();
             response.setStatusCode(exceptionRule.getStatus());
 
-            return ApiResponse.builder()
+            return ApiResponseType.builder()
                 .path(path)
                 .data(errorData.getRejectedValues())
                 .message(exceptionRule.getMessage())
                 .build();
         }
 
-        return ApiResponse.builder()
+        return ApiResponseType.builder()
             .path(path)
             .data(body)
             .build();
