@@ -22,7 +22,6 @@ public class UrlToMemberRuleMatcher {
     public Boolean isMatch(String requestURI, MemberRole loggedInMemberRole) {
         for (Map.Entry<String, MemberRole> entry : requestUrlToMemberRoleMap.entrySet()) {
             if (pathMatcher.match(entry.getKey(), requestURI) && entry.getValue().equals(loggedInMemberRole)) {
-                System.out.println("isMath함수 : " + loggedInMemberRole.name());
                 return true;
             }
         }

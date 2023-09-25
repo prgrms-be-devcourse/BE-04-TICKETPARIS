@@ -31,8 +31,6 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
         String requestURI = httpServletRequest.getRequestURI();
-        
-        System.out.println(requestURI);
 
         if (isLoginCheckPath(requestURI)) {
             //인증 : (세션이 존재하는지 확인하는 Boolean 반환 메서드를 만들까했지만, 매 요청마다 select 두 번 나가는건 아닌 것 같아서 한 번의 조회로 해결했음)
