@@ -28,3 +28,13 @@ mybatis:
   # mapper관련 xml파일이 존재하는 디렉터리의 위치
   mapper-locations: classpath:mapper/**/*.xml
   type-handlers-package: com.programmers.ticketparis
+
+#spring-doc 설정
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
