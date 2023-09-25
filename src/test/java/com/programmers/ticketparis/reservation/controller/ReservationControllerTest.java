@@ -1,26 +1,18 @@
 package com.programmers.ticketparis.reservation.controller;
 
-import static com.programmers.ticketparis.common.util.SessionConst.*;
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.programmers.ticketparis.auth.dto.LoginRequest;
+import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import com.programmers.ticketparis.auth.dto.LoginRequest;
-import com.programmers.ticketparis.reservation.dto.request.ReservationCreateRequest;
-
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static com.programmers.ticketparis.common.util.SessionConst.SESSION_COOKIE_NAME;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
