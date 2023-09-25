@@ -30,5 +30,23 @@ public class AuthConfig implements WebMvcConfigurer {
     //
     //     return filterRegistrationBean;
     // }
-
+    //
+    // @Bean
+    // public UrlToMemberRuleMatcher urlToMemberRuleMatcher() {
+    //     return new UrlToMemberRuleMatcher()
+    //         .registerUrlRule("/api/performances/**", MemberRole.SELLER)
+    //         .registerUrlRule("/api/schedules/**", MemberRole.SELLER)
+    //         .registerUrlRule("/api/reservations/**", MemberRole.SELLER);
+    // }
+    //
+    // @Override
+    // public void addInterceptors(InterceptorRegistry registry) {
+    //     registry.addInterceptor(new AuthorizationInterceptor(urlToMemberRuleMatcher()))
+    //         .order(1)
+    //         .addPathPatterns(
+    //             "/api/performances/**",
+    //             "/api/schedules/**",
+    //             "/api/reservations/**"
+    //         );
+    // }
 }

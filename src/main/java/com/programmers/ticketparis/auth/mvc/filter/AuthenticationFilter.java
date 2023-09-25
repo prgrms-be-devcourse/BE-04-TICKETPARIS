@@ -4,10 +4,9 @@ import java.io.IOException;
 
 import org.springframework.util.PatternMatchUtils;
 
-import com.programmers.ticketparis.auth.dto.SessionValueDto;
-import com.programmers.ticketparis.auth.exception.AuthException;
+import com.programmers.ticketparis.auth.dto.Session;
 import com.programmers.ticketparis.auth.service.AuthService;
-import com.programmers.ticketparis.common.exception.ExceptionRule;
+import com.programmers.ticketparis.auth.util.SessionThreadLocal;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -20,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationFilter implements Filter {
 
-    private static final String[] whitelist = {"/api/customers", "/api/customers/login", "/api/sellers",
+    private static final String[] excludePaths = {"/api/customers", "/api/customers/login", "/api/sellers",
         "/api/sellers/login", "/api/logout"};
 
     private final AuthService authService;
@@ -34,10 +33,11 @@ public class AuthenticationFilter implements Filter {
         String requestURI = httpServletRequest.getRequestURI();
 
         if (isLoginCheckPath(requestURI)) {
-            SessionValueDto sessionValueDto = authService.getSessionOrNull(httpServletRequest);
-            if (sessionValueDto == null) {
-                throw new AuthException(ExceptionRule.AUTHENTICATION_FAILED);
-            }
+            //인증 : (세션이 존재하는지 확인하는 Boolean 반환 메서드를 만들까했지만, 매 요청마다 select 두 번 나가는건 아닌 것 같아서 한 번의 조회로 해결했음)
+            Session loggedInMemberInfo = authService.getAuthenticatedSession(httpServletRequest);
+
+            //ThreadLocal에 로그인 회원 정보 배치
+            SessionThreadLocal.setSessionValueDto(loggedInMemberInfo);
         }
 
         chain.doFilter(request, response);
@@ -45,6 +45,6 @@ public class AuthenticationFilter implements Filter {
 
     //화이트 리스트의 경우 인증 체크X
     private boolean isLoginCheckPath(String requestURI) {
-        return !PatternMatchUtils.simpleMatch(whitelist, requestURI);
+        return !PatternMatchUtils.simpleMatch(excludePaths, requestURI);
     }
 }

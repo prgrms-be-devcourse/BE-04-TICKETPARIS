@@ -1,17 +1,14 @@
 package com.programmers.ticketparis.auth.repository;
 
-import com.programmers.ticketparis.auth.dto.SessionValueDto;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.programmers.ticketparis.auth.dto.Session;
 
 public interface SessionRepository {
 
-    void createSession(SessionValueDto value, HttpServletResponse httpServletResponse);
+    String createSession(Session value);
 
-    SessionValueDto getSessionOrNull(HttpServletRequest httpServletRequest);
+    Session getSession(String sessionId);
 
-    void expire(HttpServletRequest httpServletRequest);
+    void expire(String sessionId);
 
 }
 

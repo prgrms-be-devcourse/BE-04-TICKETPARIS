@@ -9,45 +9,48 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
 
-import com.programmers.ticketparis.auth.dto.SessionValueDto;
+import com.programmers.ticketparis.auth.dto.Session;
 import com.programmers.ticketparis.auth.exception.AuthException;
 import com.programmers.ticketparis.common.exception.ExceptionRule;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 
+@Getter
 @Component
 public class localCashSessionRepository implements SessionRepository {
 
-    private Map<String, SessionValueDto> sessionLocalCash = new ConcurrentHashMap<>();
+    private Map<String, Session> sessionLocalCash = new ConcurrentHashMap<>();
 
-    public void createSession(SessionValueDto value, HttpServletResponse httpServletResponse) {
+    public String createSession(Session session) {
         String sessionId = UUID.randomUUID().toString();
-        sessionLocalCash.put(sessionId, value);
+        sessionLocalCash.put(sessionId, session);
 
-        httpServletResponse.addCookie(new Cookie(SESSION_COOKIE_NAME, sessionId));
+        return sessionId;
     }
 
-    public SessionValueDto getSessionOrNull(HttpServletRequest httpServletRequest) {
-        Cookie sessionCookie = findCookieOrNull(httpServletRequest);
-        if (sessionCookie == null) {
-            return null;
+    public Session getSession(String sessionId) {
+        if (!sessionLocalCash.containsKey(sessionId)) {
+            throw new AuthException(ExceptionRule.AUTHENTICATION_FAILED);
         }
 
-        return sessionLocalCash.get(sessionCookie.getValue());
+        Session currentSession = sessionLocalCash.get(sessionId);
+        currentSession.updateLastAccessTime();
+
+        return currentSession;
     }
 
-    public void expire(HttpServletRequest httpServletRequest) {
-        Cookie sessionCookie = findCookieOrNull(httpServletRequest);
-        if (sessionCookie == null || (!sessionLocalCash.containsKey(sessionCookie.getValue()))) {
+    public void expire(String sessionId) {
+        if (!sessionLocalCash.containsKey(sessionId)) {
             throw new AuthException(ExceptionRule.LOGOUT_FAILED);
         }
 
-        sessionLocalCash.remove(sessionCookie.getValue());
+        sessionLocalCash.remove(sessionId);
     }
 
-    private Cookie findCookieOrNull(HttpServletRequest httpServletRequest) {
+    //1. 요청에 SESSION_COOKIE_NAME 쿠키가 담겨 있는지 체크 후, 가져온다.
+    private Cookie findSessionCookieFromRequestOrNull(HttpServletRequest httpServletRequest) {
         if (httpServletRequest.getCookies() == null) {
             return null;
         }
